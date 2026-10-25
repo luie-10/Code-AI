@@ -1,0 +1,263 @@
+{
+ "metrics": {
+  "classes": 10,
+  "method_outputs": 42,
+  "base_acc": 0.7,
+  "field_recall": 0.0,
+  "field_precision": 0.0,
+  "role_acc": 0.381,
+  "format_rate": 0.976
+ },
+ "rows": [
+  {
+   "file": "LevelTracker.cs",
+   "type": "ClientLevelTracker",
+   "base_ok": true,
+   "base": "SystemBase",
+   "gold_base": "SystemBase",
+   "fields": [
+    "celevas",
+    "m_Staterivel",
+    "m_velevelevel"
+   ],
+   "gold_fields": [
+    "m_Loader"
+   ],
+   "sample": "상속: SystemBase\n메서드: OnState\n역할: 초기화\n변수: m_Staterivel 읽기 1회, celevas 쓰기 1회, m_velevelevel 쓰기 1회"
+  },
+  {
+   "file": "HostingState.cs",
+   "type": "HostingState",
+   "base_ok": false,
+   "base": "Action",
+   "gold_base": "OnlineState",
+   "fields": [
+    "m_Cliessions",
+    "m_Connection",
+    "m_Ment",
+    "m_Server",
+    "m_Stion"
+   ],
+   "gold_fields": [
+    "k_MaxConnectPayload",
+    "m_ConnectionEventPublisher",
+    "m_MultiplayerServicesFacade"
+   ],
+   "sample": "상속: State\n메서드: OnConnection\n역할: 초기화\n변수: m_Server 읽기 1회, m_Connection 쓰기 1회, m_Stion 쓰기 1회\n호"
+  },
+  {
+   "file": "EquippedBall.cs",
+   "type": "EquippedBall",
+   "base_ok": true,
+   "base": "MonoBehaviour + IDisposase",
+   "gold_base": "MonoBehaviour + IEquipped",
+   "fields": [
+    "m_Augged",
+    "m_Augichardorigist",
+    "m_Auigged",
+    "m_Autions",
+    "m_Cons",
+    "m_ControppenigideBution",
+    "m_Is",
+    "m_Nes",
+    "m_Networ",
+    "m_Sets"
+   ],
+   "gold_fields": [],
+   "sample": "상속: MonoBehaviour + IDisposase\n메서드: Cons\n역할: 초기화\n변수: m_Augged 읽기 1회, m_Networ 읽기 2회\n호출: Cons.Log.Infed,"
+  },
+  {
+   "file": "ConnectionModeScript.cs",
+   "type": "ConnectionModeScript",
+   "base_ok": true,
+   "base": "MonoBehaviour",
+   "gold_base": "MonoBehaviour",
+   "fields": [
+    "m_Agent",
+    "m_Cangent",
+    "m_Connection",
+    "m_ConnectionManager",
+    "m_Connections",
+    "m_Connectionsition",
+    "m_Networ",
+    "m_NetworkManager",
+    "m_RemovePost",
+    "m_Server"
+   ],
+   "gold_fields": [
+    "OnNotifyConnectionEventClient",
+    "OnNotifyConnectionEventHost",
+    "OnNotifyConnectionEventServer",
+    "m_AuthenticationButtons",
+    "m_ClientSynchronizationMode",
+    "m_CommandLineProcessor",
+    "m_ConnectionModeButtons",
+    "m_DisconnectClientButton",
+    "m_JoinCodeInput",
+    "m_MaxConnections"
+   ],
+   "sample": "gent\n상속: MonoBehaviour\n메서드: OnConnect\n역할: 초기화\n변수: m_Server 읽기 1회, m_RemovePost 읽기 1회, m_Cangent 쓰기 1회\n호"
+  },
+  {
+   "file": "PushAgentEscape.cs",
+   "type": "PushAgentEscape",
+   "base_ok": true,
+   "base": "Agent",
+   "gold_base": "Agent",
+   "fields": [
+    "_Anistaray",
+    "m_Ader",
+    "m_Agent",
+    "m_Ageray",
+    "m_Aget",
+    "m_Anical",
+    "m_Authostargent",
+    "m_Bachargent",
+    "m_Buty",
+    "m_Coler",
+    "m_Is",
+    "m_Network_Augget",
+    "m_Prom_Anialue",
+    "m_Text"
+   ],
+   "gold_fields": [
+    "IHaveAKey",
+    "MyKey",
+    "m_AgentRb",
+    "m_GameController",
+    "m_PushBlockSettings"
+   ],
+   "sample": "상속: NetworkBable\n메서드: OnEnterAuthoriggent\n역할: 초기화\n변수: m_Text 읽기 1회, m_Network_Augget 읽기 1회, m_Ageray"
+  },
+  {
+   "file": "IPHostingUI.cs",
+   "type": "IPHostingUI",
+   "base_ok": true,
+   "base": "MonoBehaviour",
+   "gold_base": "MonoBehaviour",
+   "fields": [
+    "IPartPartProp",
+    "m_Canvas",
+    "m_ChartProutator",
+    "m_HistProup",
+    "m_I",
+    "m_IDisaction",
+    "m_IPartPor",
+    "m_IProm_Profiginton",
+    "m_Notom_Nop",
+    "m_ProfilePropttttProtttProp",
+    "m_Proutate"
+   ],
+   "gold_fields": [
+    "m_CanvasGroup",
+    "m_HostButton",
+    "m_IPInputField",
+    "m_IPUIMediator",
+    "m_PortInputField"
+   ],
+   "sample": "상속: MonoBehaviour\n메서드: Chand\n역할: 초기화\n변수: m_Canvas 읽기 1회, m_HistProup 쓰기 1회, m_Notom_Nop 쓰기 1회"
+  },
+  {
+   "file": "NetworkDiscoveryBase.cs",
+   "type": "NetworkDiscoveryBase",
+   "base_ok": false,
+   "base": "NetworkBehaviour",
+   "gold_base": "MonoBehaviour",
+   "fields": [
+    "bas",
+    "baserver",
+    "bleargervelent",
+    "cacontrings",
+    "candlers",
+    "canver",
+    "connections",
+    "contropconnect",
+    "contropor",
+    "cter",
+    "cters",
+    "m_Avacontropor",
+    "m_Aver",
+    "m_Client",
+    "m_Hanged"
+   ],
+   "gold_fields": [
+    "ActiveDiscoveryInterval",
+    "BroadcastAddress",
+    "OnServerFound",
+    "clientUdpClient",
+    "enableActiveDiscovery",
+    "hasMulticastLock",
+    "multicastLock",
+    "secretHandshake",
+    "serverBroadcastListenPort",
+    "serverUdpClient",
+    "transport"
+   ],
+   "sample": "상속: NetworkBehaviour\n메서드: OnClient\n역할: 초기화\n변수: contropor 읽기 1회, candlers 읽기 2회, baserver 쓰기 1"
+  },
+  {
+   "file": "HttpUtility.cs",
+   "type": "HttpUtility",
+   "base_ok": true,
+   "base": "없음",
+   "gold_base": "없음",
+   "fields": [
+    "cingBufer",
+    "cingButhe",
+    "cingColy",
+    "collis",
+    "cterTointerToAnd",
+    "m_Ader",
+    "m_AnIs",
+    "m_AunckePool",
+    "m_ToStringColder"
+   ],
+   "gold_fields": [],
+   "sample": "상속: 없음\n메서드: GetModeled\n역할: 동작 수행\n변수: 없음\n호출: GetPunim, Initimation\n주의: 없음"
+  },
+  {
+   "file": "WakeGenerator.cs",
+   "type": "WakeGenerator",
+   "base_ok": true,
+   "base": "MonoBehaviour",
+   "gold_base": "MonoBehaviour",
+   "fields": [
+    "_Dister",
+    "_Nes",
+    "_Position",
+    "chargeraxitorkBeworkAndProppenily",
+    "col",
+    "cterExit",
+    "m_Nes"
+   ],
+   "gold_fields": [
+    "_lrs",
+    "genDistance",
+    "maxAge",
+    "wakePrefab",
+    "wakes"
+   ],
+   "sample": "상속: MonoBehaviour\n메서드: Serasetate\n역할: 동작 수행\n변수: 없음\n호출: St, Anication\n주의: 없음"
+  },
+  {
+   "file": "InputSystem.cs",
+   "type": "ThinInputSystem",
+   "base_ok": false,
+   "base": "SystemBaker",
+   "gold_base": "SystemBase",
+   "fields": [
+    "m_Adext",
+    "m_Adldity",
+    "m_Adler",
+    "m_Adoper",
+    "m_Agerv",
+    "m_Authessions"
+   ],
+   "gold_fields": [
+    "m_Barrier",
+    "m_FrameCount"
+   ],
+   "sample": "or\n상속: SystemBaker\n메서드: OnCanged\n역할: 초기화\n변수: m_Adldity 읽기 1회, m_Adoper 쓰기 1회, m_Adler 쓰기 1"
+  }
+ ]
+}

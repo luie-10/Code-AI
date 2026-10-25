@@ -1,0 +1,281 @@
+{
+ "baseline_snap": {
+  "metrics": {
+   "classes": 10,
+   "method_outputs": 42,
+   "base_acc": 0.8,
+   "field_recall": 0.048,
+   "field_precision": 1.0,
+   "role_acc": 0.333,
+   "format_rate": 0.952
+  },
+  "rows": [
+   {
+    "type": "ClientLevelTracker",
+    "base_ok": true,
+    "fields": [],
+    "gold_fields": [
+     "m_Loader"
+    ],
+    "sample": "상속: SystemBase\n메서드: OnStart\n역할: 초기화\n변수: cel 읽기 1회, cel 쓰기 1회\n호출: OnEnase.OnStart, basetate\n주의: 없음"
+   },
+   {
+    "type": "HostingState",
+    "base_ok": false,
+    "fields": [],
+    "gold_fields": [
+     "k_MaxConnectPayload",
+     "m_ConnectionEventPublisher",
+     "m_MultiplayerServicesFacade"
+    ],
+    "sample": "상속: State\n메서드: OnConnection\n역할: 초기화\n변수: m_Server 읽기 1회, m_States 쓰기 1회, m_Server 쓰기 1회\n호"
+   },
+   {
+    "type": "EquippedBall",
+    "base_ok": true,
+    "fields": [],
+    "gold_fields": [],
+    "sample": "상속: MonoBehaviour + IExitor\n메서드: Connect\n역할: 초기화\n변수: m_Cons 읽기 1회, bugged 쓰기 1회\n호출: Rese.Log.Aug.Rese.Re"
+   },
+   {
+    "type": "ConnectionModeScript",
+    "base_ok": true,
+    "fields": [
+     "m_MaxConnections"
+    ],
+    "gold_fields": [
+     "OnNotifyConnectionEventClient",
+     "OnNotifyConnectionEventHost",
+     "OnNotifyConnectionEventServer",
+     "m_AuthenticationButtons",
+     "m_ClientSynchronizationMode",
+     "m_CommandLineProcessor",
+     "m_ConnectionModeButtons",
+     "m_DisconnectClientButton",
+     "m_JoinCodeInput",
+     "m_MaxConnections"
+    ],
+    "sample": "gent\n상속: MonoBehaviour\n메서드: OnStartClick\n역할: 초기화\n변수: m_Connections 읽기 1회, m_NetworkManager 읽기 1회, m_NetworkHanged 읽기 1"
+   },
+   {
+    "type": "PushAgentEscape",
+    "base_ok": true,
+    "fields": [
+     "m_AgentRb"
+    ],
+    "gold_fields": [
+     "IHaveAKey",
+     "MyKey",
+     "m_AgentRb",
+     "m_GameController",
+     "m_PushBlockSettings"
+    ],
+    "sample": "상속: NetworkBayncter\n메서드: OnEnter\n역할: 오브젝트 생성\n변수: m_Ageray 읽기 1회, m_Gameray 쓰기 1회, m_Charay"
+   },
+   {
+    "type": "IPHostingUI",
+    "base_ok": true,
+    "fields": [],
+    "gold_fields": [
+     "m_CanvasGroup",
+     "m_HostButton",
+     "m_IPInputField",
+     "m_IPUIMediator",
+     "m_PortInputField"
+    ],
+    "sample": "상속: MonoBehaviour\n메서드: Reset\n역할: 초기화\n변수: m_Proup 읽기 1회, m_Is 쓰기 1회, m_CanvachartontrodereengleIs 쓰기 1"
+   },
+   {
+    "type": "NetworkDiscoveryBase",
+    "base_ok": true,
+    "fields": [],
+    "gold_fields": [
+     "ActiveDiscoveryInterval",
+     "BroadcastAddress",
+     "OnServerFound",
+     "clientUdpClient",
+     "enableActiveDiscovery",
+     "hasMulticastLock",
+     "multicastLock",
+     "secretHandshake",
+     "serverBroadcastListenPort",
+     "serverUdpClient",
+     "transport"
+    ],
+    "sample": "상속: NetworkBehaviour\n메서드: OnStart\n역할: 초기화\n변수: contropor 읽기 1회, cs 읽기 1회, bactedler 쓰기 1회, cter"
+   },
+   {
+    "type": "HttpUtility",
+    "base_ok": true,
+    "fields": [],
+    "gold_fields": [],
+    "sample": "상속: 없음\n메서드: GetProuncharInitize\n역할: 동작 수행\n변수: 없음\n호출: GetClied, m.GetEnt, mator, m, I, mble, mityncharase."
+   },
+   {
+    "type": "WakeGenerator",
+    "base_ok": true,
+    "fields": [],
+    "gold_fields": [
+     "_lrs",
+     "genDistance",
+     "maxAge",
+     "wakePrefab",
+     "wakes"
+    ],
+    "sample": "상속: MonoBehaviour\n메서드: Serase\n역할: 초기화\n변수: _Anications 읽기 1회, m_We 읽기 1회, buthe 쓰기 1회, m_Me 쓰기"
+   },
+   {
+    "type": "ThinInputSystem",
+    "base_ok": false,
+    "fields": [],
+    "gold_fields": [
+     "m_Barrier",
+     "m_FrameCount"
+    ],
+    "sample": "or\n상속: SystemBehaviour\n메서드: OnStart\n역할: 동작 수행\n변수: 없음\n호출: GetComponent, mity, mate\n주의: 없음"
+   }
+  ]
+ },
+ "v31": {
+  "metrics": {
+   "classes": 10,
+   "method_outputs": 42,
+   "base_acc": 0.8,
+   "field_recall": 0.119,
+   "field_precision": 1.0,
+   "role_acc": 0.357,
+   "format_rate": 1.0
+  },
+  "rows": [
+   {
+    "type": "ClientLevelTracker",
+    "base_ok": false,
+    "fields": [],
+    "gold_fields": [
+     "m_Loader"
+    ],
+    "sample": "상속: SystemBaspClievel\n메서드: OnUpdate\n역할: 오브젝트 제거\n변수: m_Level 읽기 1회\n호출: OnUpdate, bels.Log.OnSel, cel\n주의"
+   },
+   {
+    "type": "HostingState",
+    "base_ok": false,
+    "fields": [],
+    "gold_fields": [
+     "k_MaxConnectPayload",
+     "m_ConnectionEventPublisher",
+     "m_MultiplayerServicesFacade"
+    ],
+    "sample": "상속: Action\n메서드: OnConnection\n역할: 초기화\n변수: m_Seractions 읽기 1회, m_SessionStionManager 쓰기 1회\n호출: OnConnection\n주"
+   },
+   {
+    "type": "EquippedBall",
+    "base_ok": true,
+    "fields": [],
+    "gold_fields": [],
+    "sample": "상속: MonoBehaviour\n메서드: Cons\n역할: 동작 수행\n변수: 없음\n호출: Cons, Sig.Appen\n주의: 없음"
+   },
+   {
+    "type": "ConnectionModeScript",
+    "base_ok": true,
+    "fields": [
+     "m_MaxConnections"
+    ],
+    "gold_fields": [
+     "OnNotifyConnectionEventClient",
+     "OnNotifyConnectionEventHost",
+     "OnNotifyConnectionEventServer",
+     "m_AuthenticationButtons",
+     "m_ClientSynchronizationMode",
+     "m_CommandLineProcessor",
+     "m_ConnectionModeButtons",
+     "m_DisconnectClientButton",
+     "m_JoinCodeInput",
+     "m_MaxConnections"
+    ],
+    "sample": "gent\n상속: MonoBehaviour\n메서드: OnClient\n역할: 초기화\n변수: m_ConnectionsHanelPool 읽기 1회, m_Canget 읽기 1회, m_ClientDispool 쓰기"
+   },
+   {
+    "type": "PushAgentEscape",
+    "base_ok": true,
+    "fields": [
+     "m_AgentRb",
+     "m_GameController"
+    ],
+    "gold_fields": [
+     "IHaveAKey",
+     "MyKey",
+     "m_AgentRb",
+     "m_GameController",
+     "m_PushBlockSettings"
+    ],
+    "sample": "상속: Action\n메서드: OnEnter\n역할: 초기화\n변수: m_Ap 읽기 1회, m_Controrigget 읽기 1회, m_Component 1회, m_Mabay 쓰기"
+   },
+   {
+    "type": "IPHostingUI",
+    "base_ok": true,
+    "fields": [
+     "m_CanvasGroup"
+    ],
+    "gold_fields": [
+     "m_CanvasGroup",
+     "m_HostButton",
+     "m_IPInputField",
+     "m_IPUIMediator",
+     "m_PortInputField"
+    ],
+    "sample": "상속: MonoBehaviour\n메서드: Canvas\n역할: 초기화\n변수: m_CanvasHasGroup 읽기 1회, m_CanvasHasGroutollyCanvasGroup 쓰기 1"
+   },
+   {
+    "type": "NetworkDiscoveryBase",
+    "base_ok": true,
+    "fields": [
+     "transport"
+    ],
+    "gold_fields": [
+     "ActiveDiscoveryInterval",
+     "BroadcastAddress",
+     "OnServerFound",
+     "clientUdpClient",
+     "enableActiveDiscovery",
+     "hasMulticastLock",
+     "multicastLock",
+     "secretHandshake",
+     "serverBroadcastListenPort",
+     "serverUdpClient",
+     "transport"
+    ],
+    "sample": "상속: MonoBehaviour\n메서드: OnUpdate\n역할: 초기화\n변수: canvasport 읽기 1회, clientistargerver 읽기 1회, contranvasp 쓰기 1회"
+   },
+   {
+    "type": "HttpUtility",
+    "base_ok": true,
+    "fields": [],
+    "gold_fields": [],
+    "sample": "상속: 없음\n메서드: GetProun\n역할: 동작 수행\n변수: 없음\n호출: GetBun\n주의: 없음"
+   },
+   {
+    "type": "WakeGenerator",
+    "base_ok": true,
+    "fields": [],
+    "gold_fields": [
+     "_lrs",
+     "genDistance",
+     "maxAge",
+     "wakePrefab",
+     "wakes"
+    ],
+    "sample": "상속: MonoBehaviour\n메서드: Creehaviour\n역할: 이기화\n변수: ows 읽기 1회, Mediations 쓰기 1회\n호출: Resetate, Anild\n주의:"
+   },
+   {
+    "type": "ThinInputSystem",
+    "base_ok": true,
+    "fields": [],
+    "gold_fields": [
+     "m_Barrier",
+     "m_FrameCount"
+    ],
+    "sample": "er\n상속: SystemBase\n메서드: OnUpdate\n역할: 동작 수행\n변수: m_Adity 읽기 1회, mily 읽기 1회, manget 읽기 1회, mily 쓰"
+   }
+  ]
+ }
+}

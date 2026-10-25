@@ -1,0 +1,214 @@
+{
+ "metrics": {
+  "classes": 10,
+  "method_outputs": 42,
+  "base_acc": 0.5,
+  "field_recall": 0.0,
+  "field_precision": 0.0,
+  "role_acc": 0.357,
+  "format_rate": 0.69
+ },
+ "rows": [
+  {
+   "file": "LevelTracker.cs",
+   "type": "ClientLevelTracker",
+   "base_ok": false,
+   "base": "MonoBehaviour",
+   "gold_base": "SystemBase",
+   "fields": [
+    "nextSceneName",
+    "target"
+   ],
+   "gold_fields": [
+    "m_Loader"
+   ],
+   "sample": "상속: MonoBehaviour\n메서드: Aster2D\n역할: 동작 수행\n변수: target 읽기 1회\n호출: SpawnLoop, target 주의: 없음"
+  },
+  {
+   "file": "HostingState.cs",
+   "type": "HostingState",
+   "base_ok": false,
+   "base": "MonoBehaviour",
+   "gold_base": "OnlineState",
+   "fields": [
+    "damage",
+    "detectionRanget",
+    "other",
+    "pickupSound",
+    "speed",
+    "targe",
+    "value",
+    "변수:"
+   ],
+   "gold_fields": [
+    "k_MaxConnectPayload",
+    "m_ConnectionEventPublisher",
+    "m_MultiplayerServicesFacade"
+   ],
+   "sample": "상속: MonoBehaviour\n메서드: OnTakeDamage 오드: OnTrigget 역할: UIsprEnter2D\n동작 수행\n변수: value 읽기 1회, pickupSound 읽기 2회"
+  },
+  {
+   "file": "EquippedBall.cs",
+   "type": "EquippedBall",
+   "base_ok": true,
+   "base": "MonoBehaviour",
+   "gold_base": "MonoBehaviour + IEquipped",
+   "fields": [
+    "dCount",
+    "damage",
+    "score"
+   ],
+   "gold_fields": [],
+   "sample": "상속: MonoBehaviour\n메서드: OnTaggerEnter2D\n역할: 동작 수행\n변수: score 읽기 1회 읽기 2회\n호출: OnTaggerEnter2D, other.ComparePosition\n주"
+  },
+  {
+   "file": "ConnectionModeScript.cs",
+   "type": "ConnectionModeScript",
+   "base_ok": true,
+   "base": "MonoBehaviour",
+   "gold_base": "MonoBehaviour",
+   "fields": [
+    "damage",
+    "other",
+    "preen",
+    "prefab",
+    "splier",
+    "sprefab"
+   ],
+   "gold_fields": [
+    "OnNotifyConnectionEventClient",
+    "OnNotifyConnectionEventHost",
+    "OnNotifyConnectionEventServer",
+    "m_AuthenticationButtons",
+    "m_ClientSynchronizationMode",
+    "m_CommandLineProcessor",
+    "m_ConnectionModeButtons",
+    "m_DisconnectClientButton",
+    "m_JoinCodeInput",
+    "m_MaxConnections"
+   ],
+   "sample": "gerEnter2D\n생속: MonoBehaviour\n메서드: OnTagget 역할: 동작 수행\n변수: damage 읽기 1회, preen, other 읽기 1회 쓰 1회\n호출: OnTag,"
+  },
+  {
+   "file": "PushAgentEscape.cs",
+   "type": "PushAgentEscape",
+   "base_ok": false,
+   "base": "MonoBehaviour",
+   "gold_base": "Agent",
+   "fields": [
+    "other.Compa",
+    "target",
+    "val",
+    "변수:"
+   ],
+   "gold_fields": [
+    "IHaveAKey",
+    "MyKey",
+    "m_AgentRb",
+    "m_GameController",
+    "m_PushBlockSettings"
+   ],
+   "sample": "상속: MonoBehaviour\n메서드: OnTag 처드: ShoScreen\n역할: 리\n변수: 변수: val 읽기 1회 읽기 2회 쓰 2호출: OnTrig, other.Compa"
+  },
+  {
+   "file": "IPHostingUI.cs",
+   "type": "IPHostingUI",
+   "base_ok": true,
+   "base": "MonoBehaviour",
+   "gold_base": "MonoBehaviour",
+   "fields": [
+    "attackRange",
+    "detectionRange",
+    "firePoint",
+    "mainCamera",
+    "moveSpeed",
+    "nextScene",
+    "nextSceneName",
+    "target"
+   ],
+   "gold_fields": [
+    "m_CanvasGroup",
+    "m_HostButton",
+    "m_IPInputField",
+    "m_IPUIMediator",
+    "m_PortInputField"
+   ],
+   "sample": "상속: MonoBehaviour\n메서드: PlaySfx\n역할: 동작 수행\n변수: target 쓰기 1회, firePoint 읽기 1회\n호출: ShoWag\n주의: 없음"
+  },
+  {
+   "file": "NetworkDiscoveryBase.cs",
+   "type": "NetworkDiscoveryBase",
+   "base_ok": true,
+   "base": "MonoBehaviour",
+   "gold_base": "MonoBehaviour",
+   "fields": [
+    "mainCamera",
+    "moveInput",
+    "splier"
+   ],
+   "gold_fields": [
+    "ActiveDiscoveryInterval",
+    "BroadcastAddress",
+    "OnServerFound",
+    "clientUdpClient",
+    "enableActiveDiscovery",
+    "hasMulticastLock",
+    "multicastLock",
+    "secretHandshake",
+    "serverBroadcastListenPort",
+    "serverUdpClient",
+    "transport"
+   ],
+   "sample": "ue 처드: Async\n역할: 동작 수행\n변수: splier 읽기 1회, moveInput 읽기 1회\n호출: FixedUpdate, Deb 없의: 없음"
+  },
+  {
+   "file": "HttpUtility.cs",
+   "type": "HttpUtility",
+   "base_ok": false,
+   "base": null,
+   "gold_base": "없음",
+   "fields": [
+    "rectTransform",
+    "targerEnterEnterEnterEnter"
+   ],
+   "gold_fields": [],
+   "sample": "드: MonoBehaviour\n역할: 레응 수행\n변수: targerEnterEnterEnterEnter, rectTransform 읽기 변쓰 2회\n호출: ShTaggerEnter2D, rectTransform.DOScalearestEnemy\n주의: 없음"
+  },
+  {
+   "file": "WakeGenerator.cs",
+   "type": "WakeGenerator",
+   "base_ok": true,
+   "base": "MonoBehaviour",
+   "gold_base": "MonoBehaviour",
+   "fields": [
+    "pickupickupSound",
+    "s",
+    "sync",
+    "target"
+   ],
+   "gold_fields": [
+    "_lrs",
+    "genDistance",
+    "maxAge",
+    "wakePrefab",
+    "wakes"
+   ],
+   "sample": "상속: MonoBehaviour\n메서드: SpawnLoop\n역할: 동작 수행\n변수: sync\n: sparefab 읽기 1회 읽기 2회\n호출: ShoScore, other.CompawnedUpdate, dir."
+  },
+  {
+   "file": "InputSystem.cs",
+   "type": "ThinInputSystem",
+   "base_ok": false,
+   "base": "MonoBehaviour",
+   "gold_base": "SystemBase",
+   "fields": [
+    "speed"
+   ],
+   "gold_fields": [
+    "m_Barrier",
+    "m_FrameCount"
+   ],
+   "sample": "dUpdate\n상속: MonoBehaviour\n메서드: Update\n역할: 프레임 갱신회 읽기 기 2회, targerEnter2D, targerEnter2D, other.Compareen, rectTransform.DOScrePosition\n변쓰기 2"
+  }
+ ]
+}

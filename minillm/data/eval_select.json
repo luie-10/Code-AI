@@ -1,0 +1,159 @@
+{
+ "metrics": {
+  "field_recall": 0.786,
+  "field_precision": 0.917,
+  "gold_fields": 42,
+  "pred_fields": 36,
+  "hit": 33,
+  "method_acc": 0.591,
+  "method_prec": 0.31,
+  "method_rec": 0.724
+ },
+ "rows": [
+  {
+   "type": "ClientLevelTracker",
+   "pred": [
+    "m_Loader"
+   ],
+   "gold": [
+    "m_Loader"
+   ]
+  },
+  {
+   "type": "HostingState",
+   "pred": [
+    "k_MaxConnectPayload",
+    "m_ConnectionEventPublisher",
+    "m_MultiplayerServicesFacade"
+   ],
+   "gold": [
+    "k_MaxConnectPayload",
+    "m_ConnectionEventPublisher",
+    "m_MultiplayerServicesFacade"
+   ]
+  },
+  {
+   "type": "EquippedBall",
+   "pred": [
+    "_equippedItemConfig",
+    "animator",
+    "audioSource"
+   ],
+   "gold": []
+  },
+  {
+   "type": "ConnectionModeScript",
+   "pred": [
+    "m_CommandLineProcessor",
+    "m_JoinCodeInput",
+    "m_MaxConnections"
+   ],
+   "gold": [
+    "OnNotifyConnectionEventClient",
+    "OnNotifyConnectionEventHost",
+    "OnNotifyConnectionEventServer",
+    "m_AuthenticationButtons",
+    "m_ClientSynchronizationMode",
+    "m_CommandLineProcessor",
+    "m_ConnectionModeButtons",
+    "m_DisconnectClientButton",
+    "m_JoinCodeInput",
+    "m_MaxConnections"
+   ]
+  },
+  {
+   "type": "PushAgentEscape",
+   "pred": [
+    "IHaveAKey",
+    "MyKey",
+    "m_AgentRb",
+    "m_GameController",
+    "m_PushBlockSettings"
+   ],
+   "gold": [
+    "IHaveAKey",
+    "MyKey",
+    "m_AgentRb",
+    "m_GameController",
+    "m_PushBlockSettings"
+   ]
+  },
+  {
+   "type": "IPHostingUI",
+   "pred": [
+    "m_CanvasGroup",
+    "m_HostButton",
+    "m_IPUIMediator"
+   ],
+   "gold": [
+    "m_CanvasGroup",
+    "m_HostButton",
+    "m_IPInputField",
+    "m_IPUIMediator",
+    "m_PortInputField"
+   ]
+  },
+  {
+   "type": "NetworkDiscoveryBase",
+   "pred": [
+    "ActiveDiscoveryInterval",
+    "BroadcastAddress",
+    "OnServerFound",
+    "clientUdpClient",
+    "enableActiveDiscovery",
+    "hasMulticastLock",
+    "multicastLock",
+    "secretHandshake",
+    "serverBroadcastListenPort",
+    "serverUdpClient",
+    "transport"
+   ],
+   "gold": [
+    "ActiveDiscoveryInterval",
+    "BroadcastAddress",
+    "OnServerFound",
+    "clientUdpClient",
+    "enableActiveDiscovery",
+    "hasMulticastLock",
+    "multicastLock",
+    "secretHandshake",
+    "serverBroadcastListenPort",
+    "serverUdpClient",
+    "transport"
+   ]
+  },
+  {
+   "type": "HttpUtility",
+   "pred": [],
+   "gold": []
+  },
+  {
+   "type": "WakeGenerator",
+   "pred": [
+    "_lrs",
+    "genDistance",
+    "maxAge",
+    "wakePrefab",
+    "wakes"
+   ],
+   "gold": [
+    "_lrs",
+    "genDistance",
+    "maxAge",
+    "wakePrefab",
+    "wakes"
+   ]
+  },
+  {
+   "type": "ThinInputSystem",
+   "pred": [
+    "m_Barrier",
+    "m_FrameCount"
+   ],
+   "gold": [
+    "m_Barrier",
+    "m_FrameCount"
+   ]
+  }
+ ]
+}

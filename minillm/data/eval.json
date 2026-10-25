@@ -1,0 +1,467 @@
+{
+ "metrics": {
+  "val_samples": 24,
+  "base_acc": 0.958,
+  "field_recall": 0.014,
+  "field_precision": 0.038,
+  "role_recall": 0.577,
+  "format_rate": 0.875
+ },
+ "rows": [
+  {
+   "file": "HomingBullet.cs",
+   "type": "HomingBullet",
+   "base_ok": false,
+   "pred": "할: 없읽관동 Update)\n필명\n 리\n사\n필드:\n- 기기 1회 (Awake)\n- 1회 (FindNed: MonoBehaviour\n- speed: MonoBehaviour\n- 기기 speed: MonoBehaviour\n- target: MonoBehaviour\n- speed: Transform [SerializeField], 쓰 spawned: float [SerializeField], 읽기 1회 (Start)\n- 1회 (FindNed: float [SerializeField], 읽기 1회 (Awake)\n- 1회 (Setion: int [SerializeField], 읽기 1회 (OnPointer2D), 쓰 1회 (OnPointer2D",
+   "gold_fields": [
+    "speed",
+    "destroyTime",
+    "target"
+   ],
+   "pred_fields": [
+    "1회 (FindNed",
+    "speed",
+    "기기 speed",
+    "target",
+    "speed",
+    "1회 (FindNed",
+    "1회 (Setion"
+   ],
+   "tok_s": 87.3
+  },
+  {
+   "file": "enemy_00.cs",
+   "type": "EnemyController",
+   "base_ok": true,
+   "pred": "상속: MonoBehaviour\n역할: 이동 제어\n필드:\n- target: int [SerializeField], 읽기 1회 (FindNearestEnemy)\n- target: float [SerializeField], 읽기 1회 (OnTriggerEnter2D)\n- ≠ 회 (Update)\n래스명 / 정적사\n / 수스명 검\n 필드: oScreen)\n\n 기기 GetCompTriggerEnter2D)\n- GetCompTriggerEnter2D)\n- / 수사\n- fireen)\n- fireen)",
+   "gold_fields": [
+    "moveSpeed",
+    "detectionRange",
+    "attackRange",
+    "damage",
+    "player",
+    "state"
+   ],
+   "pred_fields": [
+    "target",
+    "target"
+   ],
+   "tok_s": 99.5
+  },
+  {
+   "file": "enemy_01.cs",
+   "type": "Chaser",
+   "base_ok": true,
+   "pred": "상속: MonoBehaviour\n역할: 이동 제어\n필드:\n- target: int [SerializeField], 읽기 2회 (Start)\n- mainCamera: Camera, 읽기 3회 (ClampToScreen), 쓰기 1회 (Start)\n메서드: Start, Update, ReadMove, ClampToScreen\n주의: 파일명 ≠ 클래스명\n 클명 / 스명\n)\n 검스명 검스명\n 검지사",
+   "gold_fields": [
+    "moveSpeed",
+    "detectionRange",
+    "attackRange",
+    "damage",
+    "player",
+    "state"
+   ],
+   "pred_fields": [
+    "target",
+    "mainCamera"
+   ],
+   "tok_s": 99.9
+  },
+  {
+   "file": "enemy_02.cs",
+   "type": "MeleeEnemy",
+   "base_ok": true,
+   "pred": "상속: MonoBehaviour\n역할: 이동 제어\n필드:\n- instance: int [SerializeField], 읽기 1회 (FindNearestEnemy)\n- bleObject\n- target: float [SerializeField], 읽기 1회 (LateUpdate), 쓰기 2회 (Start)\n메서드: Start, Update, FindNearestEnemy\n주의: 파일명 ≠ 클래스명\n 클래스명\n / 스명 검사\n)\n)\n 검지사\n 검",
+   "gold_fields": [
+    "moveSpeed",
+    "detectionRange",
+    "attackRange",
+    "damage",
+    "player",
+    "state"
+   ],
+   "pred_fields": [
+    "instance",
+    "target"
+   ],
+   "tok_s": 100.8
+  },
+  {
+   "file": "enemy_03.cs",
+   "type": "MeleeEnemy",
+   "base_ok": true,
+   "pred": "상속: MonoBehaviour\n역할: 이동 제어\n필드:\n- target: int [SerializeField], 읽기 1회 (FindNearestEnemy)\n- bleObject\n- target: float [SerializeField], 읽기 1회 (ClampTriggerEnter2D)\n- 1회 (ClampTriggerame\n- score: float [SerializeField], 읽기 1회 (FindNedCompText)\n메서드\n ≠ 회일의스래스명 클명 /  탁명 / 스명 / :",
+   "gold_fields": [
+    "moveSpeed",
+    "detectionRange",
+    "attackRange",
+    "damage",
+    "player",
+    "state"
+   ],
+   "pred_fields": [
+    "target",
+    "target",
+    "score"
+   ],
+   "tok_s": 99.7
+  },
+  {
+   "file": "enemy_04.cs",
+   "type": "MeleeEnemy",
+   "base_ok": true,
+   "pred": "상속: MonoBehaviour\n역할: 이동 제어\n필드:\n- instance: int [SerializeField], 읽기 1회 (Start)\n- destroyTime: float [SerializeField], 읽기 1회 (Update)\n- ≠기 회 (Start)\n메서: Awake, OnTriggerEnter2D\n주읽래스명 / 정적 상탁래지\n)\n 탁스명 / 정적사\n / 지명 경기기 / 사\n)",
+   "gold_fields": [
+    "moveSpeed",
+    "detectionRange",
+    "attackRange",
+    "damage",
+    "player",
+    "state"
+   ],
+   "pred_fields": [
+    "instance",
+    "destroyTime"
+   ],
+   "tok_s": 103.0
+  },
+  {
+   "file": "enemy_05.cs",
+   "type": "EnemyController",
+   "base_ok": true,
+   "pred": "상속: MonoBehaviour\n역할: 이동 제어\n필드:\n- b nextSceneName: GameObject [SerializeField], 읽기 1회 (Start, 읽기 2회 (Update)\n- dScreen), 쓰기 1회 (Start)\n메서드: Start, Update, ReadMove, ClampToScreen\n주의: 파일명 ≠ 클래스명\nsetMedit, ReadMove, ReadMove,  /  스명 탁명 / 지지스명\n)",
+   "gold_fields": [
+    "moveSpeed",
+    "detectionRange",
+    "attackRange",
+    "damage",
+    "player",
+    "state"
+   ],
+   "pred_fields": [
+    "b nextSceneName"
+   ],
+   "tok_s": 101.8
+  },
+  {
+   "file": "enemy_06.cs",
+   "type": "MeleeEnemy",
+   "base_ok": true,
+   "pred": "상속: MonoBehaviour\n역할: 이동 제어\n필드:\n- target: int [SerializeField], 읽기 1회 (FindNearestEnemy)\n- bleObject\n- target: float [SerializeField], 읽기 1회 (OnPoint쓰기 1회 (Sound: Vector3 [SerializeField], 읽기 1회 (FindNedreen)\n메서드: Start, 의: Start, Update, ClampTriggerEnter2D\n ≠ 파의스래스명 클명 탁명 /  태 태 태지",
+   "gold_fields": [
+    "moveSpeed",
+    "detectionRange",
+    "attackRange",
+    "damage",
+    "player",
+    "state"
+   ],
+   "pred_fields": [
+    "target",
+    "target"
+   ],
+   "tok_s": 99.3
+  },
+  {
+   "file": "enemy_07.cs",
+   "type": "EnemyAI",
+   "base_ok": true,
+   "pred": "상속: MonoBehaviour\n역할: 이동 제어\n필드:\n- target: Transform [SerializeField], 읽기 2회 (AdScreen)\n- mainCamera: Transform [SerializeField], 읽기 2회 (FindNed: int [SerializeField], 쓰기 1회 (Start)\n메서드: Start, ClampTriggerEnter\n주의: 파일명 ≠ 클래스명\n 클래스명 / 스명 검사\n / 지지지지지지사",
+   "gold_fields": [
+    "moveSpeed",
+    "detectionRange",
+    "attackRange",
+    "damage",
+    "player",
+    "state"
+   ],
+   "pred_fields": [
+    "target",
+    "mainCamera"
+   ],
+   "tok_s": 101.0
+  },
+  {
+   "file": "enemy_08.cs",
+   "type": "EnemyAI",
+   "base_ok": true,
+   "pred": "상속: MonoBehaviour\n역할: 이동 제어\n필드:\n- target: Transform [SerializeField], 읽기 2회 (AdScreen)\n- mainCamera: Transform [SerializeField], 읽기 2회 (FindNed: int [SerializeField], 쓰기 1회 (Start)\n메서드: Start, ClampTriggerEnter2D\n주의: 파일명 ≠ 태 유지\n 클래스래스명\n)\n / 유스명\n)\n)\n / 유지지지",
+   "gold_fields": [
+    "moveSpeed",
+    "detectionRange",
+    "attackRange",
+    "damage",
+    "player",
+    "state"
+   ],
+   "pred_fields": [
+    "target",
+    "mainCamera"
+   ],
+   "tok_s": 99.3
+  },
+  {
+   "file": "enemy_09.cs",
+   "type": "EnemyAI",
+   "base_ok": true,
+   "pred": "상속: MonoBehaviour\n역할: 이동 제어  제어\n필드:\n- b, 읽기 2회 (Start, 읽기 3회 (LateUpdate)\n- float, 읽기 1회 (Update), 쓰기 1회 (Update)\n메서드: Update, FindNearestEnemy\n주의: 파일명 ≠ 클래스명\nit, ReadMove, ReadMove, ReadMove, ReadMove, ReadMove, ReadMove, ReadMove, ReadMove, ReadMove, ReadMove, ReadMove, 스명 /",
+   "gold_fields": [
+    "moveSpeed",
+    "detectionRange",
+    "attackRange",
+    "damage",
+    "player",
+    "state"
+   ],
+   "pred_fields": [],
+   "tok_s": 100.2
+  },
+  {
+   "file": "enemy_10.cs",
+   "type": "MeleeEnemy",
+   "base_ok": true,
+   "pred": "상속: MonoBehaviour\n역할: 이동 열동 제어 / 제어\n필드:\n- speed: float [SerializeField], 읽기 value: float [SerializeField], 읽기 1회 (Update)\n- 1회 (Update)\n- instance: Camera: float [SerializeField], 읽기 3회 (ClampToScreen\n메서드: Start, 적 상탁태 유지\n b: float [SerializeField], 의스드: Start, 읽기기 회 (FindNedamage: 클래스명 /  탁",
+   "gold_fields": [
+    "moveSpeed",
+    "detectionRange",
+    "attackRange",
+    "damage",
+    "player",
+    "state"
+   ],
+   "pred_fields": [
+    "speed",
+    "instance"
+   ],
+   "tok_s": 96.8
+  },
+  {
+   "file": "enemy_11.cs",
+   "type": "EnemyAI",
+   "base_ok": true,
+   "pred": "상속: MonoBehaviour\n역할: 이동 제어  제어\n필드:\n- b, 읽기 2회 (Start, 읽기 GetCompTriggerEnter2D)\n- 2회 (Start)\n- s, 읽기 2회 (Update)\n메서드: Start, Update, FindNearestEnemy\n주의: 파일명 ≠ 클래스명\n null / 명 / : 탁스명 검사\n 검지사\n 검사\n 검",
+   "gold_fields": [
+    "moveSpeed",
+    "detectionRange",
+    "attackRange",
+    "damage",
+    "player",
+    "state"
+   ],
+   "pred_fields": [],
+   "tok_s": 101.6
+  },
+  {
+   "file": "enemy_12.cs",
+   "type": "EnemyAI",
+   "base_ok": true,
+   "pred": "상속: MonoBehaviour\n역할: 이동 제어\n필드:\n- target: Transform [SerializeField], 읽기 1회 (AdScreen)\n- mainCamera: Transform [SerializeField], 읽기 2회 (FindNed: int [SerializeField], 쓰기 1회 (FindNearestEnemy)\n메서드: Start, OnPointer2D\n주의: 파일명 ≠ 클래스래\n 클명 / 스명 / 스명 / 유지지지지지지지지",
+   "gold_fields": [
+    "moveSpeed",
+    "detectionRange",
+    "attackRange",
+    "damage",
+    "player",
+    "state"
+   ],
+   "pred_fields": [
+    "target",
+    "mainCamera"
+   ],
+   "tok_s": 99.4
+  },
+  {
+   "file": "enemy_13.cs",
+   "type": "EnemyController",
+   "base_ok": true,
+   "pred": "상속: MonoBehaviour\n역할: 이동 제래명 경계 제한\n필드:\n- speed: float, 읽기 1회 (Update), FixedScreen), 사사사용 없읽기 기 1회 (Start), ClampToScreen\n- 회 (Start), 쓰기 turnSpeed드: float, 읽\n 1회 (Start)\n- destroyTime: Start)\n- 1회 (FindNed: float [SerializeField], 주읽기 ≠ 회 (Start)\n- 회 (Start",
+   "gold_fields": [
+    "moveSpeed",
+    "detectionRange",
+    "attackRange",
+    "damage",
+    "player",
+    "state"
+   ],
+   "pred_fields": [
+    "speed",
+    "회 (Start), 쓰기 turnSpeed드",
+    "destroyTime",
+    "1회 (FindNed"
+   ],
+   "tok_s": 101.4
+  },
+  {
+   "file": "enemy_14.cs",
+   "type": "Chaser",
+   "base_ok": true,
+   "pred": "상속: MonoBehaviour\n역할: 이동 제어\n필드:\n- instance: int [SerializeField], 읽기 2회 (Start)\n- mainCamera: Camera, 읽기 3회 (ClampToScreen), 쓰기 1회 (Start)\n메서드: Start, Update, ReadMove, ClampToScreen\n주의: 파일명 ≠ 클래스명\n 클래스명 검스명 검사\n 검사\n 검사\n 검",
+   "gold_fields": [
+    "moveSpeed",
+    "detectionRange",
+    "attackRange",
+    "damage",
+    "player",
+    "state"
+   ],
+   "pred_fields": [
+    "instance",
+    "mainCamera"
+   ],
+   "tok_s": 103.8
+  },
+  {
+   "file": "enemy_15.cs",
+   "type": "EnemyController",
+   "base_ok": true,
+   "pred": "상속: MonoBehaviour\n역할: 이동 제어\n필드:\n- b nextSceneName: GameObject [SerializeField], 읽기 1회 (Start, 읽기 2회 (Update)\n- dScreen), 쓰기 1회 (Start)\n메서드: Start, Update, ReadMove, ClampToScreen\n주의: 파일명 ≠ 클래스명\n 클명 / 스명\n / 스명 / 유스명\n)\n / 유어명\n)",
+   "gold_fields": [
+    "moveSpeed",
+    "detectionRange",
+    "attackRange",
+    "damage",
+    "player",
+    "state"
+   ],
+   "pred_fields": [
+    "b nextSceneName"
+   ],
+   "tok_s": 101.3
+  },
+  {
+   "file": "enemy_16.cs",
+   "type": "EnemyController",
+   "base_ok": true,
+   "pred": "상속: MonoBehaviour\n역할: 이동 제어\n필드:\n- b nextSceneName: Game\n- 기 instance: float [SerializeField], 읽기 1회 (Ad: float [SerializeField], 읽기 1회 (Update)\n- damage)\n메서드: Start, Update, ReadMove, ClampTop, OnT\n주의: 파일명 ≠ 클래스명\n 클명 스명 / 스명 / 스명\n)\n)\n)\n)\n 검지지",
+   "gold_fields": [
+    "moveSpeed",
+    "detectionRange",
+    "attackRange",
+    "damage",
+    "player",
+    "state"
+   ],
+   "pred_fields": [
+    "b nextSceneName",
+    "기 instance"
+   ],
+   "tok_s": 99.8
+  },
+  {
+   "file": "enemy_17.cs",
+   "type": "Chaser",
+   "base_ok": true,
+   "pred": "상속: MonoBehaviour\n역할: 이동 열동 제어 / 제어\n필드:\n- instance: float [SerializeField], 읽기 1회 (Update)\n- nextFireTime: float, 읽기 1회 (Update), 쓰기 1회 (Update)\n메서드: Update, FindNearestEnemy\n주의: 파일명 ≠ 클래스명\n / 스명 / 스명 / :\n)\n / 유지지사\n)\n)\n)\n)",
+   "gold_fields": [
+    "moveSpeed",
+    "detectionRange",
+    "attackRange",
+    "damage",
+    "player",
+    "state"
+   ],
+   "pred_fields": [
+    "instance",
+    "nextFireTime"
+   ],
+   "tok_s": 100.4
+  },
+  {
+   "file": "enemy_18.cs",
+   "type": "Chaser",
+   "base_ok": true,
+   "pred": "상속: MonoBehaviour\n역할: 이동 열동 제어 / 제 제Camera, 읽과래/ 어\n한\n필드:\n- spawned: ScreTime: Start)\n- target: Transform [SerializeField], 읽기 2회 (ClampTriggerEnter2D)\n- 2회 (Update)\n- synPanel)\n- 드:\n- Enemy), 읽\n destroyTime: float [SerializeField], 읽기 destroyTime: float [SerializeField], 읽기 1회 (Update)\n- 1회 (OnTriggerEnter2D)\n- 1",
+   "gold_fields": [
+    "moveSpeed",
+    "detectionRange",
+    "attackRange",
+    "damage",
+    "player",
+    "state"
+   ],
+   "pred_fields": [
+    "spawned",
+    "target",
+    "드"
+   ],
+   "tok_s": 102.2
+  },
+  {
+   "file": "enemy_19.cs",
+   "type": "Chaser",
+   "base_ok": true,
+   "pred": "상속: MonoBehaviour\n역할: 이동 제어\n필드:\n- target: int [SerializeField], 읽기 2회 (Start)\n- mainCamera: Camera, 읽기 3회 (ClampToScreen), 쓰기 1회 (Start)\n메서드: Start, Update, ReadMove, ClampToScreen\n주의: 파일명 ≠ 클래스명\n 클명 / 스명\n)\n)\n 검스명\n)\n / 유스명\n 검",
+   "gold_fields": [
+    "moveSpeed",
+    "detectionRange",
+    "attackRange",
+    "damage",
+    "player",
+    "state"
+   ],
+   "pred_fields": [
+    "target",
+    "mainCamera"
+   ],
+   "tok_s": 100.0
+  },
+  {
+   "file": "enemy_20.cs",
+   "type": "Chaser",
+   "base_ok": true,
+   "pred": "상속: MonoBehaviour\n역할: 이동 제어\n필드:\n- target: Transform [SerializeField], 읽기 2회 (AdScreen)\n- mainCamera: Transform [SerializeField], 읽기 2회 (FindNedamage), 쓰기 1회 (Start)\n메서드: Start, ReadMove, ClampToScreen\n주의: 파일명 ≠ 클래스명\n 클명 /  탁명\n)\n)\n)\n 기검스명\n / :",
+   "gold_fields": [
+    "moveSpeed",
+    "detectionRange",
+    "attackRange",
+    "damage",
+    "player",
+    "state"
+   ],
+   "pred_fields": [
+    "target",
+    "mainCamera"
+   ],
+   "tok_s": 100.6
+  },
+  {
+   "file": "enemy_21.cs",
+   "type": "EnemyController",
+   "base_ok": true,
+   "pred": "상속: MonoBehaviour\n역할: 수명 / 명 2 수명 글리\n필드:\n- target: float [SerializeField], 읽기 1회 (Update)\n- destroyTime: float, 쓰기 1회 (Start)\n메서드: Start, Update, ReadMove, ClampToScreen\n주의: 파일명 ≠ 클래스명\n 스명\n)\n)\n)\n)\n 기기스명 / 정적스명 기사\n-",
+   "gold_fields": [
+    "moveSpeed",
+    "detectionRange",
+    "attackRange",
+    "damage",
+    "player",
+    "state"
+   ],
+   "pred_fields": [
+    "target",
+    "destroyTime"
+   ],
+   "tok_s": 100.3
+  },
+  {
+   "file": "enemy_22.cs",
+   "type": "Chaser",
+   "base_ok": true,
+   "pred": "상속: MonoBehaviour\n역할: 이동 열동 제어 / 제 제Camera, 읽과래/ 어 / \n한어 / 수명:\n필드:\n- target:  instance: float, 읽기 기 1회 (Start, Update)\n- 3회 (Start)\n- ≠ 회 (Start, 읽기 필\n 회 (Start)\n- mainCamera: float [SerializeField], 읽기 1회 (Start)\n- nextScene)\n- mainCamera: float [SerializeField], 읽기 회 (Start)",
+   "gold_fields": [
+    "moveSpeed",
+    "detectionRange",
+    "attackRange",
+    "damage",
+    "player",
+    "state"
+   ],
+   "pred_fields": [
+    "target",
+    "mainCamera",
+    "mainCamera"
+   ],
+   "tok_s": 100.2
+  }
+ ]
+}

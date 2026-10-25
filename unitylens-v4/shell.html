@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UnityLens — Unity C# 구조 · 변수 추적기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/*__CSS__*/
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true">
+        <circle cx="17" cy="17" r="15" fill="none" stroke="#d9a84e" stroke-opacity=".55"/>
+        <circle cx="17" cy="17" r="9.5" fill="none" stroke="#d9a84e" stroke-opacity=".32"/>
+        <circle cx="17" cy="17" r="3" fill="#d9a84e"/>
+        <path d="M17 0v9M17 25v9M0 17h9M25 17h9" stroke="#d9a84e" stroke-opacity=".55"/>
+      </svg>
+      <div>
+        <h1>Unity<span>Lens</span></h1>
+        <p>structure &amp; variable trace</p>
+      </div>
+    </div>
+    <div class="header-meta" id="headerMeta"></div>
+    <div class="tools">
+      <div class="llm-chip" id="llmChip" role="button" tabindex="0" title="LLM 연결 설정">LLM 오프라인</div>
+      <button class="btn" id="btnAdd">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        코드 추가
+      </button>
+      <button class="btn primary" id="btnExport">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 11l5 5 5-5M5 21h14"/></svg>
+        리포트 내보내기
+      </button>
+    </div>
+  </header>
+
+  <aside class="rail">
+    <div class="rail-top">
+      <label class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        <input id="search" placeholder="클래스 · 파일 검색  ( / )" autocomplete="off">
+      </label>
+    </div>
+    <div class="rail-list" id="railList"></div>
+    <div class="rail-foot"><span class="dot"></span>규칙 기반 정적 분석 · 브라우저에서만 실행</div>
+  </aside>
+
+  <main class="stage">
+    <nav class="tabs" id="tabs">
+      <button data-tab="overview" class="on">개요</button>
+      <button data-tab="class">클래스</button>
+      <button data-tab="vars">변수 추적</button>
+      <button data-tab="graph">배선도</button>
+      <button data-tab="source">소스</button>
+    </nav>
+    <div class="views">
+      <section class="view on" id="v-overview"></section>
+      <section class="view" id="v-class"></section>
+      <section class="view" id="v-vars"></section>
+      <section class="view" id="v-graph"></section>
+      <section class="view" id="v-source"></section>
+    </div>
+  </main>
+</div>
+
+<div class="modal" id="modal" hidden>
+  <div class="box">
+    <div class="mh">
+      <h3>C# 코드 추가</h3>
+      <button class="btn" id="mClose" aria-label="닫기">ESC</button>
+    </div>
+    <div class="mb">
+      <p class="hint" style="margin-bottom:10px">파일을 선택하면 즉시 분석됩니다. 붙여넣기는 아래에 코드를 넣고 <b>분석</b>을 누르세요. 여러 클래스가 들어 있어도 됩니다.</p>
+      <button class="btn filebtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>
+        .cs 파일 선택
+        <input type="file" id="mFile" accept=".cs,.txt" multiple>
+      </button>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <input id="nameInput" placeholder="파일명 (비우면 클래스명.cs)" style="flex:0 0 240px;background:#0a110e;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font-size:12px;outline:none">
+        <span class="hint" style="align-self:center">선택 사항</span>
+      </div>
+      <textarea id="codeInput" spellcheck="false" placeholder="using UnityEngine;&#10;&#10;public class Sample : MonoBehaviour&#10;{&#10;    [SerializeField] private float speed = 3f;&#10;}"></textarea>
+      <div class="fname" id="mName"></div>
+    </div>
+    <div class="mf">
+      <span class="hint">분석은 이 브라우저 안에서만 실행됩니다. 코드가 외부로 전송되지 않습니다.</span>
+      <div style="display:flex;gap:8px">
+        <button class="btn" id="mClose2" onclick="document.getElementById('modal').hidden=true">취소</button>
+        <button class="btn primary" id="mRun">분석</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="llmModal" hidden>
+  <div class="box llm-box">
+    <div class="mh"><h3>LLM 연결</h3><button class="btn" data-ai="close">ESC</button></div>
+    <div class="mb">
+      <p class="hint" style="margin-bottom:12px">파서가 확정한 사실만 프롬프트로 보냅니다. OpenAI 호환 엔드포인트(Ollama · LM Studio · vLLM · OpenAI)를 지원합니다.</p>
+      <label class="fld"><span>엔드포인트</span><input id="llmEndpoint" placeholder="http://localhost:11434/v1/chat/completions"></label>
+      <label class="fld"><span>모델</span><input id="llmModel" placeholder="qwen2.5-coder:1.5b"></label>
+      <label class="fld"><span>API 키 (선택)</span><input id="llmKey" type="password" placeholder="sk-..."></label>
+      <p class="llm-status" id="llmStatus"></p>
+      <p class="hint" style="margin-top:10px">키는 이 탭 메모리에만 보관되고 저장되지 않습니다. 로컬 예: <code>ollama run qwen2.5-coder:1.5b</code></p>
+    </div>
+    <div class="mf"><span class="hint">모델이 만든 식별자는 심볼 테이블로 검증합니다.</span>
+      <div style="display:flex;gap:8px"><button class="btn" data-ai="test">연결 테스트</button><button class="btn primary" data-ai="save">저장</button></div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<script id="samples" type="application/json">/*__SAMPLES__*/</script>
+<script>
+/*__ANALYZER__*/
+</script>
+<script>
+/*__EXPLAINER__*/
+</script>
+<script>
+/*__UI__*/
+</script>
+</body>
+</html>

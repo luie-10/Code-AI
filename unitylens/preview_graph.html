@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UnityLens — Unity C# 구조 · 변수 추적기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* UnityLens — instrument-room palette: graphite green, lens gold, read teal, write rust */
+:root{
+  --bg:#0a100e;
+  --bg-2:#0c1411;
+  --panel:#101a16;
+  --panel-2:#14201b;
+  --panel-3:#182620;
+  --line:#21332a;
+  --line-2:#2c4437;
+  --ink:#e9efe5;
+  --dim:#93a89a;
+  --faint:#63796c;
+  --gold:#d9a84e;
+  --gold-soft:rgba(217,168,78,.13);
+  --read:#5ec8ac;
+  --read-soft:rgba(94,200,172,.12);
+  --write:#ef7452;
+  --write-soft:rgba(239,116,82,.12);
+  --violet:#a99bf0;
+  --violet-soft:rgba(169,155,240,.12);
+  --mono:"IBM Plex Mono",ui-monospace,"Cascadia Code",Menlo,monospace;
+  --sans:"IBM Plex Sans KR","IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --display:"Archivo","IBM Plex Sans KR",sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:
+    radial-gradient(900px 520px at 12% -8%, rgba(217,168,78,.075), transparent 62%),
+    radial-gradient(760px 480px at 96% 4%, rgba(94,200,172,.05), transparent 60%),
+    var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:14px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);
+  background-size:52px 52px;
+  mask-image:radial-gradient(1200px 700px at 40% 0%,#000 20%,transparent 85%);
+}
+::selection{background:rgba(217,168,78,.28);color:#fff}
+h1,h2,h3,h4{margin:0;font-weight:600;letter-spacing:-.01em}
+p{margin:0}
+button{font-family:inherit;color:inherit;background:none;border:none;cursor:pointer}
+input,textarea{font-family:inherit;color:inherit}
+.mono{font-family:var(--mono);font-variant-ligatures:none}
+.eyebrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);font-weight:500}
+.dim{color:var(--dim)}
+.faint{color:var(--faint)}
+
+/* ---------- shell ---------- */
+.app{
+  position:relative;z-index:1;
+  display:grid;
+  grid-template-columns:296px minmax(0,1fr);
+  grid-template-rows:68px minmax(0,1fr);
+  height:100vh;height:100dvh;
+}
+.topbar{
+  grid-column:1/-1;display:flex;align-items:center;gap:22px;
+  padding:0 22px;border-bottom:1px solid var(--line);
+  background:rgba(10,16,14,.82);backdrop-filter:blur(14px);
+}
+.brand{display:flex;align-items:center;gap:12px;min-width:236px}
+.brand svg{display:block;flex:0 0 auto}
+.brand h1{font-family:var(--display);font-size:17px;letter-spacing:.01em;font-weight:700}
+.brand h1 span{color:var(--gold)}
+.brand p{font-size:9px;letter-spacing:.19em;color:var(--faint);text-transform:uppercase;margin-top:1px}
+.header-meta{display:flex;gap:20px;align-items:center;flex:1;min-width:0;overflow:hidden}
+.hm{display:flex;gap:7px;align-items:baseline;white-space:nowrap}
+.hm b{font-family:var(--mono);font-size:13px;color:var(--ink);font-weight:500}
+.hm span{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.tools{display:flex;gap:8px;align-items:center}
+.btn{
+  border:1px solid var(--line-2);background:var(--panel-2);
+  padding:8px 13px;border-radius:8px;font-size:12px;font-weight:500;
+  display:inline-flex;align-items:center;gap:7px;transition:background .15s,border-color .15s,transform .15s;
+}
+.btn:hover{background:var(--panel-3);border-color:#3a574610}
+.btn:hover{border-color:#3a5746}
+.btn.primary{background:var(--gold);color:#17130a;border-color:var(--gold);font-weight:600}
+.btn.primary:hover{background:#e6b65e;border-color:#e6b65e}
+.btn svg{width:13px;height:13px}
+
+/* rail */
+.rail{
+  border-right:1px solid var(--line);background:linear-gradient(180deg,rgba(16,26,22,.9),rgba(10,16,14,.65));
+  display:flex;flex-direction:column;min-height:0;
+}
+.rail-top{padding:14px 14px 10px}
+.search{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--bg-2);border-radius:8px;padding:0 10px;height:34px}
+.search svg{width:13px;height:13px;color:var(--faint);flex:0 0 auto}
+.search input{flex:1;background:none;border:none;outline:none;font-size:12.5px;color:var(--ink);min-width:0}
+.search input::placeholder{color:#5b7064}
+.rail-list{overflow:auto;padding:2px 10px 10px;flex:1;min-height:0;scrollbar-width:thin}
+.rail-group{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);padding:12px 6px 5px}
+.ritem{
+  width:100%;text-align:left;display:grid;grid-template-columns:1fr auto;gap:2px 8px;
+  padding:9px 10px;border-radius:8px;border:1px solid transparent;position:relative;margin-bottom:2px;
+}
+.ritem:hover{background:rgba(255,255,255,.028)}
+.ritem.on{background:linear-gradient(90deg,rgba(217,168,78,.13),rgba(217,168,78,.03));border-color:rgba(217,168,78,.28)}
+.ritem.on::before{content:"";position:absolute;left:-10px;top:9px;bottom:9px;width:2px;background:var(--gold);border-radius:2px}
+.ritem .rn{font-family:var(--mono);font-size:12.5px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ritem .rb{font-size:9px;letter-spacing:.04em;color:var(--faint);white-space:nowrap}
+.ritem .rr{grid-column:1/-1;font-size:10.5px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;gap:6px;align-items:center}
+.ritem .rr .tick{width:4px;height:4px;border-radius:50%;background:var(--gold);flex:0 0 auto;opacity:.8}
+.ritem .cnt{font-family:var(--mono);font-size:9.5px;color:var(--faint);border:1px solid var(--line);border-radius:4px;padding:0 4px;margin-left:auto}
+.rail-foot{display:flex;align-items:center;gap:7px;padding:11px 16px;border-top:1px solid var(--line);font-size:10px;color:var(--faint)}
+.rail-foot .dot{width:5px;height:5px;border-radius:50%;background:var(--read);box-shadow:0 0 8px var(--read)}
+
+/* stage */
+.stage{display:flex;flex-direction:column;min-width:0;min-height:0}
+.tabs{display:flex;gap:2px;padding:0 24px;border-bottom:1px solid var(--line);background:rgba(10,16,14,.6);flex:0 0 auto;overflow:auto}
+.tabs button{
+  position:relative;padding:15px 14px 13px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--faint);font-weight:500;white-space:nowrap;
+}
+.tabs button:hover{color:var(--dim)}
+.tabs button.on{color:var(--ink)}
+.tabs button.on::after{content:"";position:absolute;left:12px;right:12px;bottom:-1px;height:2px;background:var(--gold)}
+.tabs .tcount{font-family:var(--mono);font-size:9px;margin-left:5px;color:var(--faint);border:1px solid var(--line);padding:0 3px;border-radius:3px;vertical-align:1px}
+.views{flex:1;overflow:auto;min-height:0;position:relative;scrollbar-width:thin}
+.view{display:none;padding:24px 26px 60px;max-width:1320px;animation:rise .28s ease both}
+.view.on{display:block}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* common blocks */
+.card{background:linear-gradient(180deg,rgba(255,255,255,.018),transparent 60%),var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 18px 16px;position:relative}
+.card-h{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.card-h h3{font-size:12.5px;letter-spacing:.02em}
+.card-h .eyebrow{color:var(--faint)}
+.grid2{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:16px}
+.grid2b{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+.stack{display:flex;flex-direction:column;gap:16px}
+.chip{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:10.5px;padding:2px 7px;border-radius:5px;border:1px solid var(--line-2);color:var(--dim);background:rgba(255,255,255,.02);white-space:nowrap}
+.chip.base{color:var(--violet);border-color:rgba(169,155,240,.3);background:var(--violet-soft)}
+.chip.iface{color:var(--read);border-color:rgba(94,200,172,.28);background:var(--read-soft)}
+.chip.attr{color:var(--gold);border-color:rgba(217,168,78,.28);background:var(--gold-soft)}
+.chip.sev-high{color:#ff9a7d;border-color:rgba(239,116,82,.4);background:var(--write-soft)}
+.chip.sev-medium{color:var(--gold);border-color:rgba(217,168,78,.35);background:var(--gold-soft)}
+.chip.sev-low{color:var(--dim);border-color:var(--line-2);background:rgba(255,255,255,.02)}
+.chip.serialized{color:var(--gold);border-color:rgba(217,168,78,.28)}
+.chip.tone-data{color:var(--violet);border-color:rgba(169,155,240,.3);background:var(--violet-soft)}
+.chip.tone-system{color:var(--read);border-color:rgba(94,200,172,.28);background:var(--read-soft)}
+.chip.tone-action{color:var(--gold);border-color:rgba(217,168,78,.3);background:var(--gold-soft)}
+.chip.tone-ui{color:#e2a1c7;border-color:rgba(226,161,199,.32);background:rgba(226,161,199,.1)}
+.chip.tone-plain{color:var(--dim)}
+.pill{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 6px;border-radius:4px;border:1px solid var(--line-2);color:var(--faint)}
+.pill.read{color:var(--read);border-color:rgba(94,200,172,.3);background:var(--read-soft)}
+.pill.write{color:var(--write);border-color:rgba(239,116,82,.32);background:var(--write-soft)}
+.pill.readwrite{color:var(--gold);border-color:rgba(217,168,78,.32);background:var(--gold-soft)}
+.pill.ext{color:var(--violet);border-color:rgba(169,155,240,.3);background:var(--violet-soft)}
+.muted-line{font-size:12px;color:var(--dim);line-height:1.7}
+.kv{display:flex;gap:10px;align-items:baseline;font-size:12px;padding:5px 0;border-bottom:1px dashed rgba(255,255,255,.05)}
+.kv:last-child{border-bottom:0}
+.kv b{font-family:var(--mono);font-weight:500;font-size:11.5px}
+.kv span{color:var(--faint);font-size:10.5px;min-width:52px;text-transform:uppercase;letter-spacing:.08em}
+hr.sep{border:0;border-top:1px solid var(--line);margin:14px 0}
+
+/* overview hero */
+.hero{
+  position:relative;overflow:hidden;border:1px solid var(--line);border-radius:16px;
+  background:linear-gradient(120deg,rgba(217,168,78,.075),transparent 46%),linear-gradient(180deg,var(--panel-2),var(--panel));
+  padding:26px 28px;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:24px;align-items:center;
+}
+.hero .rings{position:absolute;right:-70px;top:-110px;width:420px;height:420px;opacity:.5;pointer-events:none}
+.hero .rings circle{fill:none;stroke:rgba(217,168,78,.22);stroke-width:1}
+.hero .rings .beam{stroke:rgba(217,168,78,.5);stroke-width:1.5}
+.hero h2{font-family:var(--display);font-size:clamp(26px,3vw,40px);line-height:1.12;letter-spacing:-.025em;font-weight:700;margin-bottom:8px}
+.hero h2 em{font-style:normal;color:var(--gold)}
+.hero .lede{font-size:13px;color:var(--dim);max-width:52ch;line-height:1.7}
+.hero-num{display:flex;align-items:flex-end;gap:14px;margin-bottom:14px}
+.hero-num .n{font-family:var(--display);font-size:66px;line-height:.86;font-weight:700;color:var(--ink);letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.hero-num .u{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);padding-bottom:8px}
+.hero-side{display:grid;grid-template-columns:1fr 1fr;gap:10px;position:relative}
+.hstat{border:1px solid var(--line);background:rgba(10,16,14,.5);border-radius:9px;padding:10px 12px}
+.hstat b{display:block;font-family:var(--display);font-size:23px;letter-spacing:-.02em;font-weight:600;line-height:1.1}
+.hstat span{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.hstat.gold b{color:var(--gold)}
+.hstat.rust b{color:var(--write)}
+.hstat.teal b{color:var(--read)}
+.hstat.violet b{color:var(--violet)}
+
+.section-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:26px 0 12px}
+.section-head h3{font-size:11px;letter-spacing:.17em;text-transform:uppercase;color:var(--dim);font-weight:500}
+.section-head .hint{font-size:10.5px;color:var(--faint)}
+
+/* bars */
+.bar-row{display:grid;grid-template-columns:132px 1fr 34px;gap:10px;align-items:center;padding:6px 0}
+.bar-row .lbl{font-size:11.5px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar{height:5px;background:rgba(255,255,255,.05);border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--gold);border-radius:3px}
+.bar-row .v{font-family:var(--mono);font-size:10.5px;color:var(--faint);text-align:right}
+
+/* tables */
+table.t{width:100%;border-collapse:collapse;font-size:12px}
+table.t th{text-align:left;font-weight:500;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);padding:0 10px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+table.t td{padding:9px 10px;border-bottom:1px solid rgba(255,255,255,.045);vertical-align:middle}
+table.t tr:last-child td{border-bottom:0}
+table.t tbody tr{cursor:default}
+table.t tbody tr.click{cursor:pointer}
+table.t tbody tr.click:hover td{background:rgba(217,168,78,.045)}
+table.t td.name{font-family:var(--mono);color:var(--ink);white-space:nowrap}
+table.t td.tiny{font-family:var(--mono);font-size:10px;color:var(--faint);text-align:right;white-space:nowrap}
+table.t td .ty{font-family:var(--mono);font-size:10.5px;color:var(--dim)}
+table.t td .muted{color:var(--faint);font-size:10.5px}
+table.t .files{font-family:var(--mono);font-size:10px;color:var(--faint)}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* issue list */
+.issue{display:grid;grid-template-columns:auto 1fr;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.045)}
+.issue:last-child{border-bottom:0}
+.issue .sev{width:3px;border-radius:2px;background:var(--faint)}
+.issue.high .sev{background:var(--write)}
+.issue.medium .sev{background:var(--gold)}
+.issue.low .sev{background:var(--line-2)}
+.issue h4{font-size:12px;font-weight:600;margin-bottom:2px}
+.issue p{font-size:11px;color:var(--dim);line-height:1.55}
+.issue .where{font-family:var(--mono);font-size:9.5px;color:var(--faint);margin-top:4px}
+.issue .jump{color:var(--gold);cursor:pointer;text-decoration:none;border-bottom:1px dotted rgba(217,168,78,.4)}
+
+/* class view */
+.class-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+.class-head .ttl{flex:1;min-width:260px}
+.class-head h2{font-family:var(--display);font-size:32px;letter-spacing:-.03em;line-height:1.1;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.class-head .sub{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px;align-items:center}
+.class-head .filetag{font-family:var(--mono);font-size:11px;color:var(--faint)}
+.sig{font-family:var(--mono);font-size:12px;color:var(--dim);background:var(--bg-2);border:1px solid var(--line);border-radius:8px;padding:8px 12px;margin-top:10px;overflow:auto;white-space:nowrap}
+.sig .kw{color:var(--violet)}
+.sig .nm{color:var(--gold)}
+.role-card{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.role-card:last-child{border-bottom:0;padding-bottom:0}
+.role-card .rc-badge{flex:0 0 auto;width:26px;height:26px;border-radius:7px;display:grid;place-items:center;background:var(--gold-soft);border:1px solid rgba(217,168,78,.3);color:var(--gold);font-family:var(--mono);font-size:11px}
+.role-card h4{font-size:12.5px;margin-bottom:3px}
+.role-card ul{margin:0;padding-left:14px}
+.role-card li{font-size:11.5px;color:var(--dim);line-height:1.6}
+
+.timeline{position:relative;padding-left:18px}
+.timeline::before{content:"";position:absolute;left:4px;top:5px;bottom:5px;width:1px;background:linear-gradient(var(--gold),var(--line))}
+.tl{position:relative;padding:0 0 14px}
+.tl:last-child{padding-bottom:0}
+.tl::before{content:"";position:absolute;left:-17px;top:5px;width:7px;height:7px;border-radius:50%;background:var(--bg);border:1.5px solid var(--gold)}
+.tl h4{font-family:var(--mono);font-size:12px;font-weight:500;display:flex;gap:8px;align-items:center}
+.tl .ln{font-size:9.5px;color:var(--faint)}
+.tl p{font-size:11px;color:var(--dim);margin-top:2px}
+
+.field-line{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.045)}
+.field-line:last-child{border-bottom:0}
+.field-line .fl-name{font-family:var(--mono);font-size:12px;color:var(--ink);display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.field-line .fl-ty{font-family:var(--mono);font-size:10px;color:var(--faint);margin-left:2px}
+.field-line .fl-meta{display:flex;gap:5px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.rowlink{cursor:pointer}
+.rowlink:hover .fl-name,.rowlink:hover .rn{color:var(--gold)}
+
+/* vars */
+.vars-wrap{display:grid;grid-template-columns:272px minmax(0,1fr);gap:16px;align-items:start}
+.varlist{max-height:calc(100vh - 250px);overflow:auto;scrollbar-width:thin;padding-right:4px}
+.vitem{width:100%;text-align:left;display:block;padding:9px 10px;border-radius:8px;border:1px solid transparent;margin-bottom:2px}
+.vitem:hover{background:rgba(255,255,255,.028)}
+.vitem.on{background:var(--gold-soft);border-color:rgba(217,168,78,.26)}
+.vitem .vn{font-family:var(--mono);font-size:12px;display:flex;align-items:center;gap:6px;color:var(--ink)}
+.vitem .vm{font-size:10px;color:var(--faint);display:flex;gap:6px;margin-top:1px}
+.vitem .vt{font-family:var(--mono);font-size:9.5px;color:var(--faint);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.trace-decl{background:var(--bg-2);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:14px;position:relative;overflow:hidden}
+.trace-decl::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--gold)}
+.trace-decl .td-top{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+.trace-decl .td-name{font-family:var(--mono);font-size:16px;color:var(--gold)}
+.trace-decl .td-type{font-family:var(--mono);font-size:11px;color:var(--dim)}
+.trace-decl .td-line{font-family:var(--mono);font-size:10px;color:var(--faint);margin-left:auto}
+.trace-decl .td-code{font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:8px;white-space:pre-wrap;word-break:break-word}
+.trace-stats{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0}
+.tstat{border:1px solid var(--line);border-radius:7px;padding:5px 9px;font-size:10px;color:var(--faint);letter-spacing:.06em;text-transform:uppercase}
+.tstat b{font-family:var(--mono);font-size:13px;color:var(--ink);margin-left:5px;letter-spacing:0}
+.tstat.read b{color:var(--read)}.tstat.write b{color:var(--write)}.tstat.ext b{color:var(--violet)}
+.trace{position:relative;margin-top:6px}
+.trace::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:1px;background:var(--line)}
+.tr{position:relative;padding:0 0 12px 26px}
+.tr .dot{position:absolute;left:3px;top:6px;width:9px;height:9px;border-radius:50%;background:var(--panel);border:1.5px solid var(--line-2)}
+.tr.read .dot{border-color:var(--read)}
+.tr.write .dot{border-color:var(--write)}
+.tr.readwrite .dot{border-color:var(--gold)}
+.tr.ext .dot{border-color:var(--violet);background:var(--violet-soft)}
+.tr .tr-top{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:3px}
+.tr .tr-m{font-family:var(--mono);font-size:10.5px;color:var(--dim)}
+.tr .tr-l{font-family:var(--mono);font-size:9.5px;color:var(--faint);margin-left:auto}
+.tr .tr-c{font-family:var(--mono);font-size:11px;color:var(--ink);background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.05);border-radius:5px;padding:5px 8px;white-space:pre-wrap;word-break:break-word}
+.tr .tr-via{font-family:var(--mono);font-size:9.5px;color:var(--violet);margin-top:3px}
+.empty{padding:30px;text-align:center;color:var(--faint);font-size:12px;border:1px dashed var(--line);border-radius:10px}
+
+/* graph */
+.graph-wrap{border:1px solid var(--line);border-radius:12px;background:radial-gradient(700px 380px at 50% 0%,rgba(217,168,78,.05),transparent 70%),var(--bg-2);overflow:auto;padding:8px}
+.graph-wrap svg{display:block;min-width:720px}
+.gnode{cursor:pointer}
+.gnode rect{fill:var(--panel-2);stroke:var(--line-2);stroke-width:1;transition:fill .15s,stroke .15s}
+.gnode:hover rect{fill:var(--panel-3);stroke:var(--gold)}
+.gnode.on rect{stroke:var(--gold);stroke-width:1.5;fill:rgba(217,168,78,.1)}
+.gnode text{fill:var(--ink);font-family:var(--mono);font-size:11px}
+.gnode .gbase{fill:var(--faint);font-size:8.5px;font-family:var(--mono);letter-spacing:.04em}
+.gedge{fill:none;stroke:#3f5f4e;stroke-width:1.2;transition:stroke .15s}
+.gedge:hover{stroke:var(--gold);stroke-width:1.6}
+.gedge.inherit{stroke:var(--violet);stroke-dasharray:4 3}
+.gedge-label{fill:var(--faint);font-size:8px;font-family:var(--mono)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;font-size:10.5px;color:var(--faint)}
+.legend i{display:inline-block;width:14px;height:2px;background:#3a5446;vertical-align:middle;margin-right:6px}
+.legend .li{display:flex;align-items:center}
+.legend .li.v i{background:var(--violet)}
+.legend .li.g i{background:var(--gold)}
+
+/* source */
+.code-wrap{border:1px solid var(--line);border-radius:10px;background:#0a110e;overflow:auto;max-height:calc(100vh - 250px)}
+.code{font-family:var(--mono);font-size:11.5px;line-height:1.72;min-width:max-content;padding:8px 0}
+.cl{display:grid;grid-template-columns:52px 1fr;gap:0}
+.cl .ln{color:#3f5348;text-align:right;padding-right:14px;user-select:none;font-size:10px;padding-top:1px}
+.cl .cd{white-space:pre;color:#c9d6c9;padding-right:20px}
+.cl.hit{background:rgba(217,168,78,.1)}
+.cl.hit .ln{color:var(--gold)}
+.cl.hit .cd{color:#f2e3c2}
+.cl.hit.write{background:rgba(239,116,82,.09)}
+.cl.hit.write .ln{color:var(--write)}
+
+/* modal */
+.modal{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(4,8,6,.7);backdrop-filter:blur(6px);padding:24px}
+.modal[hidden]{display:none}
+.modal .box{width:min(780px,100%);max-height:88vh;display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line-2);border-radius:14px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.modal .mh{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--line)}
+.modal .mh h3{font-size:14px}
+.modal .mb{padding:16px 18px;overflow:auto}
+.modal textarea{width:100%;height:300px;background:#0a110e;border:1px solid var(--line);border-radius:8px;padding:12px;font-family:var(--mono);font-size:12px;line-height:1.6;resize:vertical;outline:none;color:var(--ink)}
+.modal textarea:focus{border-color:var(--line-2)}
+.modal .mf{display:flex;justify-content:space-between;gap:10px;padding:14px 18px;border-top:1px solid var(--line);align-items:center}
+.modal .hint{font-size:10.5px;color:var(--faint)}
+.filebtn{position:relative;overflow:hidden}
+.filebtn input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.fname{font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-top:8px}
+
+/* toast */
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--panel-3);border:1px solid var(--line-2);border-left:2px solid var(--gold);color:var(--ink);font-size:12px;padding:10px 16px;border-radius:8px;opacity:0;pointer-events:none;transition:.25s;z-index:60}
+.toast.on{opacity:1;transform:translateX(-50%)}
+.scanline{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(217,168,78,.5),transparent);animation:scan 7s linear infinite;top:0}
+@keyframes scan{0%{transform:translateY(0);opacity:0}10%{opacity:.7}90%{opacity:.7}100%{transform:translateY(560px);opacity:0}}
+
+@media (max-width:1120px){
+  .app{grid-template-columns:1fr;grid-template-rows:68px auto minmax(0,1fr)}
+  .rail{grid-row:2;border-right:0;border-bottom:1px solid var(--line)}
+  .rail-list{display:flex;overflow-x:auto;padding:4px 10px 10px;gap:4px}
+  .rail-group{display:none}
+  .ritem{min-width:210px;margin-bottom:0}
+  .ritem.on::before{display:none}
+  .rail-foot{display:none}
+  .stage{grid-row:3}
+  .header-meta{display:none}
+  .vars-wrap{grid-template-columns:1fr}
+  .varlist{max-height:220px}
+  .grid2,.grid2b,.hero{grid-template-columns:1fr}
+  .view{padding:18px 14px 50px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true">
+        <circle cx="17" cy="17" r="15" fill="none" stroke="#d9a84e" stroke-opacity=".55"/>
+        <circle cx="17" cy="17" r="9.5" fill="none" stroke="#d9a84e" stroke-opacity=".32"/>
+        <circle cx="17" cy="17" r="3" fill="#d9a84e"/>
+        <path d="M17 0v9M17 25v9M0 17h9M25 17h9" stroke="#d9a84e" stroke-opacity=".55"/>
+      </svg>
+      <div>
+        <h1>Unity<span>Lens</span></h1>
+        <p>structure &amp; variable trace</p>
+      </div>
+    </div>
+    <div class="header-meta" id="headerMeta"></div>
+    <div class="tools">
+      <button class="btn" id="btnAdd">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        코드 추가
+      </button>
+      <button class="btn primary" id="btnExport">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 11l5 5 5-5M5 21h14"/></svg>
+        리포트 내보내기
+      </button>
+    </div>
+  </header>
+
+  <aside class="rail">
+    <div class="rail-top">
+      <label class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        <input id="search" placeholder="클래스 · 파일 검색  ( / )" autocomplete="off">
+      </label>
+    </div>
+    <div class="rail-list" id="railList"></div>
+    <div class="rail-foot"><span class="dot"></span>규칙 기반 정적 분석 · 브라우저에서만 실행</div>
+  </aside>
+
+  <main class="stage">
+    <nav class="tabs" id="tabs">
+      <button data-tab="overview" class="on">개요</button>
+      <button data-tab="class">클래스</button>
+      <button data-tab="vars">변수 추적</button>
+      <button data-tab="graph">배선도</button>
+      <button data-tab="source">소스</button>
+    </nav>
+    <div class="views">
+      <section class="view on" id="v-overview"></section>
+      <section class="view" id="v-class"></section>
+      <section class="view" id="v-vars"></section>
+      <section class="view" id="v-graph"></section>
+      <section class="view" id="v-source"></section>
+    </div>
+  </main>
+</div>
+
+<div class="modal" id="modal" hidden>
+  <div class="box">
+    <div class="mh">
+      <h3>C# 코드 추가</h3>
+      <button class="btn" id="mClose" aria-label="닫기">ESC</button>
+    </div>
+    <div class="mb">
+      <p class="hint" style="margin-bottom:10px">파일을 선택하면 즉시 분석됩니다. 붙여넣기는 아래에 코드를 넣고 <b>분석</b>을 누르세요. 여러 클래스가 들어 있어도 됩니다.</p>
+      <button class="btn filebtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>
+        .cs 파일 선택
+        <input type="file" id="mFile" accept=".cs,.txt" multiple>
+      </button>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <input id="nameInput" placeholder="파일명 (비우면 클래스명.cs)" style="flex:0 0 240px;background:#0a110e;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font-size:12px;outline:none">
+        <span class="hint" style="align-self:center">선택 사항</span>
+      </div>
+      <textarea id="codeInput" spellcheck="false" placeholder="using UnityEngine;&#10;&#10;public class Sample : MonoBehaviour&#10;{&#10;    [SerializeField] private float speed = 3f;&#10;}"></textarea>
+      <div class="fname" id="mName"></div>
+    </div>
+    <div class="mf">
+      <span class="hint">분석은 이 브라우저 안에서만 실행됩니다. 코드가 외부로 전송되지 않습니다.</span>
+      <div style="display:flex;gap:8px">
+        <button class="btn" id="mClose2" onclick="document.getElementById('modal').hidden=true">취소</button>
+        <button class="btn primary" id="mRun">분석</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script>window.__START_TAB__='graph';window.__START_TYPE__='PlayerMove';</script>
+<script id="samples" type="application/json">{"sources": [{"name": "BulletMove.cs", "code": "using UnityEngine;\n\npublic class BulletMove : MonoBehaviour\n{\n    [SerializeField] private float speed = 10f;\n    [SerializeField] private float destroyTime;\n    // Start is called once before the first execution\n    //of Update after the MonoBehaviour is created\n    void Start()\n    {\n        Destroy(gameObject, destroyTime);\n    }\n\n    // Update is called once per frame\n    void Update()\n    {\n        transform.Translate(speed * Time.deltaTime * Vector3.up);//\n    }\n}"}, {"name": "HomingBullet.cs", "code": "\nusing UnityEngine;\n\npublic class HomingBullet : MonoBehaviour\n{\n    [SerializeField] private float speed = 5f;\n    [SerializeField] private float destroyTime = 5f;\n    [SerializeField] private Transform target;\n\n    void Start()\n    {\n        Destroy(gameObject, destroyTime);\n        FindNearestEnemy();\n    }\n\n    void Update()\n    {\n        // 타겟이 없거나 파괴되었으면 다시 탐색\n        if (target == null)\n        {\n            FindNearestEnemy();\n        }\n\n        // 타겟이 있으면 유도 이동, 없으면 위쪽으로 직진\n        if (target != null)\n        {\n            Vector2 direction = ((Vector2)target.position - (Vector2)transform.position).normalized;\n            transform.position += (Vector3)(direction * (speed * Time.deltaTime));\n        }\n        else\n        {\n            transform.Translate(speed * Time.deltaTime * Vector3.up);\n        }\n    }\n\n    private void FindNearestEnemy()\n    {\n        GameObject[] enemies = GameObject.FindGameObjectsWithTag(\"Enemy\");\n        if (enemies.Length == 0) return;\n\n        float shortestDistance = Mathf.Infinity;\n        Transform nearestEnemy = null;\n\n        foreach (GameObject enemy in enemies)\n        {\n            if (enemy == null) continue;\n\n            float distance = Vector2.Distance(transform.position, enemy.transform.position);\n\n            if (distance < shortestDistance)\n            {\n                shortestDistance = distance;\n                nearestEnemy = enemy.transform;\n            }\n        }\n\n        target = nearestEnemy;\n    }\n}\n"}, {"name": "Intro Button.cs", "code": "using DG.Tweening;\nusing UnityEngine;\nusing UnityEngine.EventSystems;\nusing UnityEngine.SceneManagement;\n\npublic class IntroButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler\n{\n    [SerializeField] private GameObject EditScene;\n    private RectTransform rectTransform;\n    private float originalX;\n\n    void Start()\n    {\n        rectTransform = GetComponent<RectTransform>();\n        originalX = rectTransform.anchoredPosition.x;\n    }\n\n    public void OnPointerEnter(PointerEventData eventData)\n    {\n        // ���� �ִϸ��̼��� ������ ������ �ʰ�, ���� ���� ���� ������ �ڿ������� �� ��ǥ�� ����\n        rectTransform.DOComplete();\n        rectTransform.DOScale(Vector3.one * 1.2f, 0.2f);\n    }\n\n    public void OnPointerExit(PointerEventData eventData)\n    {\n        // ���������� ���ڱ� ������ �ʰ� �ڿ������� ���� �ڸ��� ���ư��� ����\n        rectTransform.DOComplete();\n        rectTransform.DOScale(Vector3.one * 1.0f, 0.2f);\n    }\n    public void EditSceneOn()\n    {\n        EditScene.SetActive(true);\n    }\n    public void EditSceneOff()\n    {\n        EditScene.SetActive(false);\n    }\n    public void StartScene()\n    {\n        LoadingSceneManager.LoadScene(\"1_SlectScene\");\n    }\n    public void ExitGame()\n    {\n        Application.Quit();\n#if UNITY_EDITOR\n        UnityEditor.EditorApplication.isPlaying = false;\n#endif\n    }\n}"}, {"name": "KeyInputManager.cs", "code": "using System;\nusing System.Collections;\nusing System.Collections.Generic;\nusing UnityEngine;\nusing UnityEngine.InputSystem;\n\npublic enum KeyAction\n{\n    Forward,    // 상 이동\n    Backward,   // 하 이동\n    Left,       // 좌 이동\n    Right,      // 우 이동\n    Focus,      // 저속 이동 및 히트박스 노출\n    Attack,     // 기본 공격\n    Ultimate    // 필살기 / 스펠카드\n}\n\npublic class KeyManager : MonoBehaviour\n{\n    private static KeyManager instance;\n    public static KeyManager Instance\n    {\n        get\n        {\n            if (instance == null)\n            {\n                instance = FindFirstObjectByType<KeyManager>();\n                if (instance == null)\n                {\n                    GameObject go = new GameObject(\"KeyManager\");\n                    instance = go.AddComponent<KeyManager>();\n                    DontDestroyOnLoad(go);\n                    instance.InitDefaultKeys();\n                }\n            }\n            return instance;\n        }\n    }\n\n    // KeyCode 대신 UnityEngine.InputSystem.Key 사용\n    public Dictionary<KeyAction, Key> keys = new Dictionary<KeyAction, Key>();\n\n    private void Awake()\n    {\n        if (instance == null)\n        {\n            instance = this;\n            DontDestroyOnLoad(gameObject);\n            if (keys.Count == 0)\n            {\n                InitDefaultKeys();\n            }\n        }\n        else if (instance != this)\n        {\n            Destroy(gameObject);\n        }\n    }\n\n    private void InitDefaultKeys()\n    {\n        keys[KeyAction.Forward] = Key.W;\n        keys[KeyAction.Left] = Key.A;\n        keys[KeyAction.Backward] = Key.S;\n        keys[KeyAction.Right] = Key.D;\n\n        keys[KeyAction.Focus] = Key.LeftShift;\n        keys[KeyAction.Attack] = Key.Z;\n        keys[KeyAction.Ultimate] = Key.X;\n    }\n\n    // 키 바인딩 변경 메서드\n    public void ChangeKey(KeyAction actionToRebind, Action<Key> onKeyRebound = null)\n    {\n        StartCoroutine(WaitForKeyPress(actionToRebind, onKeyRebound));\n    }\n\n    private IEnumerator WaitForKeyPress(KeyAction actionToRebind, Action<Key> onKeyRebound)\n    {\n        yield return null; // 프레임 지연 (이전 입력 누수 방지)\n\n        bool keyAssigned = false;\n\n        while (!keyAssigned)\n        {\n            var kb = Keyboard.current;\n            if (kb != null && kb.anyKey.wasPressedThisFrame)\n            {\n                // Key.None과 Key.IMESelected 등 특수 키 제외 감지\n                foreach (Key k in Enum.GetValues(typeof(Key)))\n                {\n                    if (k == Key.None) continue;\n\n                    if (kb[k].wasPressedThisFrame)\n                    {\n                        keys[actionToRebind] = k;\n                        keyAssigned = true;\n                        onKeyRebound?.Invoke(k);\n                        break;\n                    }\n                }\n            }\n            yield return null;\n        }\n    }\n}"}, {"name": "Loading Manager.cs", "code": "using System.Collections;\nusing UnityEngine;\nusing UnityEngine.UI;\nusing UnityEngine.SceneManagement;\nusing TMPro;\n\npublic class LoadingSceneManager : MonoBehaviour\n{\n    [Header(\"UI 연결\")]\n    [SerializeField] private Slider progressBar;       // 로딩바 Slider\n    [SerializeField] private TextMeshProUGUI progressText; // 퍼센트 표시 텍스트 (TMP)\n\n    [Header(\"설정\")]\n    [SerializeField] private float fadeOrMinDelay = 0.5f; // 너무 빨리 넘어가서 화면이 튀는 것을 방지하기 위한 최소 대기 시간\n\n    // 이동할 다음 씬의 이름을 저장하는 정적 변수\n    public static string nextSceneName;\n\n    /// <summary>\n    /// 다른 매니저에서 씬 전환을 호출할 때 사용하는 정적 메서드\n    /// </summary>\n    /// <param name=\"sceneName\">이동하고자 하는 씬 이름</param>\n    public static void LoadScene(string sceneName)\n    {\n        nextSceneName = sceneName;\n        SceneManager.LoadScene(\"0.5_Loading\"); // 로딩 전용 씬으로 우선 이동\n    }\n\n    private void Start()\n    {\n        if (string.IsNullOrEmpty(nextSceneName))\n        {\n            Debug.LogError(\"로드할 씬 이름이 지정되지 않았습니다!\");\n            return;\n        }\n\n        StartCoroutine(LoadSceneAsync());\n    }\n\n    private IEnumerator LoadSceneAsync()\n    {\n        // 1. 비동기로 씬 로딩 시작\n        AsyncOperation op = SceneManager.LoadSceneAsync(nextSceneName);\n\n        // 씬 로딩이 완료되어도 즉시 전환되지 않도록 설정 (연출 및 부드러운 전환용)\n        op.allowSceneActivation = false;\n\n        float timer = 0f;\n\n        while (!op.isDone)\n        {\n            yield return null;\n            timer += Time.deltaTime;\n\n            // op.progress는 0.0 ~ 0.9 사이의 값을 반환합니다 (0.9에서 로딩 완료)\n            if (op.progress < 0.9f)\n            {\n                // 실제 진행률을 UI 슬라이더에 반영\n                float progress = Mathf.Clamp01(op.progress / 0.9f);\n                if (progressBar != null) progressBar.value = progress;\n                if (progressText != null) progressText.text = $\"LOADING... {(progress * 100f):F0}%\";\n            }\n            else\n            {\n                // 실제 씬 로딩이 completed(90% 이상)된 상태\n                // 비동기 로딩이 너무 빨라도 최소 대기 시간을 채워 연출을 완성함\n                float progress = Mathf.Lerp(progressBar != null ? progressBar.value : 0f, 1f, timer / fadeOrMinDelay);\n\n                if (progressBar != null) progressBar.value = progress;\n                if (progressText != null) progressText.text = $\"LOADING... {(progress * 100f):F0}%\";\n\n                // 게이지가 완전히 채워지면 씬 전환 허용\n                if (progressBar != null && progressBar.value >= 0.99f && timer >= fadeOrMinDelay)\n                {\n                    op\n\n\n                        .allowSceneActivation = true;\n                }\n            }\n        }\n    }\n}"}, {"name": "Player.cs", "code": "using UnityEngine;\n\n[CreateAssetMenu(fileName = \"PlayerData\", menuName = \"OverTheHorizon/Player\", order = 1)]\npublic class PlayerData : ScriptableObject\n{\n    // 데이터로 사용할 변수들 선언\n    public string playerName;\n    public int playerID;\n    public int playerHealth;\n    public float playerSpeed;\n    public GameObject chddkf;\n    public Sprite playerIcon;\n    public Sprite[] playerAnimation;\n    [TextArea] public string playerDescription;\n}"}, {"name": "PlayerMove.cs", "code": "using UnityEngine;\nusing UnityEngine.InputSystem;\n\npublic class PlayerMove: MonoBehaviour\n{\n    private float speed = 0f;\n\n    private Camera mainCamera;\n\n    private void Start()\n    {\n        // SelectScene에서 선택한 데이터가 있는지 확인 후 적용\n        if (SelectScene.SelectedData != null)\n        {\n            // 1. 속도 적용\n            speed = SelectScene.SelectedData.playerSpeed*5;\n\n\n            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();\n            if (spriteRenderer != null && SelectScene.SelectedData.playerIcon != null)\n            {\n                spriteRenderer.sprite = SelectScene.SelectedData.playerIcon;\n            }\n        }\n        else\n        {\n            Debug.LogWarning(\"선택된 캐릭터 데이터가 없습니다. 기본값으로 실행합니다.\");\n        }\n        mainCamera = Camera.main;\n    }\n\n    private void Update()\n    {\n        Vector2 dir = ReadMove();\n\n        if (dir.sqrMagnitude > 1f) dir.Normalize();\n        transform.Translate(dir * (speed * Time.deltaTime));\n\n        ClampToBounds();\n    }\n\n    private void ClampToBounds()\n    {\n        if (mainCamera == null) return;\n\n        Vector3 viewPos = mainCamera.WorldToViewportPoint(transform.position);\n\n        viewPos.x = Mathf.Clamp01(viewPos.x);\n        viewPos.y = Mathf.Clamp01(viewPos.y);\n\n        transform.position = mainCamera.ViewportToWorldPoint(viewPos);\n    }\n\n    private static Vector2 ReadMove()\n    {\n        var dir = Vector2.zero;\n\n        // 1) 키보드 입력 처리\n        var kb = Keyboard.current;\n        if (kb != null)\n        {\n            Key rightKey = Key.D, leftKey = Key.A, forwardKey = Key.W, backwardKey = Key.S;\n\n            if (KeyManager.Instance != null && KeyManager.Instance.keys != null)\n            {\n                KeyManager.Instance.keys.TryGetValue(KeyAction.Right, out rightKey);\n                KeyManager.Instance.keys.TryGetValue(KeyAction.Left, out leftKey);\n                KeyManager.Instance.keys.TryGetValue(KeyAction.Forward, out forwardKey);\n                KeyManager.Instance.keys.TryGetValue(KeyAction.Backward, out backwardKey);\n            }\n\n            if (kb[rightKey].isPressed) dir.x += 1f;\n            if (kb[leftKey].isPressed) dir.x -= 1f;\n            if (kb[forwardKey].isPressed) dir.y += 1f;\n            if (kb[backwardKey].isPressed) dir.y -= 1f;\n        }\n\n        // 2) 게임패드 입력 처리\n        var pad = Gamepad.current;\n        if (pad != null)\n        {\n            dir += pad.leftStick.ReadValue();\n            dir += pad.dpad.ReadValue();\n        }\n\n        return dir;\n    }\n}"}, {"name": "PlayerShooting.cs", "code": "using UnityEngine;\nusing UnityEngine.InputSystem;\n\npublic class PlayerShooting : MonoBehaviour\n{\n    [SerializeField] private GameObject bulletPrefab;\n    [SerializeField] private GameObject homingbulletPrefab;\n    [SerializeField] private Transform firePoint;\n\n    [Header(\"발사 설정\")]\n    [SerializeField] private float fireRate = 0.15f; // Z키 연사 간격 (초 단위)\n    private float nextFireTime;\n\n    void Update()\n    {\n        var kb = Keyboard.current;\n        if (kb == null) return;\n\n        // KeyManager에서 키를 가져오되, 없을 경우 기본 키(Z, X)로 안전하게 폴백\n        Key attackKey = Key.Z;\n        Key ultimateKey = Key.X;\n\n        if (KeyManager.Instance != null && KeyManager.Instance.keys != null)\n        {\n            if (KeyManager.Instance.keys.TryGetValue(KeyAction.Attack, out var atk)) attackKey = atk;\n            if (KeyManager.Instance.keys.TryGetValue(KeyAction.Ultimate, out var ult)) ultimateKey = ult;\n        }\n\n        // 기본 공격 (Z 키): 누르고 있으면 연사\n        if (kb[attackKey].isPressed && Time.time >= nextFireTime)\n        {\n            nextFireTime = Time.time + fireRate;\n            Shoot();\n        }\n\n        // 유도탄 공격 (X 키): 누를 때마다 단발 발사\n        if (kb[ultimateKey].wasPressedThisFrame)\n        {\n            HomingShoot();\n        }\n    }\n\n    private void Shoot()\n    {\n        if (bulletPrefab == null)\n        {\n            Debug.LogWarning(\"[PlayerShooting] Bullet Prefab이 Inspector에 할당되지 않았습니다!\");\n            return;\n        }\n\n        Vector3 spawnPos = firePoint != null ? firePoint.position : transform.position;\n        Instantiate(bulletPrefab, spawnPos, Quaternion.identity);\n    }\n\n    private void HomingShoot()\n    {\n        // homingbulletPrefab이 없으면 bulletPrefab으로 임시 발사하여 동작 여부 확인\n        GameObject prefabToSpawn = homingbulletPrefab != null ? homingbulletPrefab : bulletPrefab;\n        if (prefabToSpawn == null)\n        {\n            Debug.LogWarning(\"[PlayerShooting] 발사할 총알 Prefab이 Inspector에 할당되지 않았습니다!\");\n            return;\n        }\n\n        if (homingbulletPrefab == null)\n        {\n            Debug.LogWarning(\"[PlayerShooting] Homingbullet Prefab이 할당되지 않아 일반 Bullet으로 대체 발사했습니다. Inspector에서 Homingbullet Prefab을 할당해주세요.\");\n        }\n\n        Vector3 spawnPos = firePoint != null ? firePoint.position : transform.position;\n        Instantiate(prefabToSpawn, spawnPos, Quaternion.identity);\n    }\n}\n\n"}, {"name": "TmiReader.cs", "code": "using TMPro;\nusing UnityEngine;\n\npublic class TmiReader : MonoBehaviour\n{\n    [SerializeField]private TmiText[] tmiText;\n    [SerializeField] private TextMeshProUGUI Tmitext;\n\n    private void Start()\n    {\n        Tmitext.text = $\"TMI : {tmiText[Random.Range(0, tmiText.Length)].Tmi}\";\n    }\n}\n"}, {"name": "TmiText.cs", "code": "using UnityEngine;\n\n[CreateAssetMenu(fileName = \"PlayerData\", menuName = \"OverTheHorizon/TMI\", order = 2)]\npublic class TmiText : ScriptableObject\n{\n\n    public string Tmi;\n   \n}"}]}</script>
+<script>
+/* UnityLens analyzer core — brace/token based C# structure + variable flow analysis.
+   Pure functions, no DOM. Works in Node and the browser. */
+(function (root) {
+  'use strict';
+
+  const TYPE_KW = new Set(['class', 'struct', 'interface', 'enum', 'record']);
+  const MODIFIERS = new Set('public private protected internal static readonly const abstract virtual override sealed partial async extern unsafe new event volatile required fixed'.split(' '));
+  const KEYWORDS = new Set(('abstract as base bool break byte case catch char checked class const continue decimal default delegate do double else enum event explicit extern false finally fixed float for foreach goto if implicit in int interface internal is lock long namespace new null object operator out override params private protected public readonly ref return sbyte sealed short sizeof stackalloc static string struct switch this throw true try typeof uint ulong unchecked unsafe ushort using virtual void volatile while var async await yield get set add remove partial where record init required nameof value').split(' '));
+
+  const UNITY_MESSAGES = ['Awake', 'OnEnable', 'Start', 'FixedUpdate', 'Update', 'LateUpdate', 'OnDisable', 'OnDestroy', 'OnApplicationQuit', 'OnGUI', 'OnCollisionEnter', 'OnCollisionEnter2D', 'OnTriggerEnter', 'OnTriggerEnter2D', 'OnTriggerExit', 'OnTriggerExit2D', 'OnPointerEnter', 'OnPointerExit', 'OnPointerDown', 'OnPointerClick', 'OnPointerUp', 'OnSubmit', 'OnCancel', 'Reset', 'OnValidate'];
+
+  const KNOWN_TYPES = new Set(('Vector2 Vector3 Vector4 Quaternion Mathf Time Debug GameObject Transform RectTransform SpriteRenderer Sprite Camera Canvas CanvasGroup Slider Image Text TextMeshProUGUI TMP_Text AudioSource AudioClip Rigidbody Rigidbody2D Collider2D BoxCollider2D CircleCollider2D Animator Animation Random Enum Application SceneManager AsyncOperation Keyboard Gamepad Input System InputAction Key KeyCode Button EventSystem EventSystem PointerEventData Color Color32 Material Texture2D Texture Physics2D Physics Resources Object String Convert List Dictionary HashSet Array Tuple Task IEnumerable IEnumerator WaitForSeconds WaitForSecondsRealtime Rect Bounds Screen Cursor Scene ScriptableObject MonoBehaviour Behaviour Component CanvasRenderer LayoutElement VerticalLayoutGroup HorizontalLayoutGroup DOTween Tween Sequence').split(' '));
+
+  const ASSIGN_OPS = new Set(['=', '+=', '-=', '*=', '/=', '%=', '&=', '|=', '^=', '<<=', '>>=', '??=']);
+  const OPS = ['>>=', '<<=', '??=', '=>', '==', '!=', '<=', '>=', '&&', '||', '+=', '-=', '*=', '/=', '%=', '&=', '|=', '^=', '++', '--', '?.', '??', '::', '<<', '>>'];
+
+  /* ---------------- lexer ---------------- */
+  function lex(src) {
+    const toks = [];
+    let i = 0, line = 1;
+    const n = src.length;
+    const push = (t, v, l) => toks.push({ t, v, line: l });
+
+    function readString(startIdx) {
+      // handles "..." @"..." $"..." $@"..." @$"..." """..."""
+      let j = startIdx, prefix = '';
+      while (j < n && (src[j] === '$' || src[j] === '@') && src[j + 1] === '"') { prefix += src[j]; j++; }
+      if (src.slice(j, j + 3) === '"""') {
+        j += 3; let v = '';
+        while (j < n && src.slice(j, j + 3) !== '"""') { if (src[j] === '\n') line++; v += src[j++]; }
+        return { end: j + 3, value: v };
+      }
+      j++; let v = '';
+      const verbatim = prefix.indexOf('@') >= 0;
+      while (j < n) {
+        const c = src[j];
+        if (c === '\\' && !verbatim) { v += src[j + 1] || ''; j += 2; continue; }
+        if (c === '"') {
+          if (verbatim && src[j + 1] === '"') { v += '"'; j += 2; continue; }
+          j++; break;
+        }
+        if (c === '\n') line++;
+        v += c; j++;
+      }
+      return { end: j, value: v };
+    }
+
+    while (i < n) {
+      const c = src[i];
+      if (c === '\n') { line++; i++; continue; }
+      if (c === ' ' || c === '\t' || c === '\r') { i++; continue; }
+      if (c === '/' && src[i + 1] === '/') { while (i < n && src[i] !== '\n') i++; continue; }
+      if (c === '/' && src[i + 1] === '*') {
+        i += 2;
+        while (i < n && !(src[i] === '*' && src[i + 1] === '/')) { if (src[i] === '\n') line++; i++; }
+        i += 2; continue;
+      }
+      if (c === '"' || ((c === '$' || c === '@') && /["$@]/.test(src[i + 1]))) {
+        const startLine = line;
+        const r = readString(i);
+        push('str', r.value, startLine);
+        i = r.end; continue;
+      }
+      if (c === "'") {
+        let j = i + 1, v = '';
+        while (j < n) {
+          if (src[j] === '\\') { v += src[j + 1]; j += 2; continue; }
+          if (src[j] === "'") { j++; break; }
+          v += src[j++];
+        }
+        push('chr', v, line); i = j; continue;
+      }
+      if (/[0-9]/.test(c) || (c === '.' && /[0-9]/.test(src[i + 1] || ''))) {
+        let j = i;
+        if (src[j] === '0' && /[xXbB]/.test(src[j + 1] || '')) { j += 2; while (j < n && /[0-9a-fA-F_]/.test(src[j])) j++; }
+        else { while (j < n && /[0-9._]/.test(src[j])) j++; if (/[eE]/.test(src[j] || '')) { j++; if (/[+-]/.test(src[j] || '')) j++; while (j < n && /[0-9]/.test(src[j])) j++; } while (j < n && /[fFdDmMuUlL]/.test(src[j])) j++; }
+        push('num', src.slice(i, j), line); i = j; continue;
+      }
+      if (/[A-Za-z_@]/.test(c)) {
+        let j = i + 1;
+        while (j < n && /[A-Za-z0-9_]/.test(src[j])) j++;
+        let v = src.slice(i, j);
+        if (v[0] === '@') v = v.slice(1);
+        push('id', v, line); i = j; continue;
+      }
+      const three = src.substr(i, 3), two = src.substr(i, 2);
+      const op = OPS.find(o => o.length === 3 && three === o) || OPS.find(o => o.length === 2 && two === o);
+      if (op) { push('op', op, line); i += op.length; continue; }
+      push('punc', c, line); i++;
+    }
+    return toks;
+  }
+
+  /* ---------------- parser ---------------- */
+  function analyzeSources(sources) {
+    const files = [], types = [], byName = new Map();
+
+    sources.forEach(src => {
+      const code = String(src.code || '').replace(/\r\n?/g, '\n');
+      const lines = code.split('\n');
+      const toks = lex(code);
+      const file = { name: src.name, code, lines, loc: lines.filter(l => l.trim()).length, types: [] };
+      files.push(file);
+
+      // find type declarations anywhere (namespaces included)
+      const n = toks.length;
+      const bodyEnd = (k) => {
+        let d = 0;
+        for (let j = k; j < n; j++) {
+          if (toks[j].v === '{') d++;
+          else if (toks[j].v === '}') { d--; if (d === 0) return j; }
+        }
+        return n - 1;
+      };
+      const closeOf = (k, open, close) => {
+        let d = 0;
+        for (let j = k; j < n; j++) {
+          if (toks[j].v === open) d++;
+          else if (toks[j].v === close) { d--; if (!d) return j; }
+        }
+        return n - 1;
+      };
+
+      for (let k = 0; k < n; k++) {
+        const t = toks[k];
+        if (!(t.t === 'id' && TYPE_KW.has(t.v))) continue;
+        const prev = toks[k - 1];
+        if (prev && (prev.v === '.' || prev.v === ':')) continue;
+        // walk back for modifiers / attributes
+        let startK = k;
+        let guard = 0;
+        while (guard++ < 40) {
+          const p = toks[startK - 1];
+          if (!p) break;
+          if (p.v === ']') {
+            let d = 0, q = startK - 1;
+            for (; q >= 0; q--) { if (toks[q].v === ']') d++; else if (toks[q].v === '[') { d--; if (!d) break; } }
+            if (q < 0) break;
+            startK = q;
+          } else if (p.t === 'id' && MODIFIERS.has(p.v)) {
+            startK--;
+          } else break;
+        }
+        const parsed = parseTypeAt(startK);
+        if (!parsed) continue;
+        const ty = parsed.type;
+        ty.file = file.name; ty.fileObj = file;
+        ty.startLine = toks[startK].line;
+        ty.endLine = toks[parsed.bodyEnd] ? toks[parsed.bodyEnd].line : ty.startLine;
+        ty.loc = ty.endLine - ty.startLine + 1;
+        types.push(ty); file.types.push(ty.name);
+        if (!byName.has(ty.name)) byName.set(ty.name, ty);
+        k = Math.max(k, parsed.after - 1);
+      }
+
+      function readAttrs(start) {
+        let d = 0, j = start;
+        const parts = [];
+        for (; j < n; j++) {
+          const v = toks[j].v;
+          if (v === '[') { d++; if (d === 1) continue; }
+          if (v === ']') { d--; if (d === 0) { j++; break; } }
+          parts.push(v);
+        }
+        // names: identifiers directly followed by '(' or ',' or ']' at depth 1
+        const names = [];
+        let depth = 0;
+        for (let q = start; q < j; q++) {
+          const tk = toks[q].v;
+          if (tk === '[') { depth++; continue; }
+          if (tk === ']') { depth--; continue; }
+          if (depth === 1 && toks[q].t === 'id' && !KEYWORDS.has(tk)) {
+            const nx = toks[q + 1];
+            if (nx && (nx.v === '(' || nx.v === ',' || nx.v === ']')) names.push(tk);
+          }
+        }
+        return { end: j, names, raw: parts.join(' ') };
+      }
+
+      function parseTypeAt(start) {
+        let j = start;
+        let attrs = [], attrsRaw = '', mods = [];
+        let guard = 0;
+        while (j < n && guard++ < 60) {
+          if (toks[j].v === '[') { const a = readAttrs(j); attrs = attrs.concat(a.names); attrsRaw += a.raw + ' '; j = a.end; continue; }
+          if (toks[j].t === 'id' && MODIFIERS.has(toks[j].v)) { mods.push(toks[j].v); j++; continue; }
+          break;
+        }
+        if (!toks[j] || !TYPE_KW.has(toks[j].v)) return null;
+        const kind = toks[j].v; j++;
+        if (!toks[j] || toks[j].t !== 'id') return null;
+        const name = toks[j].v; j++;
+        if (toks[j] && toks[j].v === '<') j = closeOf(j, '<', '>') + 1;
+        let bases = [];
+        if (toks[j] && toks[j].v === ':') {
+          j++;
+          let cur = [], depth = 0;
+          while (j < n && toks[j].v !== '{' && toks[j].v !== 'where') {
+            const v = toks[j].v;
+            if (v === '<') depth++;
+            if (v === '>') depth--;
+            if (v === ',' && depth === 0) { if (cur.length) bases.push(cur.join('')); cur = []; }
+            else if (v !== ' ') cur.push(v);
+            j++;
+          }
+          if (cur.length) bases.push(cur.join(''));
+        }
+        while (j < n && toks[j].v !== '{' && toks[j].v !== ';') j++;
+        const ty = {
+          name, kind, modifiers: mods, attrs, attrsRaw: attrsRaw.trim(), bases,
+          base: null, interfaces: [], file: '', fields: [], props: [], methods: [], enumNames: [],
+          startLine: toks[start] ? toks[start].line : 1, endLine: 1, loc: 0,
+          roles: [], issues: [], externals: [], narratives: []
+        };
+        ty.interfaces = bases.filter(b => /^I[A-Z]/.test(b.replace(/<.*$/, '')));
+        ty.base = bases.find(b => !/^I[A-Z]/.test(b.replace(/<.*$/, ''))) || null;
+        if (kind === 'enum') {
+          if (toks[j] && toks[j].v === '{') {
+            const e = bodyEnd(j);
+            for (let q = j + 1; q < e; q++) if (toks[q].t === 'id' && !KEYWORDS.has(toks[q].v)) ty.enumNames.push(toks[q].v);
+            ty.endLine = toks[e].line;
+            return { type: ty, after: e + 1, bodyStart: j, bodyEnd: e };
+          }
+          ty.endLine = ty.startLine;
+          return { type: ty, after: j, bodyStart: j, bodyEnd: j };
+        }
+        if (!toks[j] || toks[j].v === ';') {
+          ty.endLine = ty.startLine;
+          return { type: ty, after: j, bodyStart: j, bodyEnd: j };
+        }
+        const bs = j, be = bodyEnd(j);
+        parseMembers(ty, bs, be);
+        ty.endLine = toks[be] ? toks[be].line : ty.startLine;
+        return { type: ty, after: be + 1, bodyStart: bs, bodyEnd: be };
+      }
+
+      function parseMembers(ty, bs, be) {
+        let k = bs + 1, guard = 0;
+        while (k < be && guard++ < 5000) {
+          if (toks[k].v === ';') { k++; continue; }
+          // nested type: skip whole body
+          let p = k;
+          let g2 = 0;
+          while (toks[p] && toks[p].v === '[' && g2++ < 10) p = readAttrs(p).end;
+          while (toks[p] && toks[p].t === 'id' && MODIFIERS.has(toks[p].v)) p++;
+          if (toks[p] && TYPE_KW.has(toks[p].v)) {
+            let q = p; while (q < be && toks[q].v !== '{' && toks[q].v !== ';') q++;
+            k = (toks[q] && toks[q].v === '{') ? bodyEnd(q) + 1 : q + 1;
+            continue;
+          }
+
+          let attrs = [], attrsRaw = '', mods = [];
+          let g3 = 0;
+          while (k < be && g3++ < 30) {
+            if (toks[k].v === '[') { const a = readAttrs(k); attrs = attrs.concat(a.names); attrsRaw += a.raw + ' '; k = a.end; continue; }
+            if (toks[k].t === 'id' && MODIFIERS.has(toks[k].v)) { mods.push(toks[k].v); k++; continue; }
+            break;
+          }
+          if (k >= be) break;
+          const declStart = k;
+          // find separator at depth 0
+          let d = 0, sep = -1, sepType = '';
+          for (; k < be; k++) {
+            const v = toks[k].v;
+            if (v === '(' && d === 0) { sep = k; sepType = '('; break; }
+            if (v === '<' || v === '[') { d++; continue; }
+            if (v === '>' || v === ']') { d--; continue; }
+            if (v === '{' && d === 0) { sep = k; sepType = '{'; break; }
+            if (v === '=' && d === 0) { sep = k; sepType = '='; break; }
+            if (v === ';' && d === 0) { sep = k; sepType = ';'; break; }
+          }
+          if (sep < 0) break;
+
+          if (sepType === '(') {
+            // method
+            let nameIdx = sep - 1;
+            while (nameIdx > declStart && toks[nameIdx].t !== 'id') nameIdx--;
+            const name = toks[nameIdx] ? toks[nameIdx].v : '?';
+            const close = closeOf(sep, '(', ')');
+            const params = parseParams(sep + 1, close);
+            let after = close + 1;
+            let bodyStart = -1, bodyEndI = -1;
+            if (toks[after] && toks[after].v === ':') { while (after < be && toks[after].v !== '{' && toks[after].v !== ';') after++; }
+            if (toks[after] && toks[after].v === '{') { bodyStart = after; bodyEndI = bodyEnd(after); after = bodyEndI + 1; }
+            else if (toks[after] && toks[after].v === '=>') {
+              bodyStart = after; bodyEndI = after;
+              while (bodyEndI < be && toks[bodyEndI].v !== ';') bodyEndI++;
+              after = bodyEndI + 1;
+            } else { after = after + 1; }
+            const m = {
+              name, params, modifiers: mods, attrs, attrsRaw: attrsRaw.trim(),
+              returnType: toks.slice(declStart, nameIdx).map(t => t.v).join(' ').replace(/ ?([<>\[\],.]) ?/g, '$1'),
+              line: toks[nameIdx].line, endLine: toks[bodyEndI] ? toks[bodyEndI].line : toks[nameIdx].line,
+              bodyStart, bodyEnd: bodyEndI, isLifecycle: UNITY_MESSAGES.indexOf(name) >= 0,
+              locals: [], usages: [], external: []
+            };
+            if (bodyStart >= 0) m.locals = findLocals(bodyStart, bodyEndI);
+            ty.methods.push(m);
+            k = Math.max(after, sep + 1);
+            continue;
+          }
+
+          if (sepType === '{') {
+            // property
+            let nameIdx = sep - 1;
+            while (nameIdx > declStart && toks[nameIdx].t !== 'id') nameIdx--;
+            const name = toks[nameIdx] ? toks[nameIdx].v : '?';
+            const close = bodyEnd(sep);
+            const prop = {
+              name, modifiers: mods, attrs, attrsRaw: attrsRaw.trim(),
+              type: toks.slice(declStart, nameIdx).map(t => t.v).join(' ').replace(/ ?([<>\[\],.]) ?/g, '$1'),
+              line: toks[nameIdx].line, endLine: toks[close] ? toks[close].line : toks[nameIdx].line,
+              bodyStart: sep, bodyEnd: close, usages: []
+            };
+            ty.props.push(prop);
+            k = close + 1;
+            continue;
+          }
+
+          // field (possibly multiple declarators)
+          let nameIdx = sep - 1;
+          while (nameIdx > declStart && toks[nameIdx].t !== 'id') nameIdx--;
+          if (!toks[nameIdx] || toks[nameIdx].t !== 'id') { k = sep + 1; continue; }
+          const typeText = toks.slice(declStart, nameIdx).map(t => t.v).join(' ').replace(/ ?([<>\[\],.]) ?/g, '$1');
+          const isSerialized = attrs.indexOf('SerializeField') >= 0 || attrs.indexOf('SerializeReference') >= 0 || (mods.indexOf('public') >= 0 && mods.indexOf('static') < 0 && mods.indexOf('const') < 0);
+          let p2 = sep, curNameIdx = nameIdx;
+          for (let dg = 0; dg < 60; dg++) {
+            let init = '';
+            if (toks[p2] && toks[p2].v === '=') {
+              let e = p2 + 1, dd = 0;
+              for (; e < be; e++) {
+                const v = toks[e].v;
+                const prevT = toks[e - 1];
+                if (v === '(' || v === '[' || v === '{') dd++;
+                else if (v === ')' || v === ']' || v === '}') dd--;
+                else if (v === '<' && prevT && prevT.t === 'id' && /^[A-Z]/.test(prevT.v)) dd++;
+                else if (v === '>' && dd > 0) dd--;
+                else if (dd === 0 && (v === ';' || v === ',')) break;
+              }
+              init = toks.slice(p2 + 1, e).map(t => t.v).join(' ');
+              p2 = e;
+            }
+            ty.fields.push({
+              name: toks[curNameIdx].v, type: typeText, modifiers: mods, attrs, attrsRaw: attrsRaw.trim(),
+              init, line: toks[curNameIdx].line, isSerialized,
+              isPublic: mods.indexOf('public') >= 0, isStatic: mods.indexOf('static') >= 0,
+              isConst: mods.indexOf('const') >= 0, usages: []
+            });
+            if (toks[p2] && toks[p2].v === ',') {
+              p2++;
+              let nx = p2;
+              while (nx < be && toks[nx].t !== 'id') nx++;
+              if (nx >= be) break;
+              curNameIdx = nx; p2 = nx + 1;
+              if (toks[p2] && toks[p2].v === ';') { ty.fields.push({ name: toks[nx].v, type: typeText, modifiers: mods, attrs, attrsRaw: attrsRaw.trim(), init: '', line: toks[nx].line, isSerialized, isPublic: mods.indexOf('public') >= 0, isStatic: mods.indexOf('static') >= 0, isConst: mods.indexOf('const') >= 0, usages: [] }); break; }
+              continue;
+            }
+            break;
+          }
+          k = (toks[p2] && toks[p2].v === ';') ? p2 + 1 : p2;
+        }
+      }
+
+      function findLocals(s, e) {
+        const out = [];
+        for (let k = s; k < e; k++) {
+          const t = toks[k];
+          if (t.t !== 'id') continue;
+          const okType = t.v === 'var' || /^[A-Z]/.test(t.v);
+          if (!okType) continue;
+          let j = k + 1;
+          if (toks[j] && toks[j].v === '[') { while (j < e && toks[j].v !== ']') j++; j++; }
+          const nt = toks[j];
+          if (!nt || nt.t !== 'id' || KEYWORDS.has(nt.v)) continue;
+          const after = toks[j + 1];
+          if (!after || ['=', ';', ',', ':', 'in'].indexOf(after.v) < 0) continue;
+          const prev = toks[k - 1];
+          if (!prev || ['.', 'new', 'return', 'out', 'ref', 'case', 'using', 'typeof', 'is', 'as'].indexOf(prev.v) >= 0) continue;
+          out.push({ name: nt.v, type: t.v, line: nt.line, idx: j });
+        }
+        return out;
+      }
+
+      function parseParams(s, e) {
+        const out = [];
+        let cur = [], depth = 0;
+        const flush = () => {
+          if (!cur.length) return;
+          let nameIdx = -1;
+          for (let q = cur.length - 1; q >= 0; q--) if (cur[q].t === 'id' && !KEYWORDS.has(cur[q].v) && cur[q].v !== 'out' && cur[q].v !== 'ref') { nameIdx = q; break; }
+          if (nameIdx >= 0) {
+            const nm = cur[nameIdx];
+            out.push({ name: nm.v, type: cur.slice(0, nameIdx).map(x => x.v).join(' ').replace(/ ?([<>\[\],.]) ?/g, '$1'), line: nm.line });
+          }
+          cur = [];
+        };
+        for (let q = s; q < e; q++) {
+          const v = toks[q].v;
+          if (v === '<' || v === '(' || v === '[') depth++;
+          else if (v === '>' || v === ')' || v === ']') depth--;
+          if (v === ',' && depth === 0) flush();
+          else cur.push(toks[q]);
+        }
+        flush();
+        return out;
+      }
+    });
+
+    /* ---- global member index for cross-file traces ---- */
+    const memberIndex = new Map();
+    const indexMember = (ty, m, kind) => {
+      if (!memberIndex.has(m.name)) memberIndex.set(m.name, []);
+      memberIndex.get(m.name).push({ owner: ty, member: m, kind });
+    };
+    types.forEach(ty => {
+      ty.fields.forEach(f => indexMember(ty, f, 'field'));
+      ty.props.forEach(p => indexMember(ty, p, 'property'));
+      ty.methods.forEach(m => indexMember(ty, m, 'method'));
+    });
+
+    /* ---- usage analysis ---- */
+    types.forEach(ty => {
+      ty.methods.forEach(m => {
+        if (m.bodyStart < 0) return;
+        const toks = ty.fileObj ? lexWithCache(ty.fileObj) : null;
+        // handled in second pass below
+      });
+    });
+
+    function lexWithCache(file) {
+      if (!file._toks) file._toks = lex(file.code);
+      return file._toks;
+    }
+
+    types.forEach(ty => {
+      const toks = lexWithCache(ty.fileObj);
+      const fieldMap = new Map();
+      ty.fields.forEach(f => fieldMap.set(f.name, { kind: 'field', ref: f }));
+      ty.props.forEach(p => fieldMap.set(p.name, { kind: 'property', ref: p }));
+      const localDeclIdx = new Set();
+
+      ty.methods.forEach(m => {
+        if (m.bodyStart < 0) return;
+        const scopes = new Map(fieldMap);
+        m.params.forEach(p => scopes.set(p.name, { kind: 'param', ref: p }));
+        m.locals.forEach(l => { scopes.set(l.name, { kind: 'local', ref: l }); localDeclIdx.add(l.idx); });
+
+        for (let k = m.bodyStart; k <= m.bodyEnd; k++) {
+          const t = toks[k];
+          if (!t || t.t !== 'id') continue;
+          const sym = scopes.get(t.v);
+          if (!sym) continue;
+          if (localDeclIdx.has(k)) continue;
+          const prev = toks[k - 1], prev2 = toks[k - 2], next = toks[k + 1];
+          if (prev && prev.v === '.' && !(prev2 && prev2.v === 'this')) continue;
+          if (prev && (prev.v === 'nameof' || prev.v === 'typeof')) continue;
+          let rw = 'read';
+          if (next && ASSIGN_OPS.has(next.v)) rw = next.v === '=' ? 'write' : 'readwrite';
+          else if (next && (next.v === '++' || next.v === '--')) rw = 'readwrite';
+          else if (prev && (prev.v === '++' || prev.v === '--')) rw = 'readwrite';
+          else if (prev && prev.v === 'out') rw = 'write';
+          const codeLine = ty.fileObj.lines[t.line - 1] || '';
+          const rec = {
+            line: t.line, method: m.name, rw, code: codeLine.trim(),
+            file: ty.fileObj.name, owner: ty.name, external: false
+          };
+          if (sym.kind === 'field' || sym.kind === 'property') {
+            sym.ref.usages.push(rec);
+            if (!m.usages.some(u => u.member === sym.ref.name && u.line === t.line && u.rw === rw)) {
+              m.usages.push({ member: sym.ref.name, kind: sym.kind, line: t.line, rw, code: rec.code });
+            }
+          }
+        }
+
+        // external chains: A.B.C -> last known member in another type
+        for (let k = m.bodyStart; k <= m.bodyEnd; k++) {
+          const t = toks[k];
+          if (!t || t.t !== 'id') continue;
+          const prev = toks[k - 1];
+          if (prev && prev.v === '.') continue;
+          if (KEYWORDS.has(t.v)) continue;
+          const chain = [t.v];
+          let q = k;
+          while (toks[q + 1] && toks[q + 1].v === '.' && toks[q + 2] && toks[q + 2].t === 'id') {
+            chain.push(toks[q + 2].v); q += 2;
+          }
+          if (chain.length < 2) { k = q; continue; }
+          if (chain[0] === 'this') continue;
+          let hit = null, segIdx = -1;
+          for (let ci = chain.length - 1; ci >= 1; ci--) {
+            const cands = memberIndex.get(chain[ci]);
+            if (!cands) continue;
+            const ext = cands.filter(c => c.owner.name !== ty.name);
+            if (ext.length) { hit = ext[0]; segIdx = ci; break; }
+          }
+          if (!hit) { k = q; continue; }
+          const via = chain.slice(0, segIdx + 1).join('.');
+          const next = toks[q + 1];
+          let rw = 'read';
+          if (next && ASSIGN_OPS.has(next.v)) rw = next.v === '=' ? 'write' : 'readwrite';
+          const codeLine = ty.fileObj.lines[t.line - 1] || '';
+          hit.member.usages.push({
+            line: t.line, method: m.name, rw, code: codeLine.trim(), file: ty.fileObj.name,
+            owner: ty.name, external: true, via
+          });
+          const rec = { target: hit.owner.name, member: hit.member.name, kind: hit.kind, via, line: t.line, method: m.name, rw };
+          if (!ty.externals.some(e => e.target === rec.target && e.member === rec.member && e.line === rec.line && e.method === rec.method)) ty.externals.push(rec);
+          m.external.push(rec);
+          k = q;
+        }
+      });
+    });
+
+    /* ---- roles, issues, narrative ---- */
+    types.forEach(ty => {
+      ty.roles = classify(ty);
+      ty.issues = detectIssues(ty, types, byName);
+      ty.narrative = buildNarrative(ty);
+      ty.stats = {
+        fields: ty.fields.length, serialized: ty.fields.filter(f => f.isSerialized).length,
+        methods: ty.methods.length, props: ty.props.length,
+        reads: ty.fields.reduce((a, f) => a + f.usages.filter(u => u.rw !== 'write').length, 0),
+        writes: ty.fields.reduce((a, f) => a + f.usages.filter(u => u.rw !== 'read').length, 0)
+      };
+    });
+
+    const edges = [];
+    types.forEach(ty => {
+      const seen = new Set();
+      ty.externals.forEach(e => {
+        const key = ty.name + '>' + e.target;
+        if (seen.has(key)) return;
+        seen.add(key);
+        edges.push({ from: ty.name, to: e.target, label: e.via, count: ty.externals.filter(x => x.target === e.target).length });
+      });
+      if (ty.base && byName.has(ty.base)) edges.push({ from: ty.name, to: ty.base, label: '상속', inherit: true });
+    });
+
+    return { files, types, byName, edges, unresolved: findUnresolved(types, byName) };
+  }
+
+  /* ---------------- roles ---------------- */
+  function classify(ty) {
+    const roles = [];
+    const names = ty.methods.map(m => m.name);
+    const has = n => names.indexOf(n) >= 0;
+    const field = n => ty.fields.find(f => f.name === n);
+    const add = (name, tone, evidence, score) => roles.push({ name, tone, evidence, score: score == null ? 50 : score });
+
+    if (ty.kind === 'enum') {
+      add('열거형 상수', 'data', ['키/상태 값을 이름으로 묶은 enum (' + ty.enumNames.length + '개 항목)'], 95);
+      return roles.sort((a, b) => b.score - a.score);
+    }
+    if (ty.base === 'ScriptableObject') {
+      const ev = ['ScriptableObject를 상속 → 씬에 붙지 않는 데이터 에셋'];
+      if (/CreateAssetMenu/.test(ty.attrsRaw)) ev.push('CreateAssetMenu로 Project 창에서 .asset 생성 가능');
+      add('데이터 에셋', 'data', ev, 95);
+      if (ty.fields.every(f => !f.isSerialized)) add('빈 데이터 컨테이너', 'data', ['직렬화된 필드가 없음'], 30);
+      return roles;
+    }
+    if (ty.base === 'MonoBehaviour' || ty.base === 'Behaviour' || ty.base === 'Component' || ty.base) {
+      const isSingleton = ty.props.some(p => p.name === 'Instance') || ty.fields.some(f => f.name === 'instance');
+      if (isSingleton && /Manager/i.test(ty.name)) add('싱글턴 매니저', 'system', ['정적 Instance 프로퍼티로 전역 접근점 제공', ty.modifiers.indexOf('static') >= 0 ? 'static 클래스' : 'DontDestroyOnLoad로 씬 전환에도 유지'], 92);
+      else if (isSingleton) add('싱글턴', 'system', ['정적 Instance 접근점 보유'], 75);
+      if (ty.interfaces.length && ty.interfaces.some(i => /Pointer|Drag|Submit|Select/.test(i))) add('UI 이벤트 핸들러', 'ui', ['EventSystem 인터페이스 구현: ' + ty.interfaces.join(', '), 'OnPointerEnter/Exit에서 시각 반응 처리'], 90);
+      if (ty.methods.some(m => /Instantiate/.test(m.usages.map(u => u.code).join('')))) add('스폰/발사 컨트롤러', 'action', ['Instantiate로 프리팹을 런타임 생성', field('fireRate') ? 'fireRate로 연사 간격 제어' : '발사 위치/프리팹을 직렬화 필드로 주입'], 88);
+      if (ty.methods.some(m => /Destroy\s*\(\s*gameObject/.test(m.usages.map(u => u.code).join('')))) add('수명 관리', 'action', ['Destroy(gameObject, t)로 오브젝트 수명 예약'], 80);
+      if (ty.methods.some(m => /transform\s*\.\s*(Translate|position)/.test(m.usages.map(u => u.code).join('')))) add('이동 제어', 'action', ['Update에서 transform을 직접 갱신 (프레임 독립: Time.deltaTime)'], 85);
+      if (ty.methods.some(m => /Keyboard|Gamepad|Key\./.test(m.usages.map(u => u.code).join('')))) add('입력 처리', 'system', ['Input System(Keyboard/Gamepad)에서 입력을 읽어 이동/공격으로 변환'], 84);
+      if (ty.methods.some(m => /FindGameObjectsWithTag|FindFirstObjectByType|FindObjectOfType/.test(m.usages.map(u => u.code).join('')))) add('대상 탐색', 'system', ['태그/타입으로 씬 오브젝트를 검색해 참조 획득'], 78);
+      if (ty.methods.some(m => /LoadSceneAsync|SceneManager/.test(m.usages.map(u => u.code).join('')))) add('씬 전환/로딩 연출', 'system', ['SceneManager로 비동기 로드', '진행률을 UI에 반영'], 90);
+      if (ty.methods.some(m => /TextMeshProUGUI|TMP_Text|\.text\s*=/.test(m.usages.map(u => u.code).join('')))) add('UI 텍스트 표시', 'ui', ['TMP 컴포넌트의 text를 코드에서 갱신'], 76);
+      if (ty.methods.some(m => /ClampToBounds|WorldToViewportPoint/.test(m.usages.map(u => u.code).join(''))) || ty.methods.some(m => m.name === 'ClampToBounds')) add('화면 경계 제한', 'action', ['카메라 뷰포트 좌표로 위치를 Clamp'], 70);
+      if (!roles.length) add('MonoBehaviour 컴포넌트', 'system', (ty.base ? ty.base + '를 상속' : 'Unity 컴포넌트'), 55);
+      return roles.sort((a, b) => b.score - a.score);
+    }
+    add(ty.kind === 'interface' ? '인터페이스' : '일반 C# 클래스', 'plain', ['Unity 타입을 상속하지 않는 순수 C# 타입'], 60);
+    return roles;
+  }
+
+  /* ---------------- issues ---------------- */
+  function detectIssues(ty, types, byName) {
+    const out = [];
+    const add = (sev, title, detail, evidence) => out.push({ sev, title, detail, evidence: evidence || '' });
+    const codeOf = m => m.usages.map(u => u.code).join('\n');
+
+    const baseName = (ty.file || '').replace(/\.cs$/i, '');
+    const isComponent = ty.base === 'MonoBehaviour' || (ty.base && byName.has(ty.base)) || ty.interfaces.some(i => /Handler$/.test(i));
+    if (ty.kind === 'class' && isComponent && baseName && baseName !== ty.name) {
+      add('high', '파일명 ≠ 클래스명', 'Unity는 MonoBehaviour의 파일명과 클래스명이 같아야 Inspector에서 컴포넌트로 붙일 수 있습니다. "' + ty.name + '.cs"로 바꾸세요.', baseName + '.cs ↔ ' + ty.name);
+    }
+    ty.fields.forEach(f => {
+      const reads = f.usages.filter(u => u.rw !== 'write').length;
+      const writes = f.usages.filter(u => u.rw !== 'read').length;
+      if (!f.isSerialized && reads === 0 && writes > 0) {
+        add('medium', '쓰기만 하는 필드: ' + f.name, '값을 저장하지만 어디에서도 읽지 않습니다. 죽은 코드이거나 로직 누락입니다.', 'L' + f.line + ' · write ' + writes + ' / read 0');
+      }
+      if (f.isSerialized && f.usages.length === 0 && f.attrs.indexOf('SerializeField') >= 0) {
+        // serialized but never touched in code: inspector-only is normal, only flag if suspicious name
+      }
+      if (/^(chddkf|temp|test|asdf|qwer)/i.test(f.name)) {
+        add('low', '의미를 알 수 없는 필드명: ' + f.name, '오타이거나 실험용 필드로 보입니다. 이름을 의도에 맞게 바꾸세요.', 'L' + f.line + ' · ' + f.type);
+      }
+    });
+    ty.methods.forEach(m => {
+      const codes = codeOf(m);
+      if (m.name === 'Update' || m.name === 'FixedUpdate' || m.name === 'LateUpdate') {
+        if (/FindGameObjectsWithTag|FindFirstObjectByType|FindObjectOfType|GetComponent</.test(codes)) {
+          add('high', m.name + ' 안에서 매 프레임 탐색', 'Find*/GetComponent를 프레임마다 호출하면 비용이 큽니다. 결과를 캐시하거나 재탐색 간격을 두세요.', 'L' + m.line + ' · ' + m.name);
+        }
+        if (/Camera\.main/.test(codes)) {
+          add('low', m.name + '에서 Camera.main 접근', 'Camera.main은 내부적으로 FindGameObjectsWithTag를 수행합니다. Start에서 캐시하세요.', 'L' + m.line);
+        }
+      }
+      if (m.name === 'Start' && /GetComponent</.test(codes) && !/if\s*\(\s*\w+\.?.*!= null/.test(codes)) {
+        const gm = codes.match(/GetComponent<([^>]+)>/);
+        add('medium', 'GetComponent 결과 null 미검사', '컴포넌트가 없으면 다음 줄에서 NullReferenceException이 발생합니다.' + (gm ? ' (' + gm[1] + ')' : ''), 'L' + m.line + ' · Start');
+      }
+      if (/Random\.Range\(0,\s*\w+\.Length\)/.test(codes)) {
+        add('medium', '빈 배열 인덱스 위험', '배열이 비어 있으면 Random.Range(0,0)=0 → [0] 접근에서 IndexOutOfRangeException. Length 검사를 추가하세요.', 'L' + m.line);
+      }
+    });
+    if (ty.fields.some(f => f.isStatic) || ty.props.some(p => /static/.test(p.modifiers.join(' ')))) {
+      const st = ty.fields.find(f => f.isStatic);
+      add('low', '정적 상태 유지', 'static 필드는 씬을 넘어 값이 남습니다. 씬 재진입 시 초기화 시점을 명시하세요.', st ? 'L' + st.line + ' · static ' + st.name : 'static 멤버');
+    }
+    if (/CreateAssetMenu/.test(ty.attrsRaw)) {
+      const fn = (ty.attrsRaw.match(/fileName\s*=\s*"([^"]+)"/) || [])[1];
+      if (fn) {
+        const dup = types.filter(t => t !== ty && (t.attrsRaw.match(/fileName\s*=\s*"([^"]+)"/) || [])[1] === fn);
+        if (dup.length) add('medium', 'CreateAssetMenu fileName 중복', '"' + fn + '" 이름이 ' + dup.map(d => d.name).join(', ') + '와 겹칩니다. 에셋 생성 시 파일명이 충돌합니다.', ty.name + ' ↔ ' + dup.map(d => d.name).join(', '));
+      }
+    }
+    return out;
+  }
+
+  /* ---------------- narrative ---------------- */
+  function buildNarrative(ty) {
+    const out = [];
+    const role = ty.roles[0] ? ty.roles[0].name : '타입';
+    const base = ty.base ? ty.base + '를 상속' : '베이스 타입 없음';
+    out.push('`' + ty.name + '`은(는) ' + base + (ty.interfaces.length ? ', ' + ty.interfaces.join('·') + ' 구현' : '') + '한 **' + role + '**입니다.');
+    const life = ty.methods.filter(m => m.isLifecycle);
+    if (life.length) {
+      out.push('생명주기: ' + life.map(m => '`' + m.name + '`').join(' → ') + ' 순서로 호출됩니다.');
+    }
+    const used = ty.fields.filter(f => f.usages.length);
+    const unused = ty.fields.filter(f => !f.usages.length && f.attrs.indexOf('SerializeField') < 0 && !f.isPublic);
+    if (used.length) {
+      out.push('추적된 필드 ' + used.length + '개 — ' + used.slice(0, 4).map(f => '`' + f.name + '`(' + f.usages.length + '회)').join(', ') + '.');
+    }
+    if (unused.length) out.push('코드에서 전혀 쓰이지 않는 필드: ' + unused.map(f => '`' + f.name + '`').join(', ') + '.');
+    return out;
+  }
+
+  function findUnresolved(types, byName) {
+    const out = [];
+    const seen = new Set();
+    types.forEach(ty => {
+      const toks = lexWithCache(ty.fileObj);
+      ty.methods.forEach(m => {
+        if (m.bodyStart < 0) return;
+        for (let k = m.bodyStart; k <= m.bodyEnd; k++) {
+          const t = toks[k];
+          if (!t || t.t !== 'id' || !/^[A-Z]/.test(t.v)) continue;
+          const next = toks[k + 1];
+          if (!next || next.v !== '.') continue;
+          const prev = toks[k - 1];
+          if (prev && (prev.v === '.' || prev.v === 'new' || prev.v === ':')) continue;
+          if (byName.has(t.v) || KNOWN_TYPES.has(t.v)) continue;
+          const localNames = ty.fields.map(f=>f.name).concat(ty.props.map(p=>p.name));
+          if (localNames.indexOf(t.v) >= 0) continue;
+          if (seen.has(t.v)) continue;
+          seen.add(t.v);
+          out.push({ name: t.v, usedBy: ty.name, line: t.line, method: m.name });
+        }
+      });
+    });
+    return out;
+  }
+
+  function lexWithCache(file) {
+    if (!file._toks) file._toks = lex(file.code);
+    return file._toks;
+  }
+
+  const api = { analyzeSources, lex, classify };
+  root.UnityLensCore = api;
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+})(typeof window !== 'undefined' ? window : globalThis);
+
+</script>
+<script>
+(function () {
+  'use strict';
+  const CORE = window.UnityLensCore;
+  const $ = (s, r) => (r || document).querySelector(s);
+  const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const TONE_KO = { data: '데이터', system: '시스템', action: '액션', ui: 'UI', plain: '일반' };
+
+  const NOTES = {
+    BulletMove: '총알 프리팹에 붙는 최소 구성입니다. `Start`에서 `Destroy(gameObject, destroyTime)`으로 수명을 예약하고, `Update`마다 `transform.Translate(speed * Time.deltaTime * Vector3.up)`로 **로컬 +Y 방향**으로 이동합니다. `speed`는 Inspector에서 조절하는 직렬화 값(기본 10)이고, `destroyTime`은 기본값이 없어 Inspector에서 반드시 채워야 합니다(0이면 스폰 즉시 소멸). Translate는 오브젝트의 회전을 반영하므로, 총알을 발사 방향으로 회전시켜 스폰하면 그 방향으로 날아갑니다.',
+    HomingBullet: '매 프레임 `target`을 검사해 없으면 `FindNearestEnemy()`로 **"Enemy" 태그 전체를 다시 검색**합니다. 타겟이 있으면 정규화한 방향을 `transform.position`에 직접 더하고(관성 없음), 없으면 위로 직진합니다. 구조는 단순하지만 적이 없을 때 `Update`마다 `FindGameObjectsWithTag`가 호출되어 GC·CPU 부담이 커집니다. 재탐색 쿨다운(0.2초)이나 적 등록 리스트로 바꾸는 편이 좋습니다. `target`이 파괴되면 Unity의 fake-null 덕분에 `target == null`이 참이 되어 재탐색으로 이어집니다.',
+    IntroButton: 'EventTrigger 없이 `IPointerEnterHandler`/`IPointerExitHandler`를 직접 구현한 버튼입니다. DOTween으로 1.2배 ↔ 1.0배 스케일 트윈을 걸고, `DOComplete()`로 이전 트윈을 즉시 끝내 중첩을 막습니다. `originalX`에 시작 X 좌표를 저장하지만 **이후 읽는 곳이 없어 죽은 코드**입니다. `EditScene` 토글, `LoadingSceneManager.LoadScene("1_SlectScene")` 씬 이동, `Application.Quit()` + 에디터에서는 `isPlaying = false`로 재생 정지까지 처리합니다.',
+    KeyManager: 'Input System의 `Key` 열거형으로 **리바인딩 가능한 키맵**을 만드는 싱글턴입니다. 정적 `Instance` 프로퍼티가 없으면 `FindFirstObjectByType`으로 찾고, 그래도 없으면 `KeyManager` 오브젝트를 만들어 `DontDestroyOnLoad`로 유지합니다. `Awake`에서는 중복 인스턴스를 파괴합니다. `ChangeKey`는 코루틴을 띄워 `anyKey.wasPressedThisFrame`을 기다린 뒤 `Enum.GetValues(typeof(Key))`를 순회해 눌린 키를 찾아 `keys`에 덮어쓰고 콜백을 호출합니다. `keys`가 public이라 `PlayerMove`/`PlayerShooting`이 `TryGetValue`로 읽고, 없으면 기본 키로 폴백합니다.',
+    LoadingSceneManager: '정적 `nextSceneName`에 목표 씬을 저장하고 **"0.5_Loading" 씬으로 먼저 이동**합니다. 그 씬의 `Start`에서 `LoadSceneAsync`를 시작하고 `allowSceneActivation = false`로 90%에서 멈춰 둡니다. `op.progress / 0.9`를 Slider와 TMP 텍스트에 반영하고, 90% 이후에는 `fadeOrMinDelay` 동안 `Mathf.Lerp`로 게이지를 1까지 채운 뒤에야 씬 활성화를 허용합니다. 로딩이 너무 빨라 화면이 튀는 것을 막는 연출 장치입니다. `nextSceneName`이 비어 있으면 LogError 후 return합니다.',
+    PlayerData: '`ScriptableObject` 데이터 컨테이너입니다. `CreateAssetMenu`로 Project 창에서 `.asset` 파일을 만들 수 있습니다. 이름·ID·체력·속도·아이콘·애니메이션 스프라이트·설명을 담고, `PlayerMove`가 `SelectScene.SelectedData`를 통해 이 값을 읽습니다. `chddkf`는 `GameObject` 필드인데 이름이 오타로 보이고 코드 어디에서도 참조되지 않습니다.',
+    PlayerMove: '`SelectScene.SelectedData`(외부 정적 참조)에서 `playerSpeed`를 읽어 `speed = playerSpeed * 5`로 만들고, `playerIcon`을 `SpriteRenderer.sprite`에 적용합니다. `Update`에서는 키보드(`KeyManager`의 바인딩, 기본 WASD)와 게임패드 스틱·DPad를 합산해 방향을 만들고, 대각선일 때 정규화한 뒤 이동합니다. 마지막에 카메라 뷰포트 좌표로 위치를 Clamp해 화면 밖으로 나가지 못하게 합니다. **선택 데이터가 없으면 `speed = 0`이라 캐릭터가 움직이지 않습니다** — 기본 속도 폴백이 필요합니다.',
+    PlayerShooting: '매 프레임 `KeyManager`에서 Attack/Ultimate 키를 조회하고(없으면 Z/X) 공격을 처리합니다. 기본 공격은 `isPressed` + `nextFireTime` 쿨다운으로 연사하고, 필살기는 `wasPressedThisFrame`으로 단발 발사합니다. 스폰 위치는 `firePoint`가 있으면 그곳, 없으면 자기 위치입니다. `homingbulletPrefab`이 비어 있으면 일반 총알로 대체하고 경고를 남기는 방어 코드가 들어 있습니다.',
+    TmiReader: '`tmiText` 배열에서 `Random.Range(0, Length)`로 한 항목을 골라 TMP에 `TMI : ...` 형식으로 출력합니다. 배열이 비어 있으면 `Random.Range(0, 0)`이 0을 반환해 `[0]` 접근에서 **IndexOutOfRangeException**이 납니다. `Start`에서 한 번만 실행되므로 씬마다 한 줄이 랜덤으로 보입니다.',
+    TmiText: 'TMI 한 줄을 담는 `ScriptableObject`입니다. 다만 `CreateAssetMenu`의 `fileName`이 **"PlayerData"로 PlayerData와 중복**입니다. 에셋을 만들 때 파일명이 겹치므로 `TmiData` 등으로 바꾸는 편이 안전합니다.'
+  };
+
+  const state = { data: null, sources: [], selected: null, tab: 'overview', varSel: null, varScope: 'class', q: '', vq: '' };
+
+  /* ---------- helpers ---------- */
+  function primaryRole(t) { return (t.roles && t.roles[0]) || { name: t.kind, tone: 'plain', evidence: [] }; }
+  function readCount(f) { return f.usages.filter(u => u.rw !== 'write').length; }
+  function writeCount(f) { return f.usages.filter(u => u.rw !== 'read').length; }
+  function getType(name) { return state.data.byName.get(name); }
+  function selType() { return state.selected ? getType(state.selected) : null; }
+  function allVars() {
+    const out = [];
+    state.data.types.forEach(t => {
+      t.fields.forEach(f => out.push({ key: t.name + '.' + f.name, owner: t, v: f, kind: 'field' }));
+      t.props.forEach(p => out.push({ key: t.name + '.' + p.name, owner: t, v: p, kind: 'property' }));
+    });
+    return out;
+  }
+  function findVar(key) { return allVars().find(x => x.key === key) || null; }
+  function ensureVar() {
+    const t = selType();
+    if (!t) { state.varSel = null; return; }
+    if (state.varSel) {
+      const f = findVar(state.varSel);
+      if (f && (state.varScope === 'all' || f.owner.name === t.name)) return;
+    }
+    const first = t.fields[0] || t.props[0];
+    state.varSel = first ? t.name + '.' + first.name : null;
+  }
+  function allIssues() {
+    const out = [];
+    state.data.types.forEach(t => t.issues.forEach(i => out.push(Object.assign({ type: t.name, file: t.file }, i))));
+    const rank = { high: 0, medium: 1, low: 2 };
+    return out.sort((a, b) => rank[a.sev] - rank[b.sev]);
+  }
+  function sigOf(t) {
+    const mods = t.modifiers.length ? t.modifiers.join(' ') + ' ' : '';
+    const bases = t.bases.length ? ' : ' + t.bases.join(', ') : '';
+    return esc(mods) + '<span class="kw">' + esc(t.kind) + '</span> <span class="nm">' + esc(t.name) + '</span>' + esc(bases);
+  }
+  function toast(msg) {
+    const el = $('#toast');
+    el.textContent = msg;
+    el.classList.add('on');
+    clearTimeout(el._t);
+    el._t = setTimeout(() => el.classList.remove('on'), 2400);
+  }
+
+  /* ---------- boot ---------- */
+  function boot() {
+    const raw = JSON.parse($('#samples').textContent);
+    state.sources = raw.sources.slice();
+    if (window.__START_TAB__) state.tab = window.__START_TAB__;
+    if (window.__START_TYPE__) state.selected = window.__START_TYPE__;
+    const hash = decodeURIComponent((location.hash || '').replace(/^#/, ''));
+    if (hash) {
+      const parts = hash.split('/');
+      if (['overview', 'class', 'vars', 'graph', 'source'].includes(parts[0])) state.tab = parts[0];
+      if (parts[1]) state.selected = parts[1];
+    }
+    reanalyze();
+    bindChrome();
+    window.__exportMd = buildMd;
+    window.addEventListener('hashchange', () => {
+      const h = decodeURIComponent((location.hash || '').replace(/^#/, '')).split('/');
+      if (h[1] && state.data.byName.has(h[1]) && h[1] !== state.selected) selectType(h[1]);
+      if (h[0] && h[0] !== state.tab) setTab(h[0]);
+    });
+  }
+  function syncHash() {
+    try { history.replaceState(null, '', '#' + state.tab + '/' + (state.selected || '')); } catch (e) {}
+  }
+  function reanalyze() {
+    state.data = CORE.analyzeSources(state.sources);
+    if (!state.selected || !state.data.byName.has(state.selected)) {
+      state.selected = state.data.types.length ? state.data.types[0].name : null;
+    }
+    ensureVar();
+    renderAll();
+  }
+  function renderAll() {
+    renderMeta();
+    renderRail();
+    renderOverview();
+    renderClass();
+    renderVars();
+    renderGraph();
+    renderSource();
+    setTab(state.tab, true);
+    window.__UL = { data: state.data, state };
+  }
+
+  function bindChrome() {
+    $('#tabs').addEventListener('click', e => {
+      const b = e.target.closest('button[data-tab]');
+      if (b) setTab(b.dataset.tab);
+    });
+    $('#search').addEventListener('input', e => { state.q = e.target.value.toLowerCase(); renderRail(); });
+    $('#btnExport').addEventListener('click', exportMd);
+    $('#btnAdd').addEventListener('click', () => { $('#modal').hidden = false; $('#codeInput').focus(); });
+    $('#mClose').addEventListener('click', () => { $('#modal').hidden = true; });
+    $('#modal').addEventListener('click', e => { if (e.target.id === 'modal') $('#modal').hidden = true; });
+    $('#mRun').addEventListener('click', () => {
+      const code = $('#codeInput').value;
+      if (!code.trim()) { toast('코드를 붙여넣어 주세요.'); return; }
+      let name = ($('#nameInput').value || '').trim();
+      if (!name) name = guessName(code);
+      state.sources.push({ name, code });
+      $('#modal').hidden = true; $('#codeInput').value = ''; $('#nameInput').value = '';
+      reanalyze();
+      toast(name + ' 분석 완료');
+    });
+    $('#mFile').addEventListener('change', e => {
+      const files = Array.from(e.target.files || []);
+      if (!files.length) return;
+      let left = files.length;
+      files.forEach(f => {
+        const r = new FileReader();
+        r.onload = () => {
+          state.sources.push({ name: f.name, code: String(r.result || '') });
+          if (--left === 0) { $('#modal').hidden = true; reanalyze(); toast(files.length + '개 파일 추가'); }
+        };
+        r.readAsText(f);
+      });
+      e.target.value = '';
+    });
+    document.addEventListener('click', e => {
+      const t = e.target.closest('[data-type]');
+      if (t) { selectType(t.dataset.type); return; }
+      const v = e.target.closest('[data-var]');
+      if (v) { state.varSel = v.dataset.var; state.varScope = v.dataset.scope || state.varScope; renderVars(); return; }
+      const j = e.target.closest('[data-goto]');
+      if (j) { selectType(j.dataset.goto); return; }
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') $('#modal').hidden = true;
+      if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') { e.preventDefault(); $('#search').focus(); }
+    });
+  }
+  function guessName(code) {
+    const m = code.match(/\b(?:class|struct|interface|enum)\s+([A-Za-z_][A-Za-z0-9_]*)/);
+    return (m ? m[1] : 'Custom') + '.cs';
+  }
+  function setTab(tab, silent) {
+    state.tab = tab;
+    $$('#tabs button').forEach(b => b.classList.toggle('on', b.dataset.tab === tab));
+    $$('.view').forEach(v => v.classList.toggle('on', v.id === 'v-' + tab));
+    if (!silent) $('.views').scrollTop = 0;
+    syncHash();
+  }
+  function selectType(name, tab) {
+    if (!state.data.byName.has(name)) return;
+    state.selected = name;
+    if (state.varScope === 'class') state.varSel = null;
+    ensureVar();
+    renderMeta(); renderRail(); renderClass(); renderVars(); renderSource(); renderGraph();
+    syncHash();
+    if (tab) setTab(tab);
+  }
+
+  /* ---------- chrome ---------- */
+  function renderMeta() {
+    const d = state.data;
+    const comps = d.types.filter(t => t.base === 'MonoBehaviour' || (t.base && d.byName.has(t.base))).length;
+    const assets = d.types.filter(t => t.base === 'ScriptableObject').length;
+    const tracked = allVars().filter(x => x.v.usages.length).length;
+    $('#headerMeta').innerHTML =
+      '<div class="hm"><b>' + d.files.length + '</b><span>scripts</span></div>' +
+      '<div class="hm"><b>' + d.types.length + '</b><span>types</span></div>' +
+      '<div class="hm"><b>' + tracked + '</b><span>vars traced</span></div>' +
+      '<div class="hm"><b>' + allIssues().length + '</b><span>findings</span></div>';
+    // rail foot
+    const foot = $('.rail-foot');
+    if (foot) foot.innerHTML = '<span class="dot"></span>규칙 기반 정적 분석 · 브라우저에서만 실행';
+  }
+
+  function renderRail() {
+    const q = state.q;
+    const items = state.data.types.filter(t => !q || (t.name + ' ' + t.file + ' ' + primaryRole(t).name).toLowerCase().includes(q));
+    if (!items.length) {
+      $('#railList').innerHTML = '<div class="empty">일치하는 타입이 없습니다.</div>';
+      return;
+    }
+    $('#railList').innerHTML = items.map(t => {
+      const role = primaryRole(t);
+      return '<button class="ritem' + (t.name === state.selected ? ' on' : '') + '" data-type="' + esc(t.name) + '">' +
+        '<span class="rn">' + esc(t.name) + '</span>' +
+        '<span class="rb">' + esc(t.kind) + '</span>' +
+        '<span class="rr"><i class="tick"></i>' + esc(role.name) + '<span class="cnt">' + t.fields.length + 'v</span></span>' +
+        '</button>';
+    }).join('');
+  }
+
+  /* ---------- overview ---------- */
+  function renderOverview() {
+    const d = state.data;
+    const comps = d.types.filter(t => t.base === 'MonoBehaviour' || (t.base && d.byName.has(t.base))).length;
+    const assets = d.types.filter(t => t.base === 'ScriptableObject').length;
+    const tracked = allVars().filter(x => x.v.usages.length).length;
+    const issues = allIssues();
+    const high = issues.filter(i => i.sev === 'high').length;
+    const inputs = d.types.filter(t => t.methods.some(m => /Keyboard|Gamepad/.test(m.usages.map(u => u.code).join('')))).length;
+
+    let html = '';
+    html += '<div class="hero"><svg class="rings" viewBox="0 0 420 420" aria-hidden="true">' +
+      '<circle cx="210" cy="210" r="198"></circle><circle cx="210" cy="210" r="150"></circle><circle cx="210" cy="210" r="104"></circle><circle cx="210" cy="210" r="58"></circle>' +
+      '<line class="beam" x1="210" y1="0" x2="210" y2="420"></line><line class="beam" x1="0" y1="210" x2="420" y2="210"></line></svg>' +
+      '<div><div class="hero-num"><span class="n">' + d.types.length + '</span><span class="u">types decoded</span></div>' +
+      '<h2>코드를 읽고, <em>상속과 변수의 흐름</em>을 그립니다.</h2>' +
+      '<p class="lede">' + d.files.length + '개 스크립트에서 ' + d.types.length + '개 타입을 찾아 베이스 타입·인터페이스·역할을 판정하고, 필드가 어느 메서드에서 읽히고 쓰이는지 줄 번호까지 추적했습니다. 왼쪽에서 타입을 고르면 해설과 추적 결과가 바뀝니다.</p></div>' +
+      '<div class="hero-side">' +
+      '<div class="hstat gold"><b>' + comps + '</b><span>components</span></div>' +
+      '<div class="hstat violet"><b>' + assets + '</b><span>data assets</span></div>' +
+      '<div class="hstat teal"><b>' + tracked + '</b><span>vars traced</span></div>' +
+      '<div class="hstat rust"><b>' + high + '</b><span>high findings</span></div>' +
+      '</div></div>';
+
+    html += '<div class="section-head"><h3>타입 지도</h3><span class="hint">행을 클릭하면 상세 해설로 이동</span></div>';
+    html += '<div class="grid2"><div class="card"><div class="card-h"><h3>상속 · 역할</h3><span class="eyebrow">' + d.types.length + ' types</span></div><table class="t"><thead><tr><th>타입</th><th>상속 / 구현</th><th>역할</th><th>변수</th><th>이슈</th></tr></thead><tbody>' +
+      d.types.map(t => {
+        const r = primaryRole(t);
+        return '<tr class="click" data-type="' + esc(t.name) + '"><td class="name">' + esc(t.name) + '</td><td><span class="ty">' + esc(t.base || '—') + '</span>' + (t.interfaces.length ? ' <span class="muted">+' + t.interfaces.length + ' I/F</span>' : '') + '</td><td><span class="chip tone-' + r.tone + '">' + esc(r.name) + '</span></td><td class="tiny">' + (t.fields.length + t.props.length) + '</td><td class="tiny">' + (t.issues.length ? '<span style="color:var(--write)">' + t.issues.length + '</span>' : '—') + '</td></tr>';
+      }).join('') + '</tbody></table></div>';
+
+    html += '<div class="stack"><div class="card"><div class="card-h"><h3>발견된 이슈</h3><span class="eyebrow">' + issues.length + ' findings</span></div>' +
+      (issues.length ? issues.slice(0, 6).map(i => issueHtml(i, true)).join('') : '<p class="muted-line">발견된 이상 징후가 없습니다.</p>') +
+      (issues.length > 6 ? '<p class="muted-line" style="margin-top:10px"><span class="jump" data-type="' + esc(issues[6].type) + '">나머지 ' + (issues.length - 6) + '건은 각 클래스 상세에…</span></p>' : '') +
+      '</div>';
+    html += '<div class="card"><div class="card-h"><h3>기준 타입 분포</h3><span class="eyebrow">inheritance</span></div>' + baseBars() + '</div></div></div>';
+
+    html += '<div class="section-head"><h3>해석 커버리지</h3><span class="hint">파일 · 직렬화 · 입력</span></div>';
+    html += '<div class="grid2b"><div class="card"><div class="card-h"><h3>파이프라인</h3><span class="eyebrow">scan</span></div>' +
+      '<div class="kv"><span>스크립트</span><b>' + d.files.length + '개</b></div>' +
+      '<div class="kv"><span>파일명</span><b style="font-weight:400;font-size:11px;color:var(--dim)">' + d.files.slice(0, 4).map(f => esc(f.name)).join(' · ') + (d.files.length > 4 ? ' 외 ' + (d.files.length - 4) : '') + '</b></div>' +
+      '<div class="kv"><span>직렬화 필드</span><b>' + d.types.reduce((a, t) => a + t.fields.filter(f => f.isSerialized).length, 0) + '개</b></div>' +
+      '<div class="kv"><span>입력 사용</span><b>' + inputs + '개 타입</b></div>' +
+      '<div class="kv"><span>추적된 변수</span><b>' + tracked + ' / ' + allVars().length + '</b></div>' +
+      '</div>';
+    html += '<div class="card"><div class="card-h"><h3>파일 밖 참조</h3><span class="eyebrow">unresolved</span></div>' +
+      (d.unresolved.length ? d.unresolved.map(u => '<div class="kv"><span>미해석</span><b>' + esc(u.name) + '</b><span style="margin-left:auto">' + esc(u.usedBy) + ' · L' + u.line + '</span></div>').join('') + '<p class="muted-line" style="margin-top:10px;font-size:11px">스캔한 파일에 정의가 없어 흐름을 끝까지 따라갈 수 없는 타입입니다. 파일을 추가하면 연결됩니다.</p>' : '<p class="muted-line">모든 외부 참조가 해석되었습니다.</p>') +
+      '</div></div>';
+
+    $('#v-overview').innerHTML = html;
+  }
+
+  function baseBars() {
+    const counts = {};
+    state.data.types.forEach(t => {
+      const k = t.base || (t.kind === 'enum' ? 'enum' : '없음');
+      counts[k] = (counts[k] || 0) + 1;
+    });
+    const max = Math.max.apply(null, Object.values(counts).concat([1]));
+    return Object.keys(counts).sort((a, b) => counts[b] - counts[a]).map(k =>
+      '<div class="bar-row"><span class="lbl">' + esc(k) + '</span><div class="bar"><i style="width:' + Math.round(counts[k] / max * 100) + '%"></i></div><span class="v">' + counts[k] + '</span></div>'
+    ).join('');
+  }
+
+  function issueHtml(i, withType) {
+    return '<div class="issue ' + i.sev + '"><div class="sev"></div><div><h4>' + esc(i.title) + '</h4><p>' + esc(i.detail) + '</p>' +
+      '<div class="where">' + (withType ? '<span class="jump" data-type="' + esc(i.type) + '">' + esc(i.type) + '</span> · ' : '') + esc(i.file) + (i.evidence ? ' · ' + esc(i.evidence) : '') + '</div></div></div>';
+  }
+
+  /* ---------- class view ---------- */
+  function renderClass() {
+    const t = selType();
+    if (!t) { $('#v-class').innerHTML = '<div class="empty">분석된 타입이 없습니다.</div>'; return; }
+    const role = primaryRole(t);
+    const note = NOTES[t.name];
+    const lifeOrder = ['Awake', 'OnEnable', 'Start', 'FixedUpdate', 'Update', 'LateUpdate', 'OnDisable', 'OnDestroy', 'OnApplicationQuit'];
+    const life = t.methods.filter(m => m.isLifecycle).sort((a, b) => {
+      const ia = lifeOrder.indexOf(a.name), ib = lifeOrder.indexOf(b.name);
+      return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+    });
+    const locals = t.methods.filter(m => m.locals.length);
+
+    let html = '<div class="class-head"><div class="ttl"><h2>' + esc(t.name) + ' <span class="chip tone-' + role.tone + '">' + esc(role.name) + '</span></h2>' +
+      '<div class="sub"><span class="filetag">' + esc(t.file) + ' · L' + t.startLine + '–' + t.endLine + ' · ' + t.loc + ' lines</span>' +
+      (t.base ? '<span class="chip base">' + esc(t.base) + '</span>' : '') +
+      t.interfaces.map(i => '<span class="chip iface">' + esc(i) + '</span>').join('') +
+      t.attrs.map(a => '<span class="chip attr">[' + esc(a) + ']</span>').join('') +
+      '</div><div class="sig">' + sigOf(t) + '</div></div></div>';
+
+    html += '<div class="grid2"><div class="stack">';
+    html += '<div class="card"><div class="card-h"><h3>AI 해설</h3><span class="eyebrow">' + (note ? 'curated · 이 샘플 전용' : 'generated from structure') + '</span></div>';
+    if (note) {
+      html += note.split('\n').map(p => '<p class="muted-line" style="margin-bottom:10px">' + mdInline(p) + '</p>').join('');
+    } else {
+      html += t.narrative.map(p => '<p class="muted-line" style="margin-bottom:10px">' + mdInline(p) + '</p>').join('');
+    }
+    html += '<hr class="sep"><p class="faint" style="font-size:10.5px">해설은 파싱 결과(상속·메서드·변수 사용)를 근거로 작성됩니다. 괄호 안 수치는 실제 사용 횟수입니다.</p></div>';
+
+    if (life.length) {
+      html += '<div class="card"><div class="card-h"><h3>생명주기</h3><span class="eyebrow">unity messages</span></div><div class="timeline">' +
+        life.map(m => '<div class="tl"><h4>' + esc(m.name) + '() <span class="ln">L' + m.line + ' · ' + esc(m.modifiers.join(' ') || 'private') + '</span></h4><p>' + (m.usages.length ? '이 안에서 ' + m.usages.map(u => '<code>' + esc(u.member) + '</code> ' + (u.rw === 'write' ? '쓰기' : u.rw === 'readwrite' ? '읽기+쓰기' : '읽기')).join(', ') + ' · ' + m.locals.length + '개 지역 변수' : '멤버 사용 없음 · ' + m.locals.length + '개 지역 변수') + '</p></div>').join('') +
+        '</div></div>';
+    }
+
+    if (t.fields.length) {
+      html += '<div class="card"><div class="card-h"><h3>필드</h3><span class="eyebrow">' + t.fields.length + ' fields · ' + t.stats.serialized + ' serialized</span></div>' +
+        t.fields.map(f => '<div class="field-line rowlink" data-var="' + esc(t.name + '.' + f.name) + '" data-scope="class"><div><div class="fl-name">' + esc(f.name) + '<span class="fl-ty">' + esc(f.type) + '</span>' +
+          (f.isSerialized ? '<span class="chip serialized">serialized</span>' : '') + (f.isStatic ? '<span class="chip">static</span>' : '') + '</div>' +
+          '<div class="fl-ty" style="margin-top:2px">L' + f.line + (f.init ? ' · = ' + esc(f.init.length > 60 ? f.init.slice(0, 60) + '…' : f.init) : ' · Inspector 값') + '</div></div>' +
+          '<div class="fl-meta"><span class="pill read">r ' + readCount(f) + '</span><span class="pill write">w ' + writeCount(f) + '</span></div></div>').join('') +
+        '</div>';
+    }
+
+    if (t.props.length) {
+      html += '<div class="card"><div class="card-h"><h3>프로퍼티</h3><span class="eyebrow">' + t.props.length + '</span></div>' +
+        t.props.map(p => '<div class="field-line rowlink" data-var="' + esc(t.name + '.' + p.name) + '" data-scope="class"><div><div class="fl-name">' + esc(p.name) + '<span class="fl-ty">' + esc(p.type) + '</span></div><div class="fl-ty" style="margin-top:2px">L' + p.line + ' · ' + esc(p.modifiers.join(' ')) + '</div></div><div class="fl-meta"><span class="pill read">r ' + readCount(p) + '</span></div></div>').join('') +
+        '</div>';
+    }
+
+    if (t.methods.length) {
+      html += '<div class="card"><div class="card-h"><h3>메서드</h3><span class="eyebrow">' + t.methods.length + '</span></div><table class="t"><thead><tr><th>이름</th><th>매개변수</th><th>사용</th><th>라인</th></tr></thead><tbody>' +
+        t.methods.map(m => '<tr><td class="name">' + esc(m.name) + (m.isLifecycle ? ' <span class="pill">unity</span>' : '') + '</td><td><span class="ty">' + (m.params.length ? esc(m.params.map(p => p.type + ' ' + p.name).join(', ')) : '—') + '</span></td><td class="tiny">' + m.usages.length + '</td><td class="tiny">' + m.line + '</td></tr>').join('') +
+        '</tbody></table></div>';
+    }
+
+    if (locals.length) {
+      html += '<div class="card"><div class="card-h"><h3>지역 변수</h3><span class="eyebrow">method scope</span></div>' +
+        locals.map(m => '<div class="kv" style="align-items:flex-start"><span style="min-width:70px">' + esc(m.name) + '</span><b style="font-weight:400">' + m.locals.map(l => '<span class="chip">' + esc(l.type) + ' ' + esc(l.name) + '</span>').join(' ') + '</b></div>').join('') +
+        '</div>';
+    }
+    html += '</div><div class="stack">';
+
+    html += '<div class="card"><div class="card-h"><h3>판정된 역할</h3><span class="eyebrow">' + t.roles.length + ' signals</span></div>' +
+      t.roles.map((r, idx) => '<div class="role-card"><div class="rc-badge">' + (idx + 1) + '</div><div><h4>' + esc(r.name) + ' <span class="pill">' + TONE_KO[r.tone] + '</span></h4><ul>' + r.evidence.map(e => '<li>' + mdInline(e) + '</li>').join('') + '</ul></div></div>').join('') +
+      '</div>';
+
+    html += '<div class="card"><div class="card-h"><h3>구조 수치</h3><span class="eyebrow">metrics</span></div>' +
+      '<div class="kv"><span>베이스</span><b>' + esc(t.base || '—') + '</b></div>' +
+      '<div class="kv"><span>필드</span><b>' + t.fields.length + '개 (직렬화 ' + t.stats.serialized + ')</b></div>' +
+      '<div class="kv"><span>메서드</span><b>' + t.methods.length + '개</b></div>' +
+      '<div class="kv"><span>읽기 / 쓰기</span><b style="color:var(--read)">' + t.stats.reads + '</b> <span style="min-width:0;color:var(--faint)">/</span> <b style="color:var(--write)">' + t.stats.writes + '</b></div>' +
+      '<div class="kv"><span>외부 참조</span><b>' + t.externals.length + '건</b></div>' +
+      '</div>';
+
+    html += '<div class="card"><div class="card-h"><h3>이 클래스의 이슈</h3><span class="eyebrow">' + t.issues.length + '</span></div>' +
+      (t.issues.length ? t.issues.map(i => issueHtml(i, false)).join('') : '<p class="muted-line">규칙에 걸린 항목이 없습니다.</p>') + '</div>';
+
+    if (t.externals.length) {
+      html += '<div class="card"><div class="card-h"><h3>외부 참조</h3><span class="eyebrow">cross-file</span></div>' +
+        t.externals.map(e => '<div class="kv"><span>' + esc(e.method) + '</span><b>' + esc(e.target) + '.' + esc(e.member) + '</b><span style="margin-left:auto;min-width:0">L' + e.line + '</span></div>').join('') +
+        '</div>';
+    }
+    if (t.kind === 'enum') {
+      html += '<div class="card"><div class="card-h"><h3>상수</h3><span class="eyebrow">members</span></div>' +
+        t.enumNames.map(n => '<span class="chip" style="margin:0 4px 4px 0">' + esc(n) + '</span>').join('') + '</div>';
+    }
+
+    html += '</div></div>';
+    $('#v-class').innerHTML = html;
+  }
+
+  /* ---------- variables ---------- */
+  function renderVars() {
+    const t = selType();
+    let pool;
+    if (state.varScope === 'all') pool = allVars();
+    else pool = allVars().filter(x => x.owner.name === (t && t.name));
+    if (state.vq) pool = pool.filter(x => (x.owner.name + '.' + x.v.name + ' ' + x.v.type).toLowerCase().includes(state.vq));
+    if (!state.varSel || !findVar(state.varSel)) {
+      state.varSel = pool.length ? pool[0].key : null;
+    }
+    const sel = findVar(state.varSel);
+
+    let html = '<div class="section-head" style="margin-top:0"><h3>변수 추적</h3><span class="hint">선언 → 읽기 / 쓰기 / 외부 참조</span></div>';
+    html += '<div class="vars-wrap"><div class="card" style="padding:14px"><div class="search" style="margin-bottom:10px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="vsearch" placeholder="변수 검색"></div>';
+    html += '<div style="display:flex;gap:6px;margin-bottom:10px"><button class="btn" id="scopeClass" style="flex:1;justify-content:center;' + (state.varScope === 'class' ? 'border-color:var(--gold);color:var(--gold)' : '') + '">이 클래스</button><button class="btn" id="scopeAll" style="flex:1;justify-content:center;' + (state.varScope === 'all' ? 'border-color:var(--gold);color:var(--gold)' : '') + '">전체</button></div>';
+    html += '<div class="varlist" id="varlist">' + (pool.length ? pool.map(x => {
+      const r = x.v.usages.filter(u => u.rw !== 'write').length;
+      const w = x.v.usages.filter(u => u.rw !== 'read').length;
+      return '<button class="vitem' + (x.key === state.varSel ? ' on' : '') + '" data-var="' + esc(x.key) + '"><div class="vn">' + esc(x.v.name) + (x.v.isSerialized ? ' <span class="chip serialized" style="font-size:8px;padding:0 4px">S</span>' : '') + '</div><div class="vt">' + esc(x.v.type || '—') + (state.varScope === 'all' ? ' · ' + esc(x.owner.name) : '') + '</div><div class="vm"><span class="pill read">r ' + r + '</span><span class="pill write">w ' + w + '</span></div></button>';
+    }).join('') : '<div class="empty">필드가 없습니다.</div>') + '</div></div>';
+
+    html += '<div id="tracePanel">' + (sel ? traceHtml(sel) : '<div class="empty">추적할 변수를 선택하세요.</div>') + '</div></div>';
+    $('#v-vars').innerHTML = html;
+
+    const vs = $('#vsearch');
+    if (vs) {
+      vs.value = state.vq;
+      vs.addEventListener('input', e => { state.vq = e.target.value.toLowerCase(); renderVars(); });
+      if (state.vq) { vs.focus(); vs.setSelectionRange(vs.value.length, vs.value.length); }
+    }
+    const sc = $('#scopeClass'), sa = $('#scopeAll');
+    if (sc) sc.addEventListener('click', () => { state.varScope = 'class'; state.varSel = null; ensureVar(); renderVars(); });
+    if (sa) sa.addEventListener('click', () => { state.varScope = 'all'; state.varSel = null; ensureVar(); renderVars(); });
+  }
+
+  function traceHtml(x) {
+    const f = x.v, t = x.owner;
+    const usages = (f.usages || []).slice().sort((a, b) => (a.line - b.line) || (a.method > b.method ? 1 : -1));
+    const reads = usages.filter(u => u.rw !== 'write').length;
+    const writes = usages.filter(u => u.rw !== 'read').length;
+    const extClasses = Array.from(new Set(usages.filter(u => u.external).map(u => u.owner)));
+    const decl = (x.kind === 'field' ? (f.attrs.indexOf('SerializeField') >= 0 ? '[SerializeField] ' : '') + (f.modifiers.join(' ') + ' ') : '') + (f.type || '') + ' ' + f.name + (f.init ? ' = ' + f.init : '') + ';';
+    const writeMethods = Array.from(new Set(usages.filter(u => u.rw !== 'read').map(u => u.method)));
+    const readMethods = Array.from(new Set(usages.filter(u => u.rw !== 'write').map(u => u.method)));
+
+    let h = '<div class="trace-decl"><div class="td-top"><span class="td-name">' + esc(f.name) + '</span><span class="td-type">' + esc(f.type || '') + '</span>' +
+      (f.isSerialized ? '<span class="chip serialized">serialized</span>' : '') +
+      '<span class="td-line">' + esc(t.name) + ' · ' + esc(t.file) + ' L' + f.line + '</span></div>' +
+      '<div class="td-code">' + esc(decl) + '</div>' +
+      '<div class="trace-stats"><span class="tstat read">읽기<b>' + reads + '</b></span><span class="tstat write">쓰기<b>' + writes + '</b></span><span class="tstat ext">참조 클래스<b>' + extClasses.length + '</b></span><span class="tstat">사용 메서드<b>' + new Set(usages.map(u => u.method)).size + '</b></span></div>' +
+      (writes && reads ? '<p class="muted-line" style="margin-top:10px;font-size:11px">쓰기: <b style="color:var(--write)">' + esc(writeMethods.join(', ')) + '</b> → 읽기: <b style="color:var(--read)">' + esc(readMethods.join(', ')) + '</b></p>' : '') +
+      (extClasses.length ? '<p class="muted-line" style="margin-top:6px;font-size:11px">다른 파일에서도 접근됨: <b style="color:var(--violet)">' + esc(extClasses.join(', ')) + '</b></p>' : '') +
+      '</div>';
+
+    if (!usages.length) {
+      return h + '<div class="empty">이 변수는 코드에서 한 번도 사용되지 않습니다.' + (f.isSerialized ? ' Inspector에서만 값을 받는 필드입니다.' : '') + '</div>';
+    }
+    h += '<div class="card"><div class="card-h"><h3>사용 지점</h3><span class="eyebrow">' + usages.length + ' hits</span></div><div class="trace">';
+    h += usages.map(u => '<div class="tr ' + u.rw + (u.external ? ' ext' : '') + '"><span class="dot"></span><div class="tr-top"><span class="pill ' + u.rw + '">' + (u.rw === 'read' ? 'read' : u.rw === 'write' ? 'write' : 'rw') + '</span><span class="tr-m">' + esc(u.owner === t.name ? u.method + '()' : u.owner + ' · ' + u.method + '()') + '</span>' + (u.external ? '<span class="pill ext">외부</span>' : '') + '<span class="tr-l">' + esc(u.file) + ' : ' + u.line + '</span></div><div class="tr-c">' + esc(u.code) + '</div>' + (u.via ? '<div class="tr-via">↳ ' + esc(u.via) + '</div>' : '') + '</div>').join('');
+    h += '</div></div>';
+    return h;
+  }
+
+  /* ---------- graph ---------- */
+  function renderGraph() {
+    const d = state.data;
+    if (!d.types.length) { $('#v-graph').innerHTML = '<div class="empty">타입이 없습니다.</div>'; return; }
+    const cols = { data: [], system: [], plain: [], action: [], ui: [] };
+    d.types.forEach(t => {
+      const tone = primaryRole(t).tone;
+      (cols[tone] || cols.plain).push(t);
+    });
+    const colIndex = { data: 0, system: 1, plain: 1, action: 2, ui: 3 };
+    const W = 172, H = 54, GX = 64, GY = 22;
+    const positions = new Map();
+    const colCounts = {};
+    Object.keys(cols).forEach(tone => {
+      cols[tone].forEach(t => {
+        const c = colIndex[tone];
+        const i = colCounts[tone] = (colCounts[tone] || 0);
+        colCounts[tone]++;
+        positions.set(t.name, { x: 30 + c * (W + GX), y: 34 + i * (H + GY), c });
+      });
+    });
+    let maxX = 0, maxY = 0;
+    positions.forEach(p => { maxX = Math.max(maxX, p.x + W); maxY = Math.max(maxY, p.y + H); });
+    const svgW = maxX + 30, svgH = maxY + 40;
+
+    let edges = '';
+    d.edges.forEach(e => {
+      const a = positions.get(e.from), b = positions.get(e.to);
+      if (!a || !b) return;
+      const x1 = a.x + W, y1 = a.y + H / 2, x2 = b.x, y2 = b.y + H / 2;
+      let path;
+      if (Math.abs(a.c - b.c) < 0.5) {
+        const cx = a.x + W / 2;
+        path = 'M ' + cx + ' ' + (a.y + H) + ' V ' + (b.y - 8) + ' H ' + (b.x + W / 2) + ' V ' + b.y;
+      } else if (x2 > x1) {
+        const mx = (x1 + x2) / 2;
+        path = 'M ' + x1 + ' ' + y1 + ' H ' + mx + ' V ' + y2 + ' H ' + x2;
+      } else {
+        const mx = x1 + 26;
+        path = 'M ' + x1 + ' ' + y1 + ' H ' + mx + ' V ' + (b.y + H + 12) + ' H ' + (b.x + W / 2) + ' V ' + (b.y + H);
+      }
+      edges += '<path class="gedge' + (e.inherit ? ' inherit' : '') + '" marker-end="url(#arw)" d="' + path + '"><title>' + esc(e.from + ' → ' + e.to + (e.label ? ' · ' + e.label : '')) + '</title></path>';
+    });
+
+    let nodes = '';
+    d.types.forEach(t => {
+      const p = positions.get(t.name);
+      if (!p) return;
+      const r = primaryRole(t);
+      nodes += '<g class="gnode' + (t.name === state.selected ? ' on' : '') + '" data-type="' + esc(t.name) + '" transform="translate(' + p.x + ',' + p.y + ')">' +
+        '<rect width="' + W + '" height="' + H + '" rx="9"></rect>' +
+        '<rect width="3" height="' + H + '" rx="1.5" fill="' + (r.tone === 'data' ? '#a99bf0' : r.tone === 'system' ? '#5ec8ac' : r.tone === 'action' ? '#d9a84e' : r.tone === 'ui' ? '#e2a1c7' : '#63796c') + '"></rect>' +
+        '<text x="14" y="25">' + esc(t.name.length > 24 ? t.name.slice(0, 23) + '…' : t.name) + '</text>' +
+        '<text class="gbase" x="14" y="42">' + esc((t.base || t.kind).toUpperCase()) + '</text>' +
+        '</g>';
+    });
+
+    let html = '<div class="section-head" style="margin-top:0"><h3>배선도</h3><span class="hint">타입이 다른 타입의 멤버를 참조하는 방향</span></div>';
+    html += '<div class="graph-wrap"><svg viewBox="0 0 ' + svgW + ' ' + svgH + '" width="100%" height="' + svgH + '" preserveAspectRatio="xMinYMin meet">' +
+      '<defs><marker id="arw" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3a5446"/></marker></defs>' +
+      edges + nodes + '</svg></div>';
+    html += '<div class="legend"><span class="li"><i></i>멤버 참조</span><span class="li v"><i></i>상속</span><span class="li g"><i style="background:#d9a84e"></i>데이터</span><span class="li"><i style="background:#5ec8ac"></i>시스템</span><span class="li"><i style="background:#a99bf0"></i>데이터 에셋</span></div>';
+    html += '<p class="muted-line" style="margin-top:12px;font-size:11px">노드를 클릭하면 해당 타입으로 이동합니다. 화살표에 마우스를 올리면 실제 참조 식이 표시됩니다.</p>';
+    $('#v-graph').innerHTML = html;
+  }
+
+  /* ---------- source ---------- */
+  function renderSource() {
+    const t = selType();
+    if (!t) { $('#v-source').innerHTML = '<div class="empty">파일이 없습니다.</div>'; return; }
+    const file = state.data.files.find(f => f.name === t.file);
+    if (!file) { $('#v-source').innerHTML = '<div class="empty">소스를 찾을 수 없습니다.</div>'; return; }
+    const sel = state.varSel ? findVar(state.varSel) : null;
+    const hits = {};
+    const own = sel && sel.owner.name === t.name ? [sel.v] : t.fields.concat(t.props);
+    own.forEach(v => (v.usages || []).forEach(u => {
+      if (u.owner === t.name || u.external) {
+        const cur = hits[u.line] || (hits[u.line] = { write: false });
+        if (u.rw !== 'read') cur.write = true;
+      }
+    }));
+    let html = '<div class="section-head" style="margin-top:0"><h3>' + esc(t.file) + '</h3><span class="hint">' + (sel && sel.owner.name === t.name ? esc(sel.v.name) + ' 사용 줄 강조' : '강조 없음 · 변수 추적에서 선택') + '</span></div>';
+    html += '<div class="code-wrap"><div class="code">' + file.lines.map((l, i) => {
+      const ln = i + 1, hit = hits[ln];
+      return '<div class="cl' + (hit ? ' hit' + (hit.write ? ' write' : '') : '') + '"><span class="ln">' + ln + '</span><span class="cd">' + (esc(l) || ' ') + '</span></div>';
+    }).join('') + '</div></div>';
+    $('#v-source').innerHTML = html;
+  }
+
+  /* ---------- markdown export ---------- */
+  function buildMd() {
+    const d = state.data;
+    const L = [];
+    L.push('# Unity 코드 해석 리포트', '');
+    L.push('- 파일: ' + d.files.length + '개');
+    L.push('- 타입: ' + d.types.length + '개');
+    L.push('- 생성: ' + new Date().toISOString().slice(0, 16).replace('T', ' '));
+    L.push('');
+    L.push('## 요약', '');
+    L.push('| 타입 | 베이스 | 역할 | 필드 | 읽기 | 쓰기 | 이슈 |');
+    L.push('|---|---|---|---|---|---|---|');
+    d.types.forEach(t => L.push('| ' + t.name + ' | ' + (t.base || '—') + ' | ' + primaryRole(t).name + ' | ' + t.fields.length + ' | ' + t.stats.reads + ' | ' + t.stats.writes + ' | ' + t.issues.length + ' |'));
+    L.push('');
+    d.types.forEach(t => {
+      L.push('## ' + t.name, '');
+      L.push('`' + t.file + '` L' + t.startLine + '–' + t.endLine + ' · `' + (t.modifiers.join(' ') + ' ' + t.kind + ' ' + t.name + (t.bases.length ? ' : ' + t.bases.join(', ') : '')).trim() + '`', '');
+      L.push('**역할**: ' + t.roles.map(r => r.name).join(' / '), '');
+      t.roles.forEach(r => { L.push('- ' + r.name + ' — ' + r.evidence.join('; ')); });
+      L.push('');
+      if (NOTES[t.name]) L.push(NOTES[t.name], '');
+      if (t.fields.length) {
+        L.push('### 필드', '', '| 이름 | 타입 | 직렬화 | 읽기 | 쓰기 | 사용 메서드 |', '|---|---|---|---|---|---|');
+        t.fields.forEach(f => L.push('| ' + f.name + ' | ' + f.type + ' | ' + (f.isSerialized ? 'O' : '') + ' | ' + readCount(f) + ' | ' + writeCount(f) + ' | ' + Array.from(new Set(f.usages.map(u => u.method))).join(', ') + ' |'));
+        L.push('');
+      }
+      if (t.methods.length) {
+        L.push('### 메서드', '');
+        t.methods.forEach(m => L.push('- `' + m.name + '(' + m.params.map(p => p.type + ' ' + p.name).join(', ') + ')` L' + m.line + (m.isLifecycle ? ' (Unity)' : '')));
+        L.push('');
+      }
+      if (t.issues.length) {
+        L.push('### 이슈', '');
+        t.issues.forEach(i => L.push('- **[' + i.sev + ']** ' + i.title + ' — ' + i.detail + (i.evidence ? ' (`' + i.evidence + '`)' : '')));
+        L.push('');
+      }
+    });
+    if (d.unresolved.length) {
+      L.push('## 미해석 외부 참조', '');
+      d.unresolved.forEach(u => L.push('- `' + u.name + '` ← ' + u.usedBy + ' L' + u.line));
+    }
+    return L.join('\n');
+  }
+
+  function exportMd() {
+    const blob = new Blob([buildMd()], { type: 'text/markdown;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'unitylens-report.md';
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 3000);
+    toast('Markdown 리포트를 내려받았습니다.');
+  }
+
+  /* ---------- mini markdown ---------- */
+  function mdInline(s) {
+    return esc(s)
+      .replace(/`([^`]+)`/g, '<code style="font-family:var(--mono);font-size:.92em;color:#e7d3a8;background:rgba(217,168,78,.08);padding:1px 4px;border-radius:3px">$1</code>')
+      .replace(/\*\*([^*]+)\*\*/g, '<b style="color:var(--ink)">$1</b>');
+  }
+
+  document.addEventListener('DOMContentLoaded', boot);
+})();
+
+</script>
+</body>
+</html>

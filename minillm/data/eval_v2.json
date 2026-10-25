@@ -1,0 +1,227 @@
+{
+ "metrics": {
+  "classes": 10,
+  "method_outputs": 16,
+  "base_acc": 1.0,
+  "field_recall": 0.632,
+  "field_precision": 0.973,
+  "role_acc": 1.0,
+  "format_rate": 1.0
+ },
+ "rows": [
+  {
+   "file": "enemy_06.cs",
+   "type": "EnemyAI",
+   "base_ok": true,
+   "base": "MonoBehaviour",
+   "gold_base": "MonoBehaviour",
+   "fields": [
+    "damage",
+    "player"
+   ],
+   "gold_fields": [
+    "attackRange",
+    "damage",
+    "detectionRange",
+    "moveSpeed",
+    "player",
+    "state"
+   ],
+   "sample": "상속: MonoBehaviour\n메서드: Attack\n역할: 동작 수행\n변수: damage 읽기 1회, player 읽기 1회\n호출: Attack, player.SendMessage\n주의: 없음"
+  },
+  {
+   "file": "enemy_274.cs",
+   "type": "Chaser",
+   "base_ok": true,
+   "base": "MonoBehaviour",
+   "gold_base": "MonoBehaviour",
+   "fields": [
+    "attackRange",
+    "damage",
+    "detectionRange",
+    "moveSpeed",
+    "player"
+   ],
+   "gold_fields": [
+    "attackRange",
+    "damage",
+    "detectionRange",
+    "moveSpeed",
+    "player",
+    "state"
+   ],
+   "sample": "상속: MonoBehaviour\n메서드: Update\n역할: 프레임 갱신\n변수: moveSpeed 읽기 1회, detectionRange 읽기 1회, attackRange 읽기 1회, player 읽기"
+  },
+  {
+   "file": "enemy_91.cs",
+   "type": "MeleeEnemy",
+   "base_ok": true,
+   "base": "MonoBehaviour",
+   "gold_base": "MonoBehaviour",
+   "fields": [
+    "attackRange",
+    "detectionRange",
+    "moveSpeed",
+    "player"
+   ],
+   "gold_fields": [
+    "attackRange",
+    "damage",
+    "detectionRange",
+    "moveSpeed",
+    "player",
+    "state"
+   ],
+   "sample": "상속: MonoBehaviour\n메서드: Update\n역할: 프레임 갱신\n변수: moveSpeed 읽기 1회, detectionRange 읽기 1회, attackRange 읽기 1회, player 읽기"
+  },
+  {
+   "file": "enemy_290.cs",
+   "type": "EnemyController",
+   "base_ok": true,
+   "base": "MonoBehaviour",
+   "gold_base": "MonoBehaviour",
+   "fields": [
+    "attackRange",
+    "detectionRange",
+    "moveSpeed",
+    "player"
+   ],
+   "gold_fields": [
+    "attackRange",
+    "damage",
+    "detectionRange",
+    "moveSpeed",
+    "player",
+    "state"
+   ],
+   "sample": "상속: MonoBehaviour\n메서드: Update\n역할: 프레임 갱신\n변수: moveSpeed 읽기 1회, detectionRange 읽기 1회, attackRange 읽기 1회, player 읽기"
+  },
+  {
+   "file": "enemy_111.cs",
+   "type": "EnemyController",
+   "base_ok": true,
+   "base": "MonoBehaviour",
+   "gold_base": "MonoBehaviour",
+   "fields": [
+    "player"
+   ],
+   "gold_fields": [
+    "attackRange",
+    "damage",
+    "detectionRange",
+    "moveSpeed",
+    "player",
+    "state"
+   ],
+   "sample": "상속: MonoBehaviour\n메서드: Start\n역할: 초기화\n변수: player 쓰기 1회\n호출: Start, GameObjectWithTag\n주의: 없음"
+  },
+  {
+   "file": "enemy_22.cs",
+   "type": "EnemyController",
+   "base_ok": true,
+   "base": "MonoBehaviour",
+   "gold_base": "MonoBehaviour",
+   "fields": [
+    "attackRange",
+    "detectionRange",
+    "moveSpeed",
+    "player"
+   ],
+   "gold_fields": [
+    "attackRange",
+    "damage",
+    "detectionRange",
+    "moveSpeed",
+    "player",
+    "state"
+   ],
+   "sample": "상속: MonoBehaviour\n메서드: Update\n역할: 프레임 갱신\n변수: moveSpeed 읽기 1회, detectionRange 읽기 1회, attackRange 읽기 1회, player 읽기"
+  },
+  {
+   "file": "enemy_300.cs",
+   "type": "MeleeEnemy",
+   "base_ok": true,
+   "base": "MonoBehaviour",
+   "gold_base": "MonoBehaviour",
+   "fields": [
+    "attackRange",
+    "detectionRange",
+    "moveSpeed",
+    "player"
+   ],
+   "gold_fields": [
+    "attackRange",
+    "damage",
+    "detectionRange",
+    "moveSpeed",
+    "player",
+    "state"
+   ],
+   "sample": "상속: MonoBehaviour\n메서드: Update\n역할: 프레임 갱신\n변수: moveSpeed 읽기 1회, detectionRange 읽기 1회, attackRange 읽기 1회, player 읽기"
+  },
+  {
+   "file": "enemy_190.cs",
+   "type": "EnemyAI",
+   "base_ok": true,
+   "base": "MonoBehaviour",
+   "gold_base": "MonoBehaviour",
+   "fields": [
+    "attackRange",
+    "damage",
+    "detectionRange",
+    "moveSpeed",
+    "player"
+   ],
+   "gold_fields": [
+    "attackRange",
+    "damage",
+    "detectionRange",
+    "moveSpeed",
+    "player",
+    "state"
+   ],
+   "sample": "상속: MonoBehaviour\n메서드: Attack\n역할: 동작 수행\n변수: damage 읽기 1회, player 읽기 1회\n호출: Attack, player.SendMessage\n주의: 없음"
+  },
+  {
+   "file": "enemy_77.cs",
+   "type": "MeleeEnemy",
+   "base_ok": true,
+   "base": "MonoBehaviour",
+   "gold_base": "MonoBehaviour",
+   "fields": [
+    "attackRange",
+    "damage",
+    "detectionRange",
+    "moveSpeed",
+    "player"
+   ],
+   "gold_fields": [
+    "attackRange",
+    "damage",
+    "detectionRange",
+    "moveSpeed",
+    "player",
+    "state"
+   ],
+   "sample": "상속: MonoBehaviour\n메서드: Start\n역할: 초기화\n변수: player 쓰기 1회\n호출: Start, GameObject.FindGameObjectWithTag\n주의: 없음"
+  },
+  {
+   "file": "pool_72.cs",
+   "type": "ProjectilePool",
+   "base_ok": true,
+   "base": "MonoBehaviour",
+   "gold_base": "MonoBehaviour",
+   "fields": [
+    "initize",
+    "pool",
+    "prefab"
+   ],
+   "gold_fields": [
+    "initialSize",
+    "pool",
+    "prefab"
+   ],
+   "sample": "상속: MonoBehaviour\n메서드: Return\n역할: 동작 수행\n변수: pool 읽기 1회\n호출: Return, item.SetActive, pool.Enqueue\n주의: 없음"
+  }
+ ]
+}
