@@ -1,0 +1,3201 @@
+{
+ "tune": {
+  "f1": 0.4458333333333334,
+  "threshold": 0.0,
+  "precision": 0.3194029850746269,
+  "recall": 0.7379310344827587,
+  "n_pairs": 1345
+ },
+ "eval": [
+  {
+   "metrics": {
+    "threshold": 0.0,
+    "field_recall": 0.747,
+    "field_precision": 0.848,
+    "gold": 494,
+    "pred": 435,
+    "hit": 369
+   },
+   "rows": [
+    {
+     "type": "ClientLevelTracker",
+     "pred": [
+      "m_Loader"
+     ],
+     "gold": [
+      "m_Loader"
+     ]
+    },
+    {
+     "type": "HostingState",
+     "pred": [
+      "k_MaxConnectPayload",
+      "m_ConnectionEventPublisher",
+      "m_MultiplayerServicesFacade"
+     ],
+     "gold": [
+      "k_MaxConnectPayload",
+      "m_ConnectionEventPublisher",
+      "m_MultiplayerServicesFacade"
+     ]
+    },
+    {
+     "type": "EquippedBall",
+     "pred": [
+      "_equippedItemConfig",
+      "animator",
+      "audioSource"
+     ],
+     "gold": []
+    },
+    {
+     "type": "ConnectionModeScript",
+     "pred": [
+      "m_CommandLineProcessor",
+      "m_JoinCodeInput",
+      "m_MaxConnections"
+     ],
+     "gold": [
+      "OnNotifyConnectionEventClient",
+      "OnNotifyConnectionEventHost",
+      "OnNotifyConnectionEventServer",
+      "m_AuthenticationButtons",
+      "m_ClientSynchronizationMode",
+      "m_CommandLineProcessor",
+      "m_ConnectionModeButtons",
+      "m_DisconnectClientButton",
+      "m_JoinCodeInput",
+      "m_MaxConnections"
+     ]
+    },
+    {
+     "type": "PushAgentEscape",
+     "pred": [
+      "IHaveAKey",
+      "MyKey",
+      "m_AgentRb",
+      "m_GameController",
+      "m_PushBlockSettings"
+     ],
+     "gold": [
+      "IHaveAKey",
+      "MyKey",
+      "m_AgentRb",
+      "m_GameController",
+      "m_PushBlockSettings"
+     ]
+    },
+    {
+     "type": "IPHostingUI",
+     "pred": [
+      "m_CanvasGroup",
+      "m_HostButton",
+      "m_IPUIMediator"
+     ],
+     "gold": [
+      "m_CanvasGroup",
+      "m_HostButton",
+      "m_IPInputField",
+      "m_IPUIMediator",
+      "m_PortInputField"
+     ]
+    },
+    {
+     "type": "NetworkDiscoveryBase",
+     "pred": [
+      "ActiveDiscoveryInterval",
+      "BroadcastAddress",
+      "OnServerFound",
+      "clientUdpClient",
+      "enableActiveDiscovery",
+      "hasMulticastLock",
+      "multicastLock",
+      "secretHandshake",
+      "serverBroadcastListenPort",
+      "serverUdpClient",
+      "transport"
+     ],
+     "gold": [
+      "ActiveDiscoveryInterval",
+      "BroadcastAddress",
+      "OnServerFound",
+      "clientUdpClient",
+      "enableActiveDiscovery",
+      "hasMulticastLock",
+      "multicastLock",
+      "secretHandshake",
+      "serverBroadcastListenPort",
+      "serverUdpClient",
+      "transport"
+     ]
+    },
+    {
+     "type": "HttpUtility",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "WakeGenerator",
+     "pred": [
+      "_lrs",
+      "genDistance",
+      "maxAge",
+      "wakePrefab",
+      "wakes"
+     ],
+     "gold": [
+      "_lrs",
+      "genDistance",
+      "maxAge",
+      "wakePrefab",
+      "wakes"
+     ]
+    },
+    {
+     "type": "ThinInputSystem",
+     "pred": [
+      "m_Barrier",
+      "m_FrameCount"
+     ],
+     "gold": [
+      "m_Barrier",
+      "m_FrameCount"
+     ]
+    },
+    {
+     "type": "ServerBossRoomState",
+     "pred": [
+      "k_LoseDelay",
+      "k_WinDelay",
+      "m_ConnectionManager",
+      "m_NetcodeHooks",
+      "m_PersistentGameState",
+      "m_PlayerSpawnPoints",
+      "m_PlayerSpawnPointsList",
+      "persistentGameState"
+     ],
+     "gold": [
+      "k_LoseDelay",
+      "k_WinDelay",
+      "m_LifeStateChangedEventMessageSubscriber",
+      "m_NetcodeHooks",
+      "m_PersistentGameState",
+      "m_PlayerPrefab",
+      "m_PlayerSpawnPoints",
+      "m_PlayerSpawnPointsList"
+     ]
+    },
+    {
+     "type": "Player",
+     "pred": [
+      "autoMove",
+      "autoSpeed",
+      "cameraOffset",
+      "destination",
+      "manualSpeed",
+      "movementDistance",
+      "movementProbability",
+      "moving",
+      "start",
+      "tf"
+     ],
+     "gold": [
+      "rigidbody2d",
+      "speed"
+     ]
+    },
+    {
+     "type": "RaceManager",
+     "pred": [
+      "Instance",
+      "RaceData",
+      "RaceStarted",
+      "RaceTime",
+      "_boatTimes",
+      "boats",
+      "demoRaceData",
+      "float>",
+      "raceStarted",
+      "raceUiPrefab",
+      "raceUiTouchPrefab"
+     ],
+     "gold": [
+      "Instance",
+      "RaceData",
+      "RaceStarted",
+      "RaceTime",
+      "_boatTimes",
+      "boats",
+      "raceStarted"
+     ]
+    },
+    {
+     "type": "SyncSet",
+     "pred": [],
+     "gold": [
+      "OnAdd",
+      "OnChange",
+      "OnClear",
+      "OnRemove",
+      "changes",
+      "changesAhead",
+      "objects"
+     ]
+    },
+    {
+     "type": "ServerCharacterMovement",
+     "pred": [
+      "k_CheatSpeed",
+      "m_CharLogic",
+      "m_ForcedSpeed",
+      "m_KnockbackVector",
+      "m_MovementState",
+      "m_NavMeshAgent",
+      "m_NavPath",
+      "m_NavigationSystem",
+      "m_PreviousState",
+      "m_Rigidbody",
+      "m_SpecialModeDurationRemaining"
+     ],
+     "gold": [
+      "k_CheatSpeed",
+      "m_CharLogic",
+      "m_ForcedSpeed",
+      "m_KnockbackVector",
+      "m_MovementState",
+      "m_NavMeshAgent",
+      "m_NavPath",
+      "m_NavigationSystem",
+      "m_PreviousState",
+      "m_Rigidbody",
+      "m_SpecialModeDurationRemaining"
+     ]
+    },
+    {
+     "type": "PartyHUD",
+     "pred": [
+      "ServerCharacter>",
+      "m_AllyPanel",
+      "m_ClientSender",
+      "m_HeroPortrait",
+      "m_OwnedPlayerAvatar",
+      "m_OwnedServerCharacter",
+      "m_PartyClassSymbols",
+      "m_PartyHealthGodModeImages",
+      "m_PartyHealthSliders",
+      "m_PartyIds",
+      "m_PartyNames",
+      "m_PlayerAvatars",
+      "m_TrackedAllies"
+     ],
+     "gold": [
+      "m_AllyPanel",
+      "m_ClientSender",
+      "m_HeroPortrait",
+      "m_OwnedPlayerAvatar",
+      "m_OwnedServerCharacter",
+      "m_PartyClassSymbols",
+      "m_PartyHealthGodModeImages",
+      "m_PartyHealthSliders",
+      "m_PartyIds",
+      "m_PartyNames",
+      "m_PlayerAvatars",
+      "m_TrackedAllies"
+     ]
+    },
+    {
+     "type": "ExperimentalWarning",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "DeltaCompression",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "Controller2D",
+     "pred": [
+      "collider",
+      "collisionMask",
+      "collisions",
+      "horizontalRayCount",
+      "horizontalRaySpacing",
+      "maxClimbAngle",
+      "raycastOrigins",
+      "skinWidth",
+      "verticalRayCount",
+      "verticalRaySpacing"
+     ],
+     "gold": [
+      "collisions",
+      "maxClimbAngle",
+      "maxDescendAngle",
+      "playerInput"
+     ]
+    },
+    {
+     "type": "AoeActionInput",
+     "pred": [
+      "k_Plane",
+      "m_Camera",
+      "m_InRangeVisualization",
+      "m_NavMeshHit",
+      "m_OutOfRangeVisualization",
+      "m_PointAction",
+      "m_ReceivedMouseDownEvent",
+      "m_TargetAction"
+     ],
+     "gold": [
+      "k_Plane",
+      "m_Camera",
+      "m_InRangeVisualization",
+      "m_NavMeshHit",
+      "m_OutOfRangeVisualization",
+      "m_PointAction",
+      "m_ReceivedMouseDownEvent",
+      "m_TargetAction"
+     ]
+    },
+    {
+     "type": "GridSpawner",
+     "pred": [
+      "NumX",
+      "NumY",
+      "NumZ",
+      "Prefab",
+      "spacing"
+     ],
+     "gold": [
+      "NumX",
+      "NumY",
+      "NumZ",
+      "Prefab",
+      "spacing"
+     ]
+    },
+    {
+     "type": "HexGrid3D",
+     "pred": [
+      "cellHeight",
+      "cellRadius",
+      "neighborCellsBase",
+      "oneDiv3",
+      "originOffset",
+      "sqrt3",
+      "sqrt3Div2",
+      "sqrt3Div3",
+      "twoDiv3"
+     ],
+     "gold": [
+      "cellHeight",
+      "cellRadius",
+      "neighborCellsBase",
+      "oneDiv3",
+      "originOffset",
+      "sqrt3",
+      "sqrt3Div2",
+      "sqrt3Div3",
+      "twoDiv3"
+     ]
+    },
+    {
+     "type": "ServerCube",
+     "pred": [
+      "distance",
+      "jitter",
+      "loss",
+      "scramble",
+      "speed",
+      "start"
+     ],
+     "gold": []
+    },
+    {
+     "type": "LodTweaker",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "DayNightController",
+     "pred": [
+      "GlobalTime",
+      "PresetKey",
+      "_currentPreset",
+      "_instance",
+      "_presets",
+      "_skybox",
+      "_skyboxColour",
+      "_sun",
+      "autoIcrement",
+      "reflections",
+      "speed",
+      "time"
+     ],
+     "gold": [
+      "GlobalTime",
+      "PresetKey",
+      "_ambientColour",
+      "_currentPreset",
+      "_fogColour",
+      "_instance",
+      "_northHeading",
+      "_presets",
+      "_prevTime",
+      "_skybox",
+      "_skyboxColour",
+      "_sun",
+      "_sunColour",
+      "autoIcrement",
+      "speed",
+      "time"
+     ]
+    },
+    {
+     "type": "SRPBatcherProfiler",
+     "pred": [
+      "kAverageStatDuration",
+      "m_AccDeltaTime",
+      "m_Enable",
+      "m_frameCount",
+      "m_oldBatcherEnable",
+      "m_statsLabel",
+      "m_style",
+      "recordersList"
+     ],
+     "gold": [
+      "kAverageStatDuration",
+      "m_AccDeltaTime",
+      "m_Enable",
+      "m_frameCount",
+      "m_oldBatcherEnable",
+      "m_statsLabel",
+      "m_style",
+      "recordersList"
+     ]
+    },
+    {
+     "type": "PushBlockEnvController",
+     "pred": [
+      "AgentsList",
+      "BlocksList",
+      "MaxEnvironmentSteps",
+      "UseRandomAgentPosition",
+      "UseRandomAgentRotation",
+      "UseRandomBlockPosition",
+      "UseRandomBlockRotation",
+      "area",
+      "areaBounds",
+      "ground",
+      "m_GroundMaterial",
+      "m_GroundRenderer"
+     ],
+     "gold": [
+      "AgentsList",
+      "BlocksList",
+      "MaxEnvironmentSteps",
+      "UseRandomAgentPosition",
+      "UseRandomAgentRotation",
+      "UseRandomBlockPosition",
+      "UseRandomBlockRotation",
+      "area",
+      "areaBounds",
+      "ground",
+      "m_AgentGroup",
+      "m_GroundMaterial",
+      "m_GroundRenderer",
+      "m_NumberOfRemainingBlocks",
+      "m_PushBlockSettings",
+      "m_ResetTimer"
+     ]
+    },
+    {
+     "type": "SimpleCameraController",
+     "pred": [
+      "boost",
+      "invertY",
+      "m_InterpolatingCameraState",
+      "m_TargetCameraState",
+      "mouseSensitivityCurve",
+      "positionLerpTime",
+      "rotationLerpTime"
+     ],
+     "gold": [
+      "boost",
+      "invertY",
+      "m_InterpolatingCameraState",
+      "m_TargetCameraState",
+      "mouseSensitivityCurve",
+      "positionLerpTime",
+      "rotationLerpTime"
+     ]
+    },
+    {
+     "type": "Paginator",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "NetworkDiscoveryHUD",
+     "pred": [
+      "ServerResponse>",
+      "discoveredServers",
+      "networkDiscovery",
+      "scrollViewPos"
+     ],
+     "gold": [
+      "discoveredServers",
+      "networkDiscovery",
+      "scrollViewPos"
+     ]
+    },
+    {
+     "type": "SessionUIMediator",
+     "pred": [],
+     "gold": [
+      "k_DefaultSessionName",
+      "k_MaxPlayers",
+      "m_AuthenticationServiceFacade",
+      "m_CanvasGroup",
+      "m_ConnectStatusSubscriber",
+      "m_ConnectionManager",
+      "m_CreateToggleHighlight",
+      "m_CreateToggleTabBlocker",
+      "m_JoinToggleHighlight",
+      "m_JoinToggleTabBlocker",
+      "m_LoadingSpinner",
+      "m_LocalSession",
+      "m_LocalUser",
+      "m_MultiplayerServicesFacade",
+      "m_NameGenerationData",
+      "m_PlayerNameLabel",
+      "m_SessionCreationUI",
+      "m_SessionJoiningUI"
+     ]
+    },
+    {
+     "type": "ClientPlayerAvatarNetworkAnimator",
+     "pred": [
+      "m_AvatarInstantiated",
+      "m_NetworkAvatarGuidState"
+     ],
+     "gold": [
+      "m_AvatarInstantiated",
+      "m_NetworkAvatarGuidState"
+     ]
+    },
+    {
+     "type": "PlayerTestNetMan",
+     "pred": [
+      "singleton"
+     ],
+     "gold": []
+    },
+    {
+     "type": "SessionJoiningUI",
+     "pred": [
+      "m_Container",
+      "m_JoinCodeField",
+      "m_JoinSessionButton",
+      "m_LocalSessionsRefreshedSub",
+      "m_SessionUIMediator",
+      "m_UpdateRunner"
+     ],
+     "gold": [
+      "m_CanvasGroup",
+      "m_Container",
+      "m_EmptySessionListLabel",
+      "m_JoinCodeField",
+      "m_JoinSessionButton",
+      "m_LocalSessionsRefreshedSub",
+      "m_SessionListItemPrototype",
+      "m_SessionListItems",
+      "m_SessionUIMediator",
+      "m_UpdateRunner"
+     ]
+    },
+    {
+     "type": "AbstractBoard",
+     "pred": [
+      "OnNoValidMovesAction"
+     ],
+     "gold": []
+    },
+    {
+     "type": "PatrollingObstacle",
+     "pred": [
+      "animator",
+      "m_Audio",
+      "m_CurrentPos",
+      "m_MaxSpeed",
+      "m_OriginalPosition",
+      "m_Segement",
+      "m_isMoving",
+      "maxTime",
+      "minTime",
+      "patrollingSound",
+      "s_DeadHash",
+      "s_SpeedRatioHash"
+     ],
+     "gold": [
+      "animator",
+      "k_LaneOffsetToFullWidth",
+      "m_Audio",
+      "m_CurrentPos",
+      "m_MaxSpeed",
+      "m_OriginalPosition",
+      "m_Segement",
+      "m_isMoving",
+      "maxTime",
+      "minTime",
+      "patrollingSound",
+      "s_DeadHash",
+      "s_SpeedRatioHash"
+     ]
+    },
+    {
+     "type": "NetworkReaderPool",
+     "pred": [
+      "Count",
+      "Pool"
+     ],
+     "gold": [
+      "Pool"
+     ]
+    },
+    {
+     "type": "EdgegapLobbyKcpTransport",
+     "pred": [
+      "Api",
+      "_lobbyId",
+      "_playerId",
+      "_request",
+      "_status",
+      "lobbyUrl",
+      "lobbyWaitTimeout"
+     ],
+     "gold": [
+      "Api",
+      "_lobbyId",
+      "_playerId",
+      "_request",
+      "_status",
+      "lobbyUrl",
+      "lobbyWaitTimeout"
+     ]
+    },
+    {
+     "type": "BasicMath",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "Helpers",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "NetworkRigidbodyReliable2D",
+     "pred": [
+      "ClientToServer",
+      "rb",
+      "wasKinematic"
+     ],
+     "gold": [
+      "rb",
+      "wasKinematic"
+     ]
+    },
+    {
+     "type": "HeroEmoteBar",
+     "pred": [
+      "m_InputSender"
+     ],
+     "gold": [
+      "m_InputSender"
+     ]
+    },
+    {
+     "type": "Tank",
+     "pred": [
+      "agent",
+      "animator",
+      "health",
+      "healthBar",
+      "projectileMount",
+      "projectilePrefab",
+      "rotationSpeed",
+      "shootKey",
+      "turret"
+     ],
+     "gold": [
+      "agent",
+      "animator",
+      "health",
+      "healthBar",
+      "projectileMount",
+      "projectilePrefab",
+      "rotationSpeed",
+      "shootKey",
+      "turret"
+     ]
+    },
+    {
+     "type": "NetworkCharSelection",
+     "pred": [],
+     "gold": [
+      "AvatarConfiguration",
+      "OnClientChangedSeat",
+      "m_SessionPlayers"
+     ]
+    },
+    {
+     "type": "LagCompensation",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "AutoForce",
+     "pred": [
+      "force",
+      "forceProbability",
+      "rigidbody3d"
+     ],
+     "gold": [
+      "force",
+      "forceProbability",
+      "rigidbody3d"
+     ]
+    },
+    {
+     "type": "LoginUI",
+     "pred": [
+      "hostButton",
+      "instance",
+      "networkAddressInput",
+      "originalNetworkAddress"
+     ],
+     "gold": [
+      "clientButton",
+      "errorText",
+      "hostButton",
+      "instance",
+      "networkAddressInput",
+      "originalNetworkAddress",
+      "usernameInput"
+     ]
+    },
+    {
+     "type": "JointDriveController",
+     "pred": [
+      "BodyPart>",
+      "bodyPartsDict",
+      "bodyPartsList",
+      "jointDampen",
+      "k_MaxAngularVelocity",
+      "maxJointForceLimit",
+      "maxJointSpring"
+     ],
+     "gold": [
+      "bodyPartsDict",
+      "bodyPartsList",
+      "jointDampen",
+      "k_MaxAngularVelocity",
+      "maxJointForceLimit",
+      "maxJointSpring"
+     ]
+    },
+    {
+     "type": "NetworkRuntimeProfiler",
+     "pred": [
+      "Output",
+      "inStats"
+     ],
+     "gold": [
+      "Output",
+      "OutputFilePath",
+      "RecentDuration",
+      "Sort",
+      "elapsedSinceReset",
+      "inStats",
+      "outStats",
+      "printBuilder"
+     ]
+    },
+    {
+     "type": "NetworkConnectionToServer",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "GraphicsUtils",
+     "pred": [
+      "s_Quad",
+      "s_WhiteTexture"
+     ],
+     "gold": [
+      "s_Quad"
+     ]
+    },
+    {
+     "type": "PushAgentBasic",
+     "pred": [
+      "area",
+      "areaBounds",
+      "block",
+      "goal",
+      "goalDetect",
+      "ground",
+      "m_AgentRb",
+      "m_BlockRb",
+      "m_GroundMaterial",
+      "m_GroundRenderer",
+      "m_PushBlockSettings",
+      "useVectorObs"
+     ],
+     "gold": [
+      "area",
+      "areaBounds",
+      "block",
+      "goalDetect",
+      "ground",
+      "m_AgentRb",
+      "m_BlockRb",
+      "m_GroundMaterial",
+      "m_GroundRenderer",
+      "m_PushBlockSettings",
+      "m_ResetParams"
+     ]
+    },
+    {
+     "type": "TimeoutAuthenticator",
+     "pred": [
+      "authenticator",
+      "timeout"
+     ],
+     "gold": [
+      "authenticator",
+      "timeout"
+     ]
+    },
+    {
+     "type": "HistoryCollider",
+     "pred": [
+      "actualCollider",
+      "boundsCollider",
+      "boundsLimit",
+      "boundsPerBucket",
+      "captureInterval",
+      "currentColor",
+      "history",
+      "historyColor",
+      "lastCaptureTime"
+     ],
+     "gold": [
+      "actualCollider",
+      "boundsCollider",
+      "boundsLimit",
+      "boundsPerBucket",
+      "captureInterval",
+      "currentColor",
+      "history",
+      "historyColor",
+      "lastCaptureTime"
+     ]
+    },
+    {
+     "type": "DungeonEscapeEnvController",
+     "pred": [
+      "AgentsList",
+      "DragonsList",
+      "MaxEnvironmentSteps",
+      "PlayerInfo>",
+      "UseRandomAgentPosition",
+      "UseRandomAgentRotation",
+      "areaBounds",
+      "ground",
+      "m_GroundMaterial",
+      "m_GroundRenderer",
+      "m_PlayerDict",
+      "m_PushBlockSettings",
+      "m_ResetTimer"
+     ],
+     "gold": [
+      "AgentsList",
+      "DragonsList",
+      "Key",
+      "MaxEnvironmentSteps",
+      "Tombstone",
+      "UseRandomAgentPosition",
+      "UseRandomAgentRotation",
+      "areaBounds",
+      "ground",
+      "m_AgentGroup",
+      "m_GroundMaterial",
+      "m_GroundRenderer",
+      "m_NumberOfRemainingPlayers",
+      "m_PushBlockSettings",
+      "m_ResetTimer"
+     ]
+    },
+    {
+     "type": "EnumFlagsDrawer",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "CrawlerAgent",
+     "pred": [
+      "TargetPrefab",
+      "body",
+      "leg0Lower",
+      "leg0Upper",
+      "leg1Lower",
+      "leg1Upper",
+      "leg2Lower",
+      "leg2Upper",
+      "leg3Upper",
+      "m_Target",
+      "m_TargetWalkingSpeed",
+      "m_maxWalkingSpeed"
+     ],
+     "gold": [
+      "TargetPrefab",
+      "body",
+      "foot0",
+      "foot1",
+      "foot2",
+      "foot3",
+      "groundedMaterial",
+      "leg0Lower",
+      "leg0Upper",
+      "leg1Lower",
+      "leg1Upper",
+      "leg2Lower",
+      "leg2Upper",
+      "leg3Lower",
+      "leg3Upper",
+      "m_DirectionIndicator",
+      "m_JdController",
+      "m_OrientationCube",
+      "m_Target",
+      "m_maxWalkingSpeed",
+      "unGroundedMaterial",
+      "useFootGroundedVisualization"
+     ]
+    },
+    {
+     "type": "ServerHostClientText",
+     "pred": [
+      "m_AnchoredPosition",
+      "m_Color",
+      "m_ColorAlpha",
+      "m_DisplayText",
+      "m_LastFocusedValue"
+     ],
+     "gold": [
+      "m_Color",
+      "m_ColorAlpha",
+      "m_DisplayText",
+      "m_LastFocusedValue",
+      "m_LocalPosition"
+     ]
+    },
+    {
+     "type": "MeleeAction",
+     "pred": [
+      "k_RangePadding",
+      "m_ImpactPlayed",
+      "m_SpawnedGraphics"
+     ],
+     "gold": [
+      "m_ExecutionFired",
+      "m_ProvisionalTarget"
+     ]
+    },
+    {
+     "type": "RotatingBodyLogic",
+     "pred": [
+      "OnExitTransferParentOnStay",
+      "PathMovement",
+      "RotateDirection",
+      "RotatingBodyLogicExpanded",
+      "RotationSpeed",
+      "m_CurrentNavPoint",
+      "m_CurrentPathObject",
+      "m_RotationDirection",
+      "m_TagHandle",
+      "m_TriggerStayBodies"
+     ],
+     "gold": [
+      "OnExitTransferParentOnStay",
+      "PathMovement",
+      "RotateDirection",
+      "RotatingBodyLogicExpanded",
+      "RotationSpeed",
+      "m_CurrentNavPoint",
+      "m_CurrentPathObject",
+      "m_RotationDirection",
+      "m_TagHandle",
+      "m_TriggerStayBodies"
+     ]
+    },
+    {
+     "type": "NetworkRigidbodyUnreliable2D",
+     "pred": [
+      "ClientToServer",
+      "rb",
+      "wasKinematic"
+     ],
+     "gold": [
+      "rb",
+      "wasKinematic"
+     ]
+    },
+    {
+     "type": "Water",
+     "pred": [
+      "_depthCam",
+      "_depthTex",
+      "_instance",
+      "_maxWaveHeight",
+      "_planarReflections",
+      "_rampTexture",
+      "_useComputeBuffer",
+      "_waveHeight",
+      "_waves",
+      "bakedDepthTex",
+      "computeOverride",
+      "waveBuffer"
+     ],
+     "gold": [
+      "AbsorptionScatteringRamp",
+      "CameraRoll",
+      "CubemapTexture",
+      "DepthCamZParams",
+      "FoamMap",
+      "InvViewProjection",
+      "MaxDepth",
+      "MaxWaveHeight",
+      "SurfaceMap",
+      "WaterDepthMap",
+      "WaveCount",
+      "WaveData",
+      "WaveDataBuffer",
+      "WaveHeight",
+      "_depthCam",
+      "_depthTex",
+      "_maxWaveHeight",
+      "_planarReflections",
+      "_rampTexture",
+      "_useComputeBuffer",
+      "_waveHeight",
+      "_waves",
+      "bakedDepthTex",
+      "computeOverride",
+      "resources",
+      "settingsData",
+      "surfaceData",
+      "waveBuffer"
+     ]
+    },
+    {
+     "type": "ClientConnectionState",
+     "pred": [
+      "Connected",
+      "Connecting",
+      "receivePipe",
+      "receiveThread"
+     ],
+     "gold": [
+      "Connected",
+      "Connecting",
+      "receivePipe",
+      "receiveThread"
+     ]
+    },
+    {
+     "type": "ServerHostClientText",
+     "pred": [
+      "m_Color",
+      "m_ColorAlpha",
+      "m_DisplayText",
+      "m_LocalPosition"
+     ],
+     "gold": [
+      "m_Color",
+      "m_ColorAlpha",
+      "m_DisplayText",
+      "m_LastFocusedValue",
+      "m_LocalPosition"
+     ]
+    },
+    {
+     "type": "NetworkMetricsModel",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "ConnectionMethodRelay",
+     "pred": [
+      "m_MultiplayerServicesFacade"
+     ],
+     "gold": [
+      "m_MultiplayerServicesFacade"
+     ]
+    },
+    {
+     "type": "ConnectionMethodIP",
+     "pred": [],
+     "gold": [
+      "m_Ipaddress",
+      "m_Port"
+     ]
+    },
+    {
+     "type": "SpawnExplosionAuthoringBaker",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "Missile",
+     "pred": [
+      "animator",
+      "k_LeftMostLaneIndex",
+      "k_RightMostLaneIndex",
+      "k_Speed",
+      "m_Audio",
+      "m_IsMoving",
+      "m_OwnSegement",
+      "movingSound",
+      "s_DeathHash",
+      "s_RunHash"
+     ],
+     "gold": [
+      "animator",
+      "k_LeftMostLaneIndex",
+      "k_RightMostLaneIndex",
+      "k_Speed",
+      "m_Audio",
+      "m_IsMoving",
+      "m_OwnSegement",
+      "movingSound",
+      "s_DeathHash",
+      "s_RunHash"
+     ]
+    },
+    {
+     "type": "DropAction",
+     "pred": [
+      "m_ActionStartTime",
+      "m_HeldNetworkObject"
+     ],
+     "gold": [
+      "m_ActionStartTime",
+      "m_HeldNetworkObject"
+     ]
+    },
+    {
+     "type": "MLAgentsSettingsManager",
+     "pred": [
+      "EditorBuildSettingsConfigKey",
+      "OnSettingsChange",
+      "s_Settings"
+     ],
+     "gold": [
+      "EditorBuildSettingsConfigKey",
+      "OnSettingsChange",
+      "s_Settings"
+     ]
+    },
+    {
+     "type": "RotateThroughCollisionFiltersSystem",
+     "pred": [
+      "BlueCollisionFilter",
+      "GreenCollisionFilter",
+      "RedCollisionFilter"
+     ],
+     "gold": [
+      "BlueCollisionFilter",
+      "GreenCollisionFilter",
+      "RedCollisionFilter"
+     ]
+    },
+    {
+     "type": "ClientPrefs",
+     "pred": [
+      "k_AvailableProfilesKey",
+      "k_ClientGUIDKey",
+      "k_DefaultMasterVolume",
+      "k_DefaultMusicVolume",
+      "k_MasterVolumeKey",
+      "k_MusicVolumeKey"
+     ],
+     "gold": [
+      "k_AvailableProfilesKey",
+      "k_ClientGUIDKey",
+      "k_DefaultMasterVolume",
+      "k_DefaultMusicVolume",
+      "k_MasterVolumeKey",
+      "k_MusicVolumeKey"
+     ]
+    },
+    {
+     "type": "PlanarReflections",
+     "pred": [
+      "BeginPlanarReflections",
+      "Camera>",
+      "_oldReflectionTextureSize",
+      "_planarReflectionTextureId",
+      "_reflectionCamera",
+      "_reflectionTexture",
+      "m_planeOffset",
+      "m_settings",
+      "target"
+     ],
+     "gold": [
+      "BeginPlanarReflections",
+      "_planarReflectionTextureId",
+      "_reflectionCamera",
+      "_reflectionTexture",
+      "m_planeOffset",
+      "m_settings",
+      "target"
+     ]
+    },
+    {
+     "type": "SceneViewUtility",
+     "pred": [],
+     "gold": [
+      "k_DefaultNotifications",
+      "k_DefaultNotificationsSpeed",
+      "k_IndeterminateProgressCurveLeftMargin",
+      "k_IndeterminateProgressCurveRightMargin",
+      "k_NotificationFadeCurve",
+      "k_NotificationSpeedPrefKey",
+      "k_NotificationsPrefKey",
+      "s_GetProgress",
+      "s_IsTemporary",
+      "s_StartTime",
+      "s_StatusMessage"
+     ]
+    },
+    {
+     "type": "LevelLoader",
+     "pred": [
+      "Level>",
+      "Level>Levels =>",
+      "m_DisableLevelSync",
+      "m_Levels"
+     ],
+     "gold": [
+      "m_DisableLevelSync",
+      "m_Levels"
+     ]
+    },
+    {
+     "type": "NetcodeClientLevelSync",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "PerfomanceStats",
+     "pred": [
+      "Stats",
+      "averageFrametime",
+      "averageVel",
+      "debugInfo",
+      "defaultInfo",
+      "demoFrames",
+      "frametime",
+      "frametimeDisplay",
+      "maxFrame",
+      "minFrame",
+      "mode",
+      "runtime"
+     ],
+     "gold": [
+      "Stats",
+      "averageFrametime",
+      "averageVel",
+      "debugInfo",
+      "defaultInfo",
+      "demoFrames",
+      "frametime",
+      "frametimeDisplay",
+      "maxFrame",
+      "minFrame",
+      "mode",
+      "runtime"
+     ]
+    },
+    {
+     "type": "SkinnerParticle",
+     "pred": [
+      "_drag",
+      "_gravity",
+      "_maxLife",
+      "_maxScale",
+      "_maxSpin",
+      "_noiseAmplitude",
+      "_source",
+      "_speedLimit",
+      "_speedToLife",
+      "_speedToScale",
+      "_speedToSpin",
+      "_template"
+     ],
+     "gold": [
+      "_defaultMaterial",
+      "_drag",
+      "_gravity",
+      "_kernel",
+      "_kernelShader",
+      "_maxLife",
+      "_maxScale",
+      "_maxSpin",
+      "_noiseAmplitude",
+      "_noiseFrequency",
+      "_noiseMotion",
+      "_noiseOffset",
+      "_randomSeed",
+      "_reconfigured",
+      "_renderer",
+      "_source",
+      "_speedLimit",
+      "_speedToLife",
+      "_speedToScale",
+      "_speedToSpin",
+      "_template"
+     ]
+    },
+    {
+     "type": "TargetAction",
+     "pred": [
+      "k_ReticuleGroundHeight",
+      "m_CurrentTarget",
+      "m_NewTarget",
+      "m_TargetReticule"
+     ],
+     "gold": []
+    },
+    {
+     "type": "ExpandChildrenDrawer",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "MeshChangerSystem",
+     "pred": [
+      "BatchMeshID>",
+      "m_MeshMapping"
+     ],
+     "gold": [
+      "m_MeshMapping"
+     ]
+    },
+    {
+     "type": "ConnectionMonitor_UIDataSystem",
+     "pred": [
+      "m_OwnsData"
+     ],
+     "gold": [
+      "m_OwnsData"
+     ]
+    },
+    {
+     "type": "AppVersionWhitelistResponse",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "ServerAnimationHandler",
+     "pred": [
+      "m_NetworkAnimator",
+      "m_NetworkLifeState",
+      "m_VisualizationConfiguration"
+     ],
+     "gold": [
+      "m_NetworkLifeState",
+      "m_VisualizationConfiguration"
+     ]
+    },
+    {
+     "type": "HostMigrationHelper",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "SelfDisable",
+     "pred": [
+      "m_DisableTimestamp",
+      "m_DisabledDelay"
+     ],
+     "gold": [
+      "m_DisableTimestamp",
+      "m_DisabledDelay"
+     ]
+    },
+    {
+     "type": "PushAgentCollab",
+     "pred": [
+      "m_AgentRb",
+      "m_PushBlockSettings"
+     ],
+     "gold": [
+      "m_AgentRb",
+      "m_PushBlockSettings"
+     ]
+    },
+    {
+     "type": "RunGhostPlayableBehaviour",
+     "pred": [
+      "m_clipAim",
+      "m_clipLengths",
+      "m_clips",
+      "m_controller",
+      "m_mixer",
+      "m_positions",
+      "m_weights"
+     ],
+     "gold": [
+      "m_clipAim",
+      "m_clipLengths",
+      "m_clips",
+      "m_controller",
+      "m_mixer",
+      "m_positions",
+      "m_weights"
+     ]
+    },
+    {
+     "type": "LobbyApi",
+     "pred": [
+      "Lobbies",
+      "LobbyUrl"
+     ],
+     "gold": [
+      "Lobbies",
+      "LobbyUrl"
+     ]
+    },
+    {
+     "type": "SpatialHashingInterestManagement",
+     "pred": [
+      "checkMethod",
+      "grid",
+      "lastRebuildTime",
+      "rebuildInterval",
+      "showSlider",
+      "visRange"
+     ],
+     "gold": [
+      "checkMethod",
+      "grid",
+      "lastRebuildTime",
+      "rebuildInterval",
+      "showSlider",
+      "visRange"
+     ]
+    },
+    {
+     "type": "PredictedSyncDataReadWrite",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "MaterialFactory",
+     "pred": [
+      "Material>",
+      "m_Materials"
+     ],
+     "gold": [
+      "m_Materials"
+     ]
+    },
+    {
+     "type": "NetworkRigidbodyReliable",
+     "pred": [
+      "ClientToServer",
+      "rb",
+      "wasKinematic"
+     ],
+     "gold": [
+      "ClientToServer",
+      "rb",
+      "wasKinematic"
+     ]
+    },
+    {
+     "type": "PyramidArea",
+     "pred": [
+      "numPyra",
+      "pyramid",
+      "range",
+      "spawnAreas",
+      "stonePyramid"
+     ],
+     "gold": [
+      "pyramid",
+      "spawnAreas",
+      "stonePyramid"
+     ]
+    },
+    {
+     "type": "AdditiveNetworkManager",
+     "pred": [
+      "Zone",
+      "subScenes"
+     ],
+     "gold": [
+      "Zone",
+      "subScenes"
+     ]
+    },
+    {
+     "type": "SessionUser",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "DriverConstructor",
+     "pred": [
+      "s_DisconnectTimeout"
+     ],
+     "gold": [
+      "s_DisconnectTimeout"
+     ]
+    },
+    {
+     "type": "PhysicsBoundsHandleUtility",
+     "pred": [
+      "kBackfaceAlphaMultiplier",
+      "kDegreeEpsilon",
+      "kDistanceEpsilon",
+      "k_NextAxis",
+      "s_FacePoints",
+      "s_LinePoints"
+     ],
+     "gold": [
+      "kBackfaceAlphaMultiplier",
+      "kDegreeEpsilon",
+      "kDistanceEpsilon",
+      "k_NextAxis",
+      "s_FacePoints",
+      "s_LinePoints"
+     ]
+    },
+    {
+     "type": "GrabbableBall",
+     "pred": [
+      "GrabDistance",
+      "m_IsGrabbed",
+      "m_Material",
+      "m_Rigidbody"
+     ],
+     "gold": [
+      "GrabDistance",
+      "m_IsGrabbed",
+      "m_Material",
+      "m_Rigidbody"
+     ]
+    }
+   ]
+  },
+  {
+   "metrics": {
+    "threshold": 0.0,
+    "field_recall": 0.747,
+    "field_precision": 0.848,
+    "gold": 494,
+    "pred": 435,
+    "hit": 369
+   },
+   "rows": [
+    {
+     "type": "ClientLevelTracker",
+     "pred": [
+      "m_Loader"
+     ],
+     "gold": [
+      "m_Loader"
+     ]
+    },
+    {
+     "type": "HostingState",
+     "pred": [
+      "k_MaxConnectPayload",
+      "m_ConnectionEventPublisher",
+      "m_MultiplayerServicesFacade"
+     ],
+     "gold": [
+      "k_MaxConnectPayload",
+      "m_ConnectionEventPublisher",
+      "m_MultiplayerServicesFacade"
+     ]
+    },
+    {
+     "type": "EquippedBall",
+     "pred": [
+      "_equippedItemConfig",
+      "animator",
+      "audioSource"
+     ],
+     "gold": []
+    },
+    {
+     "type": "ConnectionModeScript",
+     "pred": [
+      "m_CommandLineProcessor",
+      "m_JoinCodeInput",
+      "m_MaxConnections"
+     ],
+     "gold": [
+      "OnNotifyConnectionEventClient",
+      "OnNotifyConnectionEventHost",
+      "OnNotifyConnectionEventServer",
+      "m_AuthenticationButtons",
+      "m_ClientSynchronizationMode",
+      "m_CommandLineProcessor",
+      "m_ConnectionModeButtons",
+      "m_DisconnectClientButton",
+      "m_JoinCodeInput",
+      "m_MaxConnections"
+     ]
+    },
+    {
+     "type": "PushAgentEscape",
+     "pred": [
+      "IHaveAKey",
+      "MyKey",
+      "m_AgentRb",
+      "m_GameController",
+      "m_PushBlockSettings"
+     ],
+     "gold": [
+      "IHaveAKey",
+      "MyKey",
+      "m_AgentRb",
+      "m_GameController",
+      "m_PushBlockSettings"
+     ]
+    },
+    {
+     "type": "IPHostingUI",
+     "pred": [
+      "m_CanvasGroup",
+      "m_HostButton",
+      "m_IPUIMediator"
+     ],
+     "gold": [
+      "m_CanvasGroup",
+      "m_HostButton",
+      "m_IPInputField",
+      "m_IPUIMediator",
+      "m_PortInputField"
+     ]
+    },
+    {
+     "type": "NetworkDiscoveryBase",
+     "pred": [
+      "ActiveDiscoveryInterval",
+      "BroadcastAddress",
+      "OnServerFound",
+      "clientUdpClient",
+      "enableActiveDiscovery",
+      "hasMulticastLock",
+      "multicastLock",
+      "secretHandshake",
+      "serverBroadcastListenPort",
+      "serverUdpClient",
+      "transport"
+     ],
+     "gold": [
+      "ActiveDiscoveryInterval",
+      "BroadcastAddress",
+      "OnServerFound",
+      "clientUdpClient",
+      "enableActiveDiscovery",
+      "hasMulticastLock",
+      "multicastLock",
+      "secretHandshake",
+      "serverBroadcastListenPort",
+      "serverUdpClient",
+      "transport"
+     ]
+    },
+    {
+     "type": "HttpUtility",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "WakeGenerator",
+     "pred": [
+      "_lrs",
+      "genDistance",
+      "maxAge",
+      "wakePrefab",
+      "wakes"
+     ],
+     "gold": [
+      "_lrs",
+      "genDistance",
+      "maxAge",
+      "wakePrefab",
+      "wakes"
+     ]
+    },
+    {
+     "type": "ThinInputSystem",
+     "pred": [
+      "m_Barrier",
+      "m_FrameCount"
+     ],
+     "gold": [
+      "m_Barrier",
+      "m_FrameCount"
+     ]
+    },
+    {
+     "type": "ServerBossRoomState",
+     "pred": [
+      "k_LoseDelay",
+      "k_WinDelay",
+      "m_ConnectionManager",
+      "m_NetcodeHooks",
+      "m_PersistentGameState",
+      "m_PlayerSpawnPoints",
+      "m_PlayerSpawnPointsList",
+      "persistentGameState"
+     ],
+     "gold": [
+      "k_LoseDelay",
+      "k_WinDelay",
+      "m_LifeStateChangedEventMessageSubscriber",
+      "m_NetcodeHooks",
+      "m_PersistentGameState",
+      "m_PlayerPrefab",
+      "m_PlayerSpawnPoints",
+      "m_PlayerSpawnPointsList"
+     ]
+    },
+    {
+     "type": "Player",
+     "pred": [
+      "autoMove",
+      "autoSpeed",
+      "cameraOffset",
+      "destination",
+      "manualSpeed",
+      "movementDistance",
+      "movementProbability",
+      "moving",
+      "start",
+      "tf"
+     ],
+     "gold": [
+      "rigidbody2d",
+      "speed"
+     ]
+    },
+    {
+     "type": "RaceManager",
+     "pred": [
+      "Instance",
+      "RaceData",
+      "RaceStarted",
+      "RaceTime",
+      "_boatTimes",
+      "boats",
+      "demoRaceData",
+      "float>",
+      "raceStarted",
+      "raceUiPrefab",
+      "raceUiTouchPrefab"
+     ],
+     "gold": [
+      "Instance",
+      "RaceData",
+      "RaceStarted",
+      "RaceTime",
+      "_boatTimes",
+      "boats",
+      "raceStarted"
+     ]
+    },
+    {
+     "type": "SyncSet",
+     "pred": [],
+     "gold": [
+      "OnAdd",
+      "OnChange",
+      "OnClear",
+      "OnRemove",
+      "changes",
+      "changesAhead",
+      "objects"
+     ]
+    },
+    {
+     "type": "ServerCharacterMovement",
+     "pred": [
+      "k_CheatSpeed",
+      "m_CharLogic",
+      "m_ForcedSpeed",
+      "m_KnockbackVector",
+      "m_MovementState",
+      "m_NavMeshAgent",
+      "m_NavPath",
+      "m_NavigationSystem",
+      "m_PreviousState",
+      "m_Rigidbody",
+      "m_SpecialModeDurationRemaining"
+     ],
+     "gold": [
+      "k_CheatSpeed",
+      "m_CharLogic",
+      "m_ForcedSpeed",
+      "m_KnockbackVector",
+      "m_MovementState",
+      "m_NavMeshAgent",
+      "m_NavPath",
+      "m_NavigationSystem",
+      "m_PreviousState",
+      "m_Rigidbody",
+      "m_SpecialModeDurationRemaining"
+     ]
+    },
+    {
+     "type": "PartyHUD",
+     "pred": [
+      "ServerCharacter>",
+      "m_AllyPanel",
+      "m_ClientSender",
+      "m_HeroPortrait",
+      "m_OwnedPlayerAvatar",
+      "m_OwnedServerCharacter",
+      "m_PartyClassSymbols",
+      "m_PartyHealthGodModeImages",
+      "m_PartyHealthSliders",
+      "m_PartyIds",
+      "m_PartyNames",
+      "m_PlayerAvatars",
+      "m_TrackedAllies"
+     ],
+     "gold": [
+      "m_AllyPanel",
+      "m_ClientSender",
+      "m_HeroPortrait",
+      "m_OwnedPlayerAvatar",
+      "m_OwnedServerCharacter",
+      "m_PartyClassSymbols",
+      "m_PartyHealthGodModeImages",
+      "m_PartyHealthSliders",
+      "m_PartyIds",
+      "m_PartyNames",
+      "m_PlayerAvatars",
+      "m_TrackedAllies"
+     ]
+    },
+    {
+     "type": "ExperimentalWarning",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "DeltaCompression",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "Controller2D",
+     "pred": [
+      "collider",
+      "collisionMask",
+      "collisions",
+      "horizontalRayCount",
+      "horizontalRaySpacing",
+      "maxClimbAngle",
+      "raycastOrigins",
+      "skinWidth",
+      "verticalRayCount",
+      "verticalRaySpacing"
+     ],
+     "gold": [
+      "collisions",
+      "maxClimbAngle",
+      "maxDescendAngle",
+      "playerInput"
+     ]
+    },
+    {
+     "type": "AoeActionInput",
+     "pred": [
+      "k_Plane",
+      "m_Camera",
+      "m_InRangeVisualization",
+      "m_NavMeshHit",
+      "m_OutOfRangeVisualization",
+      "m_PointAction",
+      "m_ReceivedMouseDownEvent",
+      "m_TargetAction"
+     ],
+     "gold": [
+      "k_Plane",
+      "m_Camera",
+      "m_InRangeVisualization",
+      "m_NavMeshHit",
+      "m_OutOfRangeVisualization",
+      "m_PointAction",
+      "m_ReceivedMouseDownEvent",
+      "m_TargetAction"
+     ]
+    },
+    {
+     "type": "GridSpawner",
+     "pred": [
+      "NumX",
+      "NumY",
+      "NumZ",
+      "Prefab",
+      "spacing"
+     ],
+     "gold": [
+      "NumX",
+      "NumY",
+      "NumZ",
+      "Prefab",
+      "spacing"
+     ]
+    },
+    {
+     "type": "HexGrid3D",
+     "pred": [
+      "cellHeight",
+      "cellRadius",
+      "neighborCellsBase",
+      "oneDiv3",
+      "originOffset",
+      "sqrt3",
+      "sqrt3Div2",
+      "sqrt3Div3",
+      "twoDiv3"
+     ],
+     "gold": [
+      "cellHeight",
+      "cellRadius",
+      "neighborCellsBase",
+      "oneDiv3",
+      "originOffset",
+      "sqrt3",
+      "sqrt3Div2",
+      "sqrt3Div3",
+      "twoDiv3"
+     ]
+    },
+    {
+     "type": "ServerCube",
+     "pred": [
+      "distance",
+      "jitter",
+      "loss",
+      "scramble",
+      "speed",
+      "start"
+     ],
+     "gold": []
+    },
+    {
+     "type": "LodTweaker",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "DayNightController",
+     "pred": [
+      "GlobalTime",
+      "PresetKey",
+      "_currentPreset",
+      "_instance",
+      "_presets",
+      "_skybox",
+      "_skyboxColour",
+      "_sun",
+      "autoIcrement",
+      "reflections",
+      "speed",
+      "time"
+     ],
+     "gold": [
+      "GlobalTime",
+      "PresetKey",
+      "_ambientColour",
+      "_currentPreset",
+      "_fogColour",
+      "_instance",
+      "_northHeading",
+      "_presets",
+      "_prevTime",
+      "_skybox",
+      "_skyboxColour",
+      "_sun",
+      "_sunColour",
+      "autoIcrement",
+      "speed",
+      "time"
+     ]
+    },
+    {
+     "type": "SRPBatcherProfiler",
+     "pred": [
+      "kAverageStatDuration",
+      "m_AccDeltaTime",
+      "m_Enable",
+      "m_frameCount",
+      "m_oldBatcherEnable",
+      "m_statsLabel",
+      "m_style",
+      "recordersList"
+     ],
+     "gold": [
+      "kAverageStatDuration",
+      "m_AccDeltaTime",
+      "m_Enable",
+      "m_frameCount",
+      "m_oldBatcherEnable",
+      "m_statsLabel",
+      "m_style",
+      "recordersList"
+     ]
+    },
+    {
+     "type": "PushBlockEnvController",
+     "pred": [
+      "AgentsList",
+      "BlocksList",
+      "MaxEnvironmentSteps",
+      "UseRandomAgentPosition",
+      "UseRandomAgentRotation",
+      "UseRandomBlockPosition",
+      "UseRandomBlockRotation",
+      "area",
+      "areaBounds",
+      "ground",
+      "m_GroundMaterial",
+      "m_GroundRenderer"
+     ],
+     "gold": [
+      "AgentsList",
+      "BlocksList",
+      "MaxEnvironmentSteps",
+      "UseRandomAgentPosition",
+      "UseRandomAgentRotation",
+      "UseRandomBlockPosition",
+      "UseRandomBlockRotation",
+      "area",
+      "areaBounds",
+      "ground",
+      "m_AgentGroup",
+      "m_GroundMaterial",
+      "m_GroundRenderer",
+      "m_NumberOfRemainingBlocks",
+      "m_PushBlockSettings",
+      "m_ResetTimer"
+     ]
+    },
+    {
+     "type": "SimpleCameraController",
+     "pred": [
+      "boost",
+      "invertY",
+      "m_InterpolatingCameraState",
+      "m_TargetCameraState",
+      "mouseSensitivityCurve",
+      "positionLerpTime",
+      "rotationLerpTime"
+     ],
+     "gold": [
+      "boost",
+      "invertY",
+      "m_InterpolatingCameraState",
+      "m_TargetCameraState",
+      "mouseSensitivityCurve",
+      "positionLerpTime",
+      "rotationLerpTime"
+     ]
+    },
+    {
+     "type": "Paginator",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "NetworkDiscoveryHUD",
+     "pred": [
+      "ServerResponse>",
+      "discoveredServers",
+      "networkDiscovery",
+      "scrollViewPos"
+     ],
+     "gold": [
+      "discoveredServers",
+      "networkDiscovery",
+      "scrollViewPos"
+     ]
+    },
+    {
+     "type": "SessionUIMediator",
+     "pred": [],
+     "gold": [
+      "k_DefaultSessionName",
+      "k_MaxPlayers",
+      "m_AuthenticationServiceFacade",
+      "m_CanvasGroup",
+      "m_ConnectStatusSubscriber",
+      "m_ConnectionManager",
+      "m_CreateToggleHighlight",
+      "m_CreateToggleTabBlocker",
+      "m_JoinToggleHighlight",
+      "m_JoinToggleTabBlocker",
+      "m_LoadingSpinner",
+      "m_LocalSession",
+      "m_LocalUser",
+      "m_MultiplayerServicesFacade",
+      "m_NameGenerationData",
+      "m_PlayerNameLabel",
+      "m_SessionCreationUI",
+      "m_SessionJoiningUI"
+     ]
+    },
+    {
+     "type": "ClientPlayerAvatarNetworkAnimator",
+     "pred": [
+      "m_AvatarInstantiated",
+      "m_NetworkAvatarGuidState"
+     ],
+     "gold": [
+      "m_AvatarInstantiated",
+      "m_NetworkAvatarGuidState"
+     ]
+    },
+    {
+     "type": "PlayerTestNetMan",
+     "pred": [
+      "singleton"
+     ],
+     "gold": []
+    },
+    {
+     "type": "SessionJoiningUI",
+     "pred": [
+      "m_Container",
+      "m_JoinCodeField",
+      "m_JoinSessionButton",
+      "m_LocalSessionsRefreshedSub",
+      "m_SessionUIMediator",
+      "m_UpdateRunner"
+     ],
+     "gold": [
+      "m_CanvasGroup",
+      "m_Container",
+      "m_EmptySessionListLabel",
+      "m_JoinCodeField",
+      "m_JoinSessionButton",
+      "m_LocalSessionsRefreshedSub",
+      "m_SessionListItemPrototype",
+      "m_SessionListItems",
+      "m_SessionUIMediator",
+      "m_UpdateRunner"
+     ]
+    },
+    {
+     "type": "AbstractBoard",
+     "pred": [
+      "OnNoValidMovesAction"
+     ],
+     "gold": []
+    },
+    {
+     "type": "PatrollingObstacle",
+     "pred": [
+      "animator",
+      "m_Audio",
+      "m_CurrentPos",
+      "m_MaxSpeed",
+      "m_OriginalPosition",
+      "m_Segement",
+      "m_isMoving",
+      "maxTime",
+      "minTime",
+      "patrollingSound",
+      "s_DeadHash",
+      "s_SpeedRatioHash"
+     ],
+     "gold": [
+      "animator",
+      "k_LaneOffsetToFullWidth",
+      "m_Audio",
+      "m_CurrentPos",
+      "m_MaxSpeed",
+      "m_OriginalPosition",
+      "m_Segement",
+      "m_isMoving",
+      "maxTime",
+      "minTime",
+      "patrollingSound",
+      "s_DeadHash",
+      "s_SpeedRatioHash"
+     ]
+    },
+    {
+     "type": "NetworkReaderPool",
+     "pred": [
+      "Count",
+      "Pool"
+     ],
+     "gold": [
+      "Pool"
+     ]
+    },
+    {
+     "type": "EdgegapLobbyKcpTransport",
+     "pred": [
+      "Api",
+      "_lobbyId",
+      "_playerId",
+      "_request",
+      "_status",
+      "lobbyUrl",
+      "lobbyWaitTimeout"
+     ],
+     "gold": [
+      "Api",
+      "_lobbyId",
+      "_playerId",
+      "_request",
+      "_status",
+      "lobbyUrl",
+      "lobbyWaitTimeout"
+     ]
+    },
+    {
+     "type": "BasicMath",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "Helpers",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "NetworkRigidbodyReliable2D",
+     "pred": [
+      "ClientToServer",
+      "rb",
+      "wasKinematic"
+     ],
+     "gold": [
+      "rb",
+      "wasKinematic"
+     ]
+    },
+    {
+     "type": "HeroEmoteBar",
+     "pred": [
+      "m_InputSender"
+     ],
+     "gold": [
+      "m_InputSender"
+     ]
+    },
+    {
+     "type": "Tank",
+     "pred": [
+      "agent",
+      "animator",
+      "health",
+      "healthBar",
+      "projectileMount",
+      "projectilePrefab",
+      "rotationSpeed",
+      "shootKey",
+      "turret"
+     ],
+     "gold": [
+      "agent",
+      "animator",
+      "health",
+      "healthBar",
+      "projectileMount",
+      "projectilePrefab",
+      "rotationSpeed",
+      "shootKey",
+      "turret"
+     ]
+    },
+    {
+     "type": "NetworkCharSelection",
+     "pred": [],
+     "gold": [
+      "AvatarConfiguration",
+      "OnClientChangedSeat",
+      "m_SessionPlayers"
+     ]
+    },
+    {
+     "type": "LagCompensation",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "AutoForce",
+     "pred": [
+      "force",
+      "forceProbability",
+      "rigidbody3d"
+     ],
+     "gold": [
+      "force",
+      "forceProbability",
+      "rigidbody3d"
+     ]
+    },
+    {
+     "type": "LoginUI",
+     "pred": [
+      "hostButton",
+      "instance",
+      "networkAddressInput",
+      "originalNetworkAddress"
+     ],
+     "gold": [
+      "clientButton",
+      "errorText",
+      "hostButton",
+      "instance",
+      "networkAddressInput",
+      "originalNetworkAddress",
+      "usernameInput"
+     ]
+    },
+    {
+     "type": "JointDriveController",
+     "pred": [
+      "BodyPart>",
+      "bodyPartsDict",
+      "bodyPartsList",
+      "jointDampen",
+      "k_MaxAngularVelocity",
+      "maxJointForceLimit",
+      "maxJointSpring"
+     ],
+     "gold": [
+      "bodyPartsDict",
+      "bodyPartsList",
+      "jointDampen",
+      "k_MaxAngularVelocity",
+      "maxJointForceLimit",
+      "maxJointSpring"
+     ]
+    },
+    {
+     "type": "NetworkRuntimeProfiler",
+     "pred": [
+      "Output",
+      "inStats"
+     ],
+     "gold": [
+      "Output",
+      "OutputFilePath",
+      "RecentDuration",
+      "Sort",
+      "elapsedSinceReset",
+      "inStats",
+      "outStats",
+      "printBuilder"
+     ]
+    },
+    {
+     "type": "NetworkConnectionToServer",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "GraphicsUtils",
+     "pred": [
+      "s_Quad",
+      "s_WhiteTexture"
+     ],
+     "gold": [
+      "s_Quad"
+     ]
+    },
+    {
+     "type": "PushAgentBasic",
+     "pred": [
+      "area",
+      "areaBounds",
+      "block",
+      "goal",
+      "goalDetect",
+      "ground",
+      "m_AgentRb",
+      "m_BlockRb",
+      "m_GroundMaterial",
+      "m_GroundRenderer",
+      "m_PushBlockSettings",
+      "useVectorObs"
+     ],
+     "gold": [
+      "area",
+      "areaBounds",
+      "block",
+      "goalDetect",
+      "ground",
+      "m_AgentRb",
+      "m_BlockRb",
+      "m_GroundMaterial",
+      "m_GroundRenderer",
+      "m_PushBlockSettings",
+      "m_ResetParams"
+     ]
+    },
+    {
+     "type": "TimeoutAuthenticator",
+     "pred": [
+      "authenticator",
+      "timeout"
+     ],
+     "gold": [
+      "authenticator",
+      "timeout"
+     ]
+    },
+    {
+     "type": "HistoryCollider",
+     "pred": [
+      "actualCollider",
+      "boundsCollider",
+      "boundsLimit",
+      "boundsPerBucket",
+      "captureInterval",
+      "currentColor",
+      "history",
+      "historyColor",
+      "lastCaptureTime"
+     ],
+     "gold": [
+      "actualCollider",
+      "boundsCollider",
+      "boundsLimit",
+      "boundsPerBucket",
+      "captureInterval",
+      "currentColor",
+      "history",
+      "historyColor",
+      "lastCaptureTime"
+     ]
+    },
+    {
+     "type": "DungeonEscapeEnvController",
+     "pred": [
+      "AgentsList",
+      "DragonsList",
+      "MaxEnvironmentSteps",
+      "PlayerInfo>",
+      "UseRandomAgentPosition",
+      "UseRandomAgentRotation",
+      "areaBounds",
+      "ground",
+      "m_GroundMaterial",
+      "m_GroundRenderer",
+      "m_PlayerDict",
+      "m_PushBlockSettings",
+      "m_ResetTimer"
+     ],
+     "gold": [
+      "AgentsList",
+      "DragonsList",
+      "Key",
+      "MaxEnvironmentSteps",
+      "Tombstone",
+      "UseRandomAgentPosition",
+      "UseRandomAgentRotation",
+      "areaBounds",
+      "ground",
+      "m_AgentGroup",
+      "m_GroundMaterial",
+      "m_GroundRenderer",
+      "m_NumberOfRemainingPlayers",
+      "m_PushBlockSettings",
+      "m_ResetTimer"
+     ]
+    },
+    {
+     "type": "EnumFlagsDrawer",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "CrawlerAgent",
+     "pred": [
+      "TargetPrefab",
+      "body",
+      "leg0Lower",
+      "leg0Upper",
+      "leg1Lower",
+      "leg1Upper",
+      "leg2Lower",
+      "leg2Upper",
+      "leg3Upper",
+      "m_Target",
+      "m_TargetWalkingSpeed",
+      "m_maxWalkingSpeed"
+     ],
+     "gold": [
+      "TargetPrefab",
+      "body",
+      "foot0",
+      "foot1",
+      "foot2",
+      "foot3",
+      "groundedMaterial",
+      "leg0Lower",
+      "leg0Upper",
+      "leg1Lower",
+      "leg1Upper",
+      "leg2Lower",
+      "leg2Upper",
+      "leg3Lower",
+      "leg3Upper",
+      "m_DirectionIndicator",
+      "m_JdController",
+      "m_OrientationCube",
+      "m_Target",
+      "m_maxWalkingSpeed",
+      "unGroundedMaterial",
+      "useFootGroundedVisualization"
+     ]
+    },
+    {
+     "type": "ServerHostClientText",
+     "pred": [
+      "m_AnchoredPosition",
+      "m_Color",
+      "m_ColorAlpha",
+      "m_DisplayText",
+      "m_LastFocusedValue"
+     ],
+     "gold": [
+      "m_Color",
+      "m_ColorAlpha",
+      "m_DisplayText",
+      "m_LastFocusedValue",
+      "m_LocalPosition"
+     ]
+    },
+    {
+     "type": "MeleeAction",
+     "pred": [
+      "k_RangePadding",
+      "m_ImpactPlayed",
+      "m_SpawnedGraphics"
+     ],
+     "gold": [
+      "m_ExecutionFired",
+      "m_ProvisionalTarget"
+     ]
+    },
+    {
+     "type": "RotatingBodyLogic",
+     "pred": [
+      "OnExitTransferParentOnStay",
+      "PathMovement",
+      "RotateDirection",
+      "RotatingBodyLogicExpanded",
+      "RotationSpeed",
+      "m_CurrentNavPoint",
+      "m_CurrentPathObject",
+      "m_RotationDirection",
+      "m_TagHandle",
+      "m_TriggerStayBodies"
+     ],
+     "gold": [
+      "OnExitTransferParentOnStay",
+      "PathMovement",
+      "RotateDirection",
+      "RotatingBodyLogicExpanded",
+      "RotationSpeed",
+      "m_CurrentNavPoint",
+      "m_CurrentPathObject",
+      "m_RotationDirection",
+      "m_TagHandle",
+      "m_TriggerStayBodies"
+     ]
+    },
+    {
+     "type": "NetworkRigidbodyUnreliable2D",
+     "pred": [
+      "ClientToServer",
+      "rb",
+      "wasKinematic"
+     ],
+     "gold": [
+      "rb",
+      "wasKinematic"
+     ]
+    },
+    {
+     "type": "Water",
+     "pred": [
+      "_depthCam",
+      "_depthTex",
+      "_instance",
+      "_maxWaveHeight",
+      "_planarReflections",
+      "_rampTexture",
+      "_useComputeBuffer",
+      "_waveHeight",
+      "_waves",
+      "bakedDepthTex",
+      "computeOverride",
+      "waveBuffer"
+     ],
+     "gold": [
+      "AbsorptionScatteringRamp",
+      "CameraRoll",
+      "CubemapTexture",
+      "DepthCamZParams",
+      "FoamMap",
+      "InvViewProjection",
+      "MaxDepth",
+      "MaxWaveHeight",
+      "SurfaceMap",
+      "WaterDepthMap",
+      "WaveCount",
+      "WaveData",
+      "WaveDataBuffer",
+      "WaveHeight",
+      "_depthCam",
+      "_depthTex",
+      "_maxWaveHeight",
+      "_planarReflections",
+      "_rampTexture",
+      "_useComputeBuffer",
+      "_waveHeight",
+      "_waves",
+      "bakedDepthTex",
+      "computeOverride",
+      "resources",
+      "settingsData",
+      "surfaceData",
+      "waveBuffer"
+     ]
+    },
+    {
+     "type": "ClientConnectionState",
+     "pred": [
+      "Connected",
+      "Connecting",
+      "receivePipe",
+      "receiveThread"
+     ],
+     "gold": [
+      "Connected",
+      "Connecting",
+      "receivePipe",
+      "receiveThread"
+     ]
+    },
+    {
+     "type": "ServerHostClientText",
+     "pred": [
+      "m_Color",
+      "m_ColorAlpha",
+      "m_DisplayText",
+      "m_LocalPosition"
+     ],
+     "gold": [
+      "m_Color",
+      "m_ColorAlpha",
+      "m_DisplayText",
+      "m_LastFocusedValue",
+      "m_LocalPosition"
+     ]
+    },
+    {
+     "type": "NetworkMetricsModel",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "ConnectionMethodRelay",
+     "pred": [
+      "m_MultiplayerServicesFacade"
+     ],
+     "gold": [
+      "m_MultiplayerServicesFacade"
+     ]
+    },
+    {
+     "type": "ConnectionMethodIP",
+     "pred": [],
+     "gold": [
+      "m_Ipaddress",
+      "m_Port"
+     ]
+    },
+    {
+     "type": "SpawnExplosionAuthoringBaker",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "Missile",
+     "pred": [
+      "animator",
+      "k_LeftMostLaneIndex",
+      "k_RightMostLaneIndex",
+      "k_Speed",
+      "m_Audio",
+      "m_IsMoving",
+      "m_OwnSegement",
+      "movingSound",
+      "s_DeathHash",
+      "s_RunHash"
+     ],
+     "gold": [
+      "animator",
+      "k_LeftMostLaneIndex",
+      "k_RightMostLaneIndex",
+      "k_Speed",
+      "m_Audio",
+      "m_IsMoving",
+      "m_OwnSegement",
+      "movingSound",
+      "s_DeathHash",
+      "s_RunHash"
+     ]
+    },
+    {
+     "type": "DropAction",
+     "pred": [
+      "m_ActionStartTime",
+      "m_HeldNetworkObject"
+     ],
+     "gold": [
+      "m_ActionStartTime",
+      "m_HeldNetworkObject"
+     ]
+    },
+    {
+     "type": "MLAgentsSettingsManager",
+     "pred": [
+      "EditorBuildSettingsConfigKey",
+      "OnSettingsChange",
+      "s_Settings"
+     ],
+     "gold": [
+      "EditorBuildSettingsConfigKey",
+      "OnSettingsChange",
+      "s_Settings"
+     ]
+    },
+    {
+     "type": "RotateThroughCollisionFiltersSystem",
+     "pred": [
+      "BlueCollisionFilter",
+      "GreenCollisionFilter",
+      "RedCollisionFilter"
+     ],
+     "gold": [
+      "BlueCollisionFilter",
+      "GreenCollisionFilter",
+      "RedCollisionFilter"
+     ]
+    },
+    {
+     "type": "ClientPrefs",
+     "pred": [
+      "k_AvailableProfilesKey",
+      "k_ClientGUIDKey",
+      "k_DefaultMasterVolume",
+      "k_DefaultMusicVolume",
+      "k_MasterVolumeKey",
+      "k_MusicVolumeKey"
+     ],
+     "gold": [
+      "k_AvailableProfilesKey",
+      "k_ClientGUIDKey",
+      "k_DefaultMasterVolume",
+      "k_DefaultMusicVolume",
+      "k_MasterVolumeKey",
+      "k_MusicVolumeKey"
+     ]
+    },
+    {
+     "type": "PlanarReflections",
+     "pred": [
+      "BeginPlanarReflections",
+      "Camera>",
+      "_oldReflectionTextureSize",
+      "_planarReflectionTextureId",
+      "_reflectionCamera",
+      "_reflectionTexture",
+      "m_planeOffset",
+      "m_settings",
+      "target"
+     ],
+     "gold": [
+      "BeginPlanarReflections",
+      "_planarReflectionTextureId",
+      "_reflectionCamera",
+      "_reflectionTexture",
+      "m_planeOffset",
+      "m_settings",
+      "target"
+     ]
+    },
+    {
+     "type": "SceneViewUtility",
+     "pred": [],
+     "gold": [
+      "k_DefaultNotifications",
+      "k_DefaultNotificationsSpeed",
+      "k_IndeterminateProgressCurveLeftMargin",
+      "k_IndeterminateProgressCurveRightMargin",
+      "k_NotificationFadeCurve",
+      "k_NotificationSpeedPrefKey",
+      "k_NotificationsPrefKey",
+      "s_GetProgress",
+      "s_IsTemporary",
+      "s_StartTime",
+      "s_StatusMessage"
+     ]
+    },
+    {
+     "type": "LevelLoader",
+     "pred": [
+      "Level>",
+      "Level>Levels =>",
+      "m_DisableLevelSync",
+      "m_Levels"
+     ],
+     "gold": [
+      "m_DisableLevelSync",
+      "m_Levels"
+     ]
+    },
+    {
+     "type": "NetcodeClientLevelSync",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "PerfomanceStats",
+     "pred": [
+      "Stats",
+      "averageFrametime",
+      "averageVel",
+      "debugInfo",
+      "defaultInfo",
+      "demoFrames",
+      "frametime",
+      "frametimeDisplay",
+      "maxFrame",
+      "minFrame",
+      "mode",
+      "runtime"
+     ],
+     "gold": [
+      "Stats",
+      "averageFrametime",
+      "averageVel",
+      "debugInfo",
+      "defaultInfo",
+      "demoFrames",
+      "frametime",
+      "frametimeDisplay",
+      "maxFrame",
+      "minFrame",
+      "mode",
+      "runtime"
+     ]
+    },
+    {
+     "type": "SkinnerParticle",
+     "pred": [
+      "_drag",
+      "_gravity",
+      "_maxLife",
+      "_maxScale",
+      "_maxSpin",
+      "_noiseAmplitude",
+      "_source",
+      "_speedLimit",
+      "_speedToLife",
+      "_speedToScale",
+      "_speedToSpin",
+      "_template"
+     ],
+     "gold": [
+      "_defaultMaterial",
+      "_drag",
+      "_gravity",
+      "_kernel",
+      "_kernelShader",
+      "_maxLife",
+      "_maxScale",
+      "_maxSpin",
+      "_noiseAmplitude",
+      "_noiseFrequency",
+      "_noiseMotion",
+      "_noiseOffset",
+      "_randomSeed",
+      "_reconfigured",
+      "_renderer",
+      "_source",
+      "_speedLimit",
+      "_speedToLife",
+      "_speedToScale",
+      "_speedToSpin",
+      "_template"
+     ]
+    },
+    {
+     "type": "TargetAction",
+     "pred": [
+      "k_ReticuleGroundHeight",
+      "m_CurrentTarget",
+      "m_NewTarget",
+      "m_TargetReticule"
+     ],
+     "gold": []
+    },
+    {
+     "type": "ExpandChildrenDrawer",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "MeshChangerSystem",
+     "pred": [
+      "BatchMeshID>",
+      "m_MeshMapping"
+     ],
+     "gold": [
+      "m_MeshMapping"
+     ]
+    },
+    {
+     "type": "ConnectionMonitor_UIDataSystem",
+     "pred": [
+      "m_OwnsData"
+     ],
+     "gold": [
+      "m_OwnsData"
+     ]
+    },
+    {
+     "type": "AppVersionWhitelistResponse",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "ServerAnimationHandler",
+     "pred": [
+      "m_NetworkAnimator",
+      "m_NetworkLifeState",
+      "m_VisualizationConfiguration"
+     ],
+     "gold": [
+      "m_NetworkLifeState",
+      "m_VisualizationConfiguration"
+     ]
+    },
+    {
+     "type": "HostMigrationHelper",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "SelfDisable",
+     "pred": [
+      "m_DisableTimestamp",
+      "m_DisabledDelay"
+     ],
+     "gold": [
+      "m_DisableTimestamp",
+      "m_DisabledDelay"
+     ]
+    },
+    {
+     "type": "PushAgentCollab",
+     "pred": [
+      "m_AgentRb",
+      "m_PushBlockSettings"
+     ],
+     "gold": [
+      "m_AgentRb",
+      "m_PushBlockSettings"
+     ]
+    },
+    {
+     "type": "RunGhostPlayableBehaviour",
+     "pred": [
+      "m_clipAim",
+      "m_clipLengths",
+      "m_clips",
+      "m_controller",
+      "m_mixer",
+      "m_positions",
+      "m_weights"
+     ],
+     "gold": [
+      "m_clipAim",
+      "m_clipLengths",
+      "m_clips",
+      "m_controller",
+      "m_mixer",
+      "m_positions",
+      "m_weights"
+     ]
+    },
+    {
+     "type": "LobbyApi",
+     "pred": [
+      "Lobbies",
+      "LobbyUrl"
+     ],
+     "gold": [
+      "Lobbies",
+      "LobbyUrl"
+     ]
+    },
+    {
+     "type": "SpatialHashingInterestManagement",
+     "pred": [
+      "checkMethod",
+      "grid",
+      "lastRebuildTime",
+      "rebuildInterval",
+      "showSlider",
+      "visRange"
+     ],
+     "gold": [
+      "checkMethod",
+      "grid",
+      "lastRebuildTime",
+      "rebuildInterval",
+      "showSlider",
+      "visRange"
+     ]
+    },
+    {
+     "type": "PredictedSyncDataReadWrite",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "MaterialFactory",
+     "pred": [
+      "Material>",
+      "m_Materials"
+     ],
+     "gold": [
+      "m_Materials"
+     ]
+    },
+    {
+     "type": "NetworkRigidbodyReliable",
+     "pred": [
+      "ClientToServer",
+      "rb",
+      "wasKinematic"
+     ],
+     "gold": [
+      "ClientToServer",
+      "rb",
+      "wasKinematic"
+     ]
+    },
+    {
+     "type": "PyramidArea",
+     "pred": [
+      "numPyra",
+      "pyramid",
+      "range",
+      "spawnAreas",
+      "stonePyramid"
+     ],
+     "gold": [
+      "pyramid",
+      "spawnAreas",
+      "stonePyramid"
+     ]
+    },
+    {
+     "type": "AdditiveNetworkManager",
+     "pred": [
+      "Zone",
+      "subScenes"
+     ],
+     "gold": [
+      "Zone",
+      "subScenes"
+     ]
+    },
+    {
+     "type": "SessionUser",
+     "pred": [],
+     "gold": []
+    },
+    {
+     "type": "DriverConstructor",
+     "pred": [
+      "s_DisconnectTimeout"
+     ],
+     "gold": [
+      "s_DisconnectTimeout"
+     ]
+    },
+    {
+     "type": "PhysicsBoundsHandleUtility",
+     "pred": [
+      "kBackfaceAlphaMultiplier",
+      "kDegreeEpsilon",
+      "kDistanceEpsilon",
+      "k_NextAxis",
+      "s_FacePoints",
+      "s_LinePoints"
+     ],
+     "gold": [
+      "kBackfaceAlphaMultiplier",
+      "kDegreeEpsilon",
+      "kDistanceEpsilon",
+      "k_NextAxis",
+      "s_FacePoints",
+      "s_LinePoints"
+     ]
+    },
+    {
+     "type": "GrabbableBall",
+     "pred": [
+      "GrabDistance",
+      "m_IsGrabbed",
+      "m_Material",
+      "m_Rigidbody"
+     ],
+     "gold": [
+      "GrabDistance",
+      "m_IsGrabbed",
+      "m_Material",
+      "m_Rigidbody"
+     ]
+    }
+   ]
+  }
+ ]
+}
