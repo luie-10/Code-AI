@@ -50,3 +50,5 @@ cd minillm && python3 finetune_select.py && python3 eval_select.py
 
 본문 등장 후보만 쓰면 재현율이 -32.3pp 떨어져 채택하지 않았습니다. 상세: `results/report_prefilter.md`
 
+
+- v3.6: 250 step early stopping. best 250 step, test R 77.7% / P 83.5% / F1 0.805.
