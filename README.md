@@ -52,3 +52,5 @@ cd minillm && python3 finetune_select.py && python3 eval_select.py
 
 
 - v3.6: 250 step early stopping. best 250 step, test R 77.7% / P 83.5% / F1 0.805.
+
+- v3.7: 신규 4개 저장소로 21,157메서드. best 750 step, test R 72.2% / P 83.5% / F1 0.774.
