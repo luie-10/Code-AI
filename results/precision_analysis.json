@@ -1,0 +1,37 @@
+{
+ "auc": 0.68,
+ "pairs": 2058,
+ "selected": 1041,
+ "tp": 315,
+ "fp": 726,
+ "fp_categories": {
+  "in_code": 23,
+  "in_gold_class": 575,
+  "neither": 149
+ },
+ "variants": {
+  "baseline": {
+   "recall": 0.416,
+   "precision": 0.825,
+   "hit": 852,
+   "pred": 1033,
+   "gold": 2050
+  },
+  "prefilter_code": {
+   "recall": 0.146,
+   "precision": 0.898,
+   "hit": 299,
+   "pred": 333,
+   "gold": 2050
+  },
+  "parser_only": {
+   "recall": 0.206,
+   "precision": 0.906,
+   "hit": 423,
+   "pred": 467,
+   "gold": 2050
+  }
+ },
+ "pos_mean": 0.37,
+ "neg_mean": -0.03
+}

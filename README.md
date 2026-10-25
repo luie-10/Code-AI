@@ -34,3 +34,13 @@ cd minillm && python3 finetune_select.py && python3 eval_select.py
 ```
 
 체크포인트(`*.pt`)는 용량 때문에 제외했습니다. 학습 스크립트로 재생성할 수 있습니다.
+### 후보 필터 실험 (기각)
+
+| 변형 | 재현율 | 정밀도 | F1 |
+|---|---|---|---|
+| baseline | 74.8% | 84.7% | 0.795 |
+| prefilter_code | 42.5% | 88.9% | 0.575 |
+| hybrid | 78.1% | 84.7% | 0.813 |
+
+본문 등장 후보만 쓰면 재현율이 -32.3pp 떨어져 채택하지 않았습니다. 상세: `results/report_prefilter.md`
+

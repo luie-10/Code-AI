@@ -1,0 +1,47 @@
+{
+ "methods": 344,
+ "pairs": 2058,
+ "gold": 1,
+ "variants": {
+  "baseline": {
+   "recall": 0.748,
+   "precision": 0.847,
+   "f1": 0.795,
+   "hit": 366,
+   "pred": 432,
+   "gold": 489,
+   "method_precision": 0.825,
+   "method_recall": 0.416
+  },
+  "prefilter_code": {
+   "recall": 0.425,
+   "precision": 0.889,
+   "f1": 0.575,
+   "hit": 208,
+   "pred": 234,
+   "gold": 489,
+   "method_precision": 0.898,
+   "method_recall": 0.146
+  },
+  "parser_only": {
+   "recall": 0.542,
+   "precision": 0.898,
+   "f1": 0.676,
+   "hit": 265,
+   "pred": 295,
+   "gold": 489,
+   "method_precision": 0.906,
+   "method_recall": 0.206
+  },
+  "hybrid": {
+   "recall": 0.781,
+   "precision": 0.847,
+   "f1": 0.813,
+   "hit": 382,
+   "pred": 451,
+   "gold": 489,
+   "method_precision": 0.836,
+   "method_recall": 0.476
+  }
+ }
+}
