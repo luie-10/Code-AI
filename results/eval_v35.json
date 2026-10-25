@@ -1,0 +1,17 @@
+{
+ "metrics": {
+  "recall": 0.814,
+  "precision": 0.849,
+  "f1": 0.831,
+  "hit": 398,
+  "pred": 469,
+  "gold": 489
+ },
+ "model": {
+  "params": 25770000,
+  "d": 512,
+  "layers": 8,
+  "heads": 8,
+  "steps": 512
+ }
+}
