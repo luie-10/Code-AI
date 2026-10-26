@@ -1,0 +1,93 @@
+[
+ {
+  "combo": "v35",
+  "dev_f1": 0.836,
+  "thr": -2.0,
+  "dev_best": 0.867,
+  "test_f1": 0.853,
+  "test_r": 0.863,
+  "test_p": 0.842,
+  "test_f1_thr0": 0.762,
+  "hit": 422,
+  "pred": 501,
+  "gold": 489
+ },
+ {
+  "combo": "v36",
+  "dev_f1": 0.82,
+  "thr": -2.0,
+  "dev_best": 0.867,
+  "test_f1": 0.853,
+  "test_r": 0.863,
+  "test_p": 0.842,
+  "test_f1_thr0": 0.805,
+  "hit": 422,
+  "pred": 501,
+  "gold": 489
+ },
+ {
+  "combo": "v37",
+  "dev_f1": 0.775,
+  "thr": -0.75,
+  "dev_best": 0.877,
+  "test_f1": 0.85,
+  "test_r": 0.857,
+  "test_p": 0.843,
+  "test_f1_thr0": 0.774,
+  "hit": 419,
+  "pred": 497,
+  "gold": 489
+ },
+ {
+  "combo": "v35+v36",
+  "dev_f1": 0.855,
+  "thr": -2.0,
+  "dev_best": 0.867,
+  "test_f1": 0.853,
+  "test_r": 0.863,
+  "test_p": 0.842,
+  "test_f1_thr0": 0.794,
+  "hit": 422,
+  "pred": 501,
+  "gold": 489
+ },
+ {
+  "combo": "v35+v37",
+  "dev_f1": 0.817,
+  "thr": -0.5,
+  "dev_best": 0.868,
+  "test_f1": 0.845,
+  "test_r": 0.84,
+  "test_p": 0.849,
+  "test_f1_thr0": 0.762,
+  "hit": 411,
+  "pred": 484,
+  "gold": 489
+ },
+ {
+  "combo": "v36+v37",
+  "dev_f1": 0.853,
+  "thr": -0.25,
+  "dev_best": 0.877,
+  "test_f1": 0.847,
+  "test_r": 0.847,
+  "test_p": 0.847,
+  "test_f1_thr0": 0.787,
+  "hit": 414,
+  "pred": 489,
+  "gold": 489
+ },
+ {
+  "combo": "v35+v36+v37",
+  "dev_f1": 0.86,
+  "thr": -0.25,
+  "dev_best": 0.868,
+  "test_f1": 0.829,
+  "test_r": 0.816,
+  "test_p": 0.842,
+  "test_f1_thr0": 0.79,
+  "hit": 399,
+  "pred": 474,
+  "gold": 489
+ }
+]
