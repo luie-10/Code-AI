@@ -8,7 +8,7 @@ Unity C# 코드의 상속·역할·변수 흐름을 정적 분석하고, 그 결
 |---|---|
 | `unitylens/` | v1 — 단일 파일 정적 분석기 (`UnityLens.html`) |
 | `unitylens-v4/` | v4 — 파서 추적 + AI 해설 카드(요약/변수 흐름/리스크), LLM 연결 |
-| `minillm/` | MiniUnityLLM 학습·평가 코드 (v1~v3.2) |
+| `minillm/` | MiniUnityLLM 학습·평가 코드 (v1~v3.8) |
 | `results/` | v3.1 / v3.2 / v3.3 실측 리포트와 평가 원자료 |
 
 ## 현재 결과 (실제 GitHub 코드 held-out 10클래스/42필드)
@@ -57,3 +57,7 @@ cd minillm && python3 finetune_select.py && python3 eval_select.py
 
 - 임계값 보정: v3.7 + thr -0.75 (dev 82클래스에서 선택) → test F1 0.850. 앙상블은 이득 없음.
 - 주의: v3.5 512step 체크포인트는 1512step 실행이 덮어써서 소실. 81.4/84.9는 평가 기록으로만 남음.
+
+## v3.8 — 학습 파이프라인 정비 (실측 전)
+
+`minillm/train_select.py` + `eval_select38.py` 하나로 v3.2~v3.7 설정을 재현합니다. best/last 분리 저장(소실 방지), dev 클래스 F1로 체크포인트 선택, `--resume`, 임계값 자동 보정·저장, 정답 토큰 손실(`--loss mix`), 헤더 보존 절단(`--trunc smart`), 부트스트랩 95% CI. 상세: `minillm/README_v3_8.md`
